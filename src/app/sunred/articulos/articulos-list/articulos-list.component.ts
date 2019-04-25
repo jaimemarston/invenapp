@@ -15,7 +15,7 @@ import { fuseAnimations } from '../../../../@fuse/animations';
 })
 export class ArticulosListComponent implements OnInit {
 
-    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'options'];
+    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'modelo', 'talla', 'options'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     articulos: Array<IArticulo>;
@@ -98,7 +98,7 @@ export class ArticulosListComponent implements OnInit {
     }
 
 
-    openPrint(): void {
+    openPrint() {
         window.print();
     }
 
@@ -114,6 +114,9 @@ export class ArticulosListComponent implements OnInit {
                 this.getArticulos();
             }
         }
+    }
+    applyFilter(filterValue: string): void {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
     addArticulo(): void {

@@ -3,7 +3,7 @@
 export const BASEURL = 'http://188.166.63.89:8080/'; 
 
 
-export const DEFAULT_ROUTE = 'sunred/clientes';
+export const DEFAULT_ROUTE = 'sunred/articulos';
 
 export const SUNRED = {
     logo: 'assets/images/logos/fuse.svg',

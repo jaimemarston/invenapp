@@ -1,15 +1,18 @@
 <div id="clientes" fxLayout="column">
-    <toolbar-table (add)="addArticulo()" (delete)="deleteAllSelecteds()" (printing)="openPrint()"></toolbar-table>
+    <toolbar-table [title]="'Registro de Productos'"  (inputText)="applyFilter($event)"
+        [hidden]="edit" (add)="addArticulo()" (delete)="deleteAllSelecteds()"  ></toolbar-table>
+
+    
     <div fxFlex>
         <mat-table #table [dataSource]="dataSource">
             <ng-container matColumnDef="select">
-                <mat-header-cell *matHeaderCellDef>
+                <mat-header-cell  fxFlex="50px" *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row">
+                <mat-cell  fxFlex="50px" *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)">
                     </mat-checkbox>
@@ -22,25 +25,30 @@
             </ng-container>
 
             <ng-container matColumnDef="codigo">
-                <mat-header-cell *matHeaderCellDef> CODIGO</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.codigo}}</mat-cell>
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> CODIGO</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.codigo}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="descripcion">
-                <mat-header-cell *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.descripcion}}</mat-cell>
+                <mat-header-cell fxFlex="350px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
+                <mat-cell fxFlex="350px" *matCellDef="let element"> {{element.descripcion}}</mat-cell>
             </ng-container>
+
+            <ng-container matColumnDef="modelo">
+                <mat-header-cell *matHeaderCellDef> MODELO</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.modelo}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="talla">
+                <mat-header-cell *matHeaderCellDef> TALLA</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.talla}}</mat-cell>
+            </ng-container>
+
 
             <ng-container matColumnDef="options">
                 <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <button (click)="editRecord(row.id)" mat-icon-button color="accent">
-                        <mat-icon style="color: steelblue;vertical-align:baseline" aria-label="Edit">edit</mat-icon>
-                    </button>
-
-                    <button (click)="delete(row.id)" mat-icon-button color="accent">
-                        <mat-icon style="color: steelblue;vertical-align:baseline" aria-label="Delete">delete</mat-icon>
-                    </button>
+                    <app-action-icons (edit)="editRecord(row.id)" (remove)="delete(row.id)"></app-action-icons>
                 </mat-cell>
             </ng-container>
 

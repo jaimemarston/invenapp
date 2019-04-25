@@ -17,7 +17,7 @@ export class DataService {
   }
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  url = 'http://localhost:8000/';
+  url = 'http://localhost:8080/';
 
   getClientes(): Promise<Clientes[]> {
     return this.http.get(this.url + 'cliente', {headers: this.headers})

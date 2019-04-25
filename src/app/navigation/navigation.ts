@@ -31,14 +31,14 @@ export const navigation: FuseNavigation[] = [
             },
             {
                 id: 'articulosmat',
-                title: 'Articulos - Materiales',
+                title: 'Materiales',
                 type: 'item',
                 icon: 'print',
                 url: '/sunred/articulosmat',
             },
             {
                 id: 'articulos',
-                title: 'Articulos - Venta',
+                title: 'Productos',
                 type: 'item',
                 icon: 'print',
                 url: '/sunred/articulos',

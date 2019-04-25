@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientesComponent } from './clientes.component';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
+import { ClientesFormComponent } from './clientes-form/clientes-form.component';
 import {
     MatButtonModule,
     MatCheckboxModule,
@@ -15,10 +16,9 @@ import {
     MatTableModule, MatToolbarModule
 } from '@angular/material';
 import { FuseSharedModule } from '../../../@fuse/shared.module';
-import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../@fuse/components';
 import { ToolbarTableModule } from '../../shared/components/toolbar-table/toolbar-table.module';
-import { ClientesFormComponent } from './clientes-form/clientes-form.component';
-import {ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
+import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../@fuse/components';
+import { ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
 
 const routes: Routes = [
     {
