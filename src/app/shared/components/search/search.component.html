@@ -1,0 +1,15 @@
+<div class="search-wrapper">
+
+    <button mat-icon-button class="sidebar-toggle" fxHide.gt-md>
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <div class="search" flex fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field style="width: 100%" class="example-full-width">
+            <input (keyup)="keyup($event.target.value)"
+                   placeholder="Busqueda de cotizaciones"
+                   matInput>
+            <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+    </div>
+</div>
