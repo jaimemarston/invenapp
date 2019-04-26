@@ -39,9 +39,9 @@ export class EditCotizacionComponent implements OnInit {
 
 
     estados: Estados[] = [
-        {codigo: 1, descripcion: 'Agendado'},
-        {codigo: 2, descripcion: 'Atendido'},
-        {codigo: 3, descripcion: 'Pagado'},
+        {codigo: 1, descripcion: 'Inventario Inicial'},
+        {codigo: 2, descripcion: 'Ingreso Producto'},
+        {codigo: 3, descripcion: 'Salida Producto'},
         {codigo: 4, descripcion: 'Anulado'},
     ];
 

@@ -127,23 +127,11 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
 
     createForm(): void {
         this.registerForm = this.formBuilder.group({
-            fechaini: [''],
-            horaini: [''],
-            fechafin: [''],
-            horafin: [''],
             descripcion: ['', Validators.required],
             desunimed: [''],
-            lugorigen: [''],
-            lugdestino: [''],
             cantidad: [''],
             precio: [''],
             imptotal: [''],
-            opcviaje: [''],
-            conductor: [''],
-            nvuelo: [''],
-            proveedor: [''],
-            obs: [''],
-            tipodoc: [''],
             codigo: [this.idMaster],
         });
 
@@ -193,20 +181,8 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
 
     setForm(): void {
         this.registerForm.get('codigo').setValue(this.cotizacion.codigo);
-        this.registerForm.get('fechaini').setValue(this.cotizacion.fechaini);
-        this.registerForm.get('horaini').setValue(this.cotizacion.horaini);
-        this.registerForm.get('fechafin').setValue(this.cotizacion.fechafin);
-        this.registerForm.get('horafin').setValue(this.cotizacion.horafin);
         this.registerForm.get('descripcion').setValue(this.cotizacion.descripcion);
         this.registerForm.get('desunimed').setValue(this.cotizacion.desunimed);
-        this.registerForm.get('lugorigen').setValue(this.cotizacion.lugorigen);
-        this.registerForm.get('lugdestino').setValue(this.cotizacion.lugdestino);
-        this.registerForm.get('opcviaje').setValue(this.cotizacion.opcviaje);
-        this.registerForm.get('conductor').setValue(this.cotizacion.conductor);
-        this.registerForm.get('nvuelo').setValue(this.cotizacion.nvuelo);
-        this.registerForm.get('proveedor').setValue(this.cotizacion.proveedor);
-        this.registerForm.get('obs').setValue(this.cotizacion.obs);
-        this.registerForm.get('tipodoc').setValue(this.cotizacion.tipodoc);
         this.registerForm.get('cantidad').setValue(this.cotizacion.cantidad);
         this.registerForm.get('precio').setValue(this.cotizacion.precio);
         this.registerForm.get('imptotal').setValue(this.cotizacion.imptotal);

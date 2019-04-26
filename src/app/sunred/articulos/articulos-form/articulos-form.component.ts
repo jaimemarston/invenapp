@@ -99,6 +99,7 @@ export class ArticulosFormComponent implements OnInit {
             desruc: [''],
             precioventa: [''],
             unimed: [''],
+            tipo: [''],
             
         });
     }
@@ -121,6 +122,7 @@ export class ArticulosFormComponent implements OnInit {
         this.registerForm.get('desruc').setValue(this.articulo.desruc);
         this.registerForm.get('precioventa').setValue(this.articulo.precioventa);
         this.registerForm.get('unimed').setValue(this.articulo.unimed);
+        this.registerForm.get('tipo').setValue(this.articulo.tipo);
     }
 
     saveForm(clear?: boolean): void {

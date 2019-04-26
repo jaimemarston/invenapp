@@ -51,6 +51,13 @@ export const navigation: FuseNavigation[] = [
                 url: '/sunred/cotizacion',
             },
             {
+                id: 'reporte',
+                title: 'Reportes',
+                type: 'item',
+                icon: 'print',
+                url: '/sunred/reporte',
+            },
+            {
                 id: 'dashboard',
                 title: 'Dashboard',
                 type: 'collapsable',

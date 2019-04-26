@@ -50,9 +50,9 @@
                 <mat-header-cell *matHeaderCellDef> ESTADO</mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     <mat-chip-list>
-                        <mat-chip *ngIf="element.estado === 1" class="green-300" selected>Agendado</mat-chip>
-                        <mat-chip *ngIf="element.estado === 2" class="green-100" selected>Atendido</mat-chip>
-                        <mat-chip *ngIf="element.estado === 3" class="cyan-100"  selected>Pagado</mat-chip>
+                        <mat-chip *ngIf="element.estado === 1" class="green-300" selected>Inventario Inicial</mat-chip>
+                        <mat-chip *ngIf="element.estado === 2" class="green-100" selected>Ingreso Producto</mat-chip>
+                        <mat-chip *ngIf="element.estado === 3" class="cyan-100"  selected>Salida Producto</mat-chip>
                         <mat-chip *ngIf="element.estado === 4" class="red-100"   selected>Anulado</mat-chip>
                     </mat-chip-list>
                 </mat-cell>

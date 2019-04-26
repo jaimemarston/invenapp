@@ -18,4 +18,5 @@ export class Articulos {
   afectoigv: string;
   preciocosto: string;
   aplicadscto: string;
+  tipo: string;
 }

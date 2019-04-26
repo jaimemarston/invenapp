@@ -45,6 +45,10 @@ export const routes: Routes = [
                 loadChildren: './sunred/articulos/articulos.module#ArticulosModule'
             },
             {
+                path: 'reporte',
+                loadChildren: './sunred/reporte/reporte.module#ReporteModule'
+            },
+            {
                 path: 'dashboards/analytics',
                 loadChildren: './sunred/dashboards/analytics/analytics.module#AnalyticsDashboardModule'
             },

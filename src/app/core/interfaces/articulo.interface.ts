@@ -18,6 +18,7 @@ export interface IArticulo {
   afectoigv: string;
   preciocosto: string;
   aplicadscto: string;
+  tipo: string;
 }
 
 //https://www.desarrolloweb.com/articulos/clases-interfaces-servicios-angular.html
