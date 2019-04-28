@@ -1,9 +1,9 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-export const BASEURL = 'http://localhost:8080/';
+export const BASEURL = 'http://localhost:8000/';
 
-export const DEFAULT_ROUTE = 'sunred/articulos';
+export const DEFAULT_ROUTE = 'articulos';
 
 export const SUNRED = {
     logo: 'assets/images/logos/fuse.svg',
