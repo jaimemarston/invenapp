@@ -69,7 +69,7 @@ export class UnidadesListComponent implements OnInit {
 
     public editRecord(id: number): void {
         this.selectedId = id;
-        this.router.navigate([`sunred/unidades/edit/${id}`]);
+        this.router.navigate([`unidades/edit/${id}`]);
     }
 
     public addRecord(): void {
@@ -118,7 +118,7 @@ export class UnidadesListComponent implements OnInit {
     }
 
     addUnidad(): void {
-        this.router.navigate(['sunred/unidades/add']);
+        this.router.navigate(['unidades/add']);
     }
 
     applyFilter(filterValue: string): void {

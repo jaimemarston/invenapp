@@ -164,7 +164,7 @@ export class ArticulosFormComponent implements OnInit {
     }
 
     back(): void {
-        this.router.navigate(['sunred/articulos']);
+        this.router.navigate(['articulos']);
     }
 }
 

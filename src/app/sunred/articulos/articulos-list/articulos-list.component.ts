@@ -67,7 +67,7 @@ export class ArticulosListComponent implements OnInit {
 
     public editRecord(id: number): void {
         this.selectedId = id;
-        this.router.navigate([`sunred/articulos/edit/${id}`]);
+        this.router.navigate([`edit/${id}`]);
     }
 
     public addRecord(): void {
@@ -120,6 +120,6 @@ export class ArticulosListComponent implements OnInit {
     }
 
     addArticulo(): void {
-        this.router.navigate(['sunred/articulos/add']);
+        this.router.navigate(['articulos/add']);
     }
 }
