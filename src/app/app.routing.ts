@@ -14,11 +14,6 @@ export const routes: Routes = [
         loadChildren: './sunred/authentication/login/login.module#LoginModule'
     },
     {
-        path: 'cafe',
-        canActivate: [AuthGuard, CafeGuard],
-        redirectTo: 'auth/login'
-    },
-    {
         path: 'sunred',
         canActivate: [AuthGuard, AlitourGuard],
         children: [
