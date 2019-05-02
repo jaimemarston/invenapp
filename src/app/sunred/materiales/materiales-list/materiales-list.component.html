@@ -1,43 +1,48 @@
 <div id="clientes" fxLayout="column">
-   
-    <toolbar-table [title]="'Detalle de Clientes'" (urlPrint)="openPrint()" (inputText)="applyFilter($event)" 
-    [hidden]="edit" (add)="addClient()"  (delete)="deleteAllSelecteds()"></toolbar-table>
-                   
+    <toolbar-table [title]="'Registro de Materiales'"  [urlPrint]="'export_xls'" (inputText)="applyFilter($event)"
+        [hidden]="edit" (printing)="printing()" (add)="addMaterial()" (delete)="deleteAllSelecteds()"  ></toolbar-table>
+       
     <div fxFlex>
         <mat-table #table [dataSource]="dataSource">
             <ng-container matColumnDef="select">
-                <mat-header-cell fxFlex="50px" *matHeaderCellDef>
+                <mat-header-cell  fxFlex="50px" *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
                 </mat-header-cell>
-                <mat-cell fxFlex="50px" *matCellDef="let row">
+                <mat-cell  fxFlex="50px" *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)">
                     </mat-checkbox>
                 </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="ruc">
-                <mat-header-cell *matHeaderCellDef> RUC</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.ruc}}</mat-cell>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="nombre">
-                <mat-header-cell *matHeaderCellDef> NOMBRE</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.nombre}}</mat-cell>
+            <ng-container matColumnDef="codigo">
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> CODIGO</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.codigo}}</mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="telefono1">
-                <mat-header-cell *matHeaderCellDef>TELEFONO</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.telefono1}}</mat-cell>
+            <ng-container matColumnDef="descripcion">
+                <mat-header-cell fxFlex="450px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
+                <mat-cell fxFlex="450px" *matCellDef="let element"> {{element.descripcion}}</mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="correo">
-                <mat-header-cell *matHeaderCellDef>CORREO</mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.correo}}</mat-cell>
+            <ng-container matColumnDef="color">
+                <mat-header-cell fxFlex="180px" *matHeaderCellDef> COLOR</mat-header-cell>
+                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.color}}</mat-cell>
             </ng-container>
+
+            <ng-container matColumnDef="unimed">
+                <mat-header-cell fxFlex="180px" *matHeaderCellDef> UM</mat-header-cell>
+                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.unimed}}</mat-cell>
+            </ng-container>
+
 
             <ng-container matColumnDef="options">
                 <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
@@ -60,4 +65,6 @@
         <mat-paginator #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>
+</div>
+<div id="div_print">
 </div>

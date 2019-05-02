@@ -1,35 +1,35 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
-import { IArticulo } from '../../../core/interfaces/articulo.interface';
+import { IMaterial } from '../../../core/interfaces/material.interface';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ArticuloService } from '../../../core/services/articulo.service';
+import { MaterialService } from '../../../core/services/material.service';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '../../../../@fuse/animations';
 
 @Component({
-    selector: 'app-articulos-list',
-    templateUrl: './articulos-list.component.html',
-    styleUrls: ['./articulos-list.component.scss'],
+    selector: 'app-materiales-list',
+    templateUrl: './materiales-list.component.html',
+    styleUrls: ['./materiales-list.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class ArticulosListComponent implements OnInit {
+export class MaterialesListComponent implements OnInit {
 
-    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'modelo', 'talla', 'options'];
+    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'color', 'unimed', 'options'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    articulos: Array<IArticulo>;
-    dataSource = new MatTableDataSource<IArticulo>();
+    materiales: Array<IMaterial>;
+    dataSource = new MatTableDataSource<IMaterial>();
     errorMessage: String;
     selectedId: number;
     edit: boolean;
 
 
     /** checkbox datatable */
-    selection = new SelectionModel<IArticulo>(true, []);
+    selection = new SelectionModel<IMaterial>(true, []);
 
     constructor(
-        private articuloService: ArticuloService,
+        private materialService: MaterialService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar
@@ -37,14 +37,14 @@ export class ArticulosListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getArticulos();
+        this.getMateriales();
     }
 
-    getArticulos(): void {
-        this.articuloService.getArticulos()
+    getMateriales(): void {
+        this.materialService.getMateriales()
             .subscribe(response => {
-                this.articulos = response;
-                this.dataSource.data = this.articulos;
+                this.materiales = response;
+                this.dataSource.data = this.materiales;
                 this.dataSource.paginator = this.paginator;
                 this.paginator._intl.itemsPerPageLabel = 'Item por Pagina:';
             });
@@ -58,16 +58,16 @@ export class ArticulosListComponent implements OnInit {
     }
 
     deleteClient(): void {
-        this.articuloService.deleteArticulo(this.selectedId)
+        this.materialService.deleteMaterial(this.selectedId)
             .subscribe(response => {
                 /* console.log(response); */
-                this.getArticulos();
+                this.getMateriales();
             });
     }
 
     public editRecord(id: number): void {
         this.selectedId = id;
-        this.router.navigate([`articulos/edit/${id}`]);
+        this.router.navigate([`materiales/edit/${id}`]);
     }
 
     public addRecord(): void {
@@ -79,8 +79,8 @@ export class ArticulosListComponent implements OnInit {
         this.edit = false;
     }
 
-    updateDataTable(data: IArticulo): void {
-        this.getArticulos();
+    updateDataTable(data: IMaterial): void {
+        this.getMateriales();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -98,9 +98,29 @@ export class ArticulosListComponent implements OnInit {
     }
 
 
-    openPrint() {
-        window.print();
-    }
+    printing(): void {
+        // window.print();
+
+        const prtContent = document.getElementById('div_print');
+       
+        console.log('Datos de printing');
+        console.log(document);
+
+        const getTbody = () => {
+            
+            const tbody = this.materiales.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td></tr>`).join('');
+            return tbody;
+        };
+        prtContent.innerHTML = `
+                         <h1>Relacion de Materiales</h1>  
+                         <table border="1">
+                          <thead><th>ruc</th><th>Nombre</th></thead>
+                          <tbody> ${getTbody()} </tbody>
+                        </table>
+                        <tfoot><button  onclick='window.print();'>Imprimir</button><button (click)="mostrar=false">Descargar PDF</button></tfoot>`;
+        const WinPrint = window.open();
+        WinPrint.document.write(prtContent.innerHTML);
+   }
 
     /**
      * async await sirve para esperar que una promesa sea cumplida
@@ -108,10 +128,10 @@ export class ArticulosListComponent implements OnInit {
     async deleteAllSelecteds(): Promise<void> {
         const selecteds = this.selection.selected;
         for (let index = 0; index < selecteds.length; index++) {
-            await this.articuloService.deleteArticulo(selecteds[index].id).toPromise();
+            await this.materialService.deleteMaterial(selecteds[index].id).toPromise();
             if (index === selecteds.length - 1) {
                 this.snackBar.open('ELMINADOS TODOS');
-                this.getArticulos();
+                this.getMateriales();
             }
         }
     }
@@ -119,7 +139,7 @@ export class ArticulosListComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    addArticulo(): void {
-        this.router.navigate(['articulos/add']);
+    addMaterial(): void {
+        this.router.navigate(['materiales/add']);
     }
 }

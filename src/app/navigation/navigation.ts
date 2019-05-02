@@ -30,11 +30,11 @@ export const navigation: FuseNavigation[] = [
                 url: '/proveedores',
             },
             {
-                id: 'articulosmat',
+                id: 'materiales',
                 title: 'Materiales',
                 type: 'item',
                 icon: 'print',
-                url: '/articulosmat',
+                url: '/materiales',
             },
             {
                 id: 'articulos',

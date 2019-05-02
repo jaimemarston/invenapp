@@ -8,6 +8,8 @@ import { BASEURL } from '../../../../environments/environment';
     encapsulation: ViewEncapsulation.None
 })
 export class ToolbarTableComponent implements OnInit {
+    
+
 
     @Input() search = true;
     @Input() urlPrint;
@@ -16,6 +18,7 @@ export class ToolbarTableComponent implements OnInit {
     @Output() add: EventEmitter<any> = new EventEmitter();
     @Output() printing: EventEmitter<any> = new EventEmitter();
     @Output() delete: EventEmitter<any> = new EventEmitter();
+    @Output() settings: EventEmitter<any> = new EventEmitter();
 
     @Output() inputText: EventEmitter<string> = new EventEmitter<string>();
 
@@ -25,6 +28,8 @@ export class ToolbarTableComponent implements OnInit {
     ngOnInit(): void {
     }
 
+
+    // imprime el urlPrint del html
     print_pdf(): void {
         if (this.urlPrint) {
             window.open(`${BASEURL}${this.urlPrint}`, '_blank');
@@ -32,4 +37,5 @@ export class ToolbarTableComponent implements OnInit {
         }
     }
 
-}
+ }
+
