@@ -2,7 +2,7 @@
 
     <!-- HEADER -->
     <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
-        fxLayoutAlign.gt-xs="space-between center">
+         fxLayoutAlign.gt-xs="space-between center">
 
         <!-- APP TITLE -->
         <div fxLayout="row" fxLayoutAlign="start center">
@@ -20,23 +20,20 @@
 
                 <mat-form-field>
 
-                    <mat-select class="simplified" value="A1">
+                    <mat-select [formControl]="listaReportesControl" class="simplified" value="A1">
 
-                        <mat-option value="A1">Listado de Productos</mat-option>
-                        <mat-option value="A2">Inventarios Inicial</mat-option>
-                        <mat-option value="A3">Kardex de Productos Detallado</mat-option>
-                        <mat-option value="A4">Kardex de Productos Resumen</mat-option>
+                        <mat-option *ngFor="let lista of listaReportes" [value]="lista">{{ lista.name }}</mat-option>
 
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field fxFlex="22">
-                        <input #inputs matInput type="date" formControlName="fechanac" class="form-control"/>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="22">
-                        <input #inputs matInput type="date" formControlName="fechanac" class="form-control"/>
-                    </mat-form-field>
-                    <button mat-raised-button class="mat-raised-button mat-warn" color="warm">VISUALIZAR REPORTE</button>
+                    <input #inputs matInput type="date" class="form-control"/>
+                </mat-form-field>
+                <mat-form-field fxFlex="22">
+                    <input #inputs matInput type="date" class="form-control"/>
+                </mat-form-field>
+                <button mat-raised-button class="mat-raised-button mat-warn" color="warm">VISUALIZAR REPORTE</button>
 
             </div>
 
@@ -47,7 +44,7 @@
             <img src="/src/assets/images/logos/logo.jpg">
         </div>
         <!-- / APP TITLE -->
-        
+
     </div>
     <!-- / HEADER -->
 
@@ -57,63 +54,41 @@
         <!-- CENTER -->
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
 
-            
 
             <!-- CONTENT -->
             <div class="content mat-elevation-z4">
-                   
-                            <div class="my-mat-row" fxLayout="row" fxLayoutAlign="space-between center">
-     
-    
-                            <table class="simple clickable">
-                                <thead>
-                                    <tr>
-                                        <th>PRODUCTO</th>
-                                        <th class="text-right">INV. INICIAL</th>
-                                        <th class="text-right">INGRESOS</th>
-                                        <th class="text-right">SALIDAS</th>
-                                        <th class="text-right">TOTAL</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                        
-                                        <tr>
-                                            <td>SANDALIAS ESTAMPADO BAP ADULTO DOCENAS T/44-38</td>
-                                            <td class="text-right">200</td>
-                                            <td class="text-right">150</td>
-                                            <td class="text-right">150</td>
-                                            <td class="text-right">200</td>
-                                        </tr>
-                                        <tr>
-                                            <td>SANDALIAS ESTAMPADO ASIA PRIVATE ADULTO DOCENAS T/44-38</td>
-                                            <td class="text-right">200</td>
-                                            <td class="text-right">150</td>
-                                            <td class="text-right">150</td>
-                                            <td class="text-right">200</td>
-                                        </tr>
-                                        <tr><td>SANDALIAS ESTAMPADO SUMMER ADULTO DOCENAS T/44-38</td></tr>
-                                        <tr><td>SANDALIAS ESTAMPADO MALIBÚ ADULTO DOCENAS T/44-38</td></tr>
-                                        <tr><td>SANDALIAS ESTAMPADO SUNSET ADULTO DOCENAS T/44-38</td></tr>
-                                        <tr><td>SANDALIAS ESTAMPADO TRIPLE BEACH ADULTO DOCENAS T/44-38</td></tr>
-                                        <tr><td>SANDALIAS ESTAMPADO SURFING ADULTO DOCENAS T/44-38</td></tr>
-                                        <tr>
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-    
-                            <div class="card-divider full-width"></div>
- 
-    
-                       
+
+                <div class="my-mat-row" fxLayout="row" fxLayoutAlign="space-between center">
+
+
+                    <table *ngIf="data && headers" class="simple clickable">
+                        <thead>
+                        <tr>
+                            <!--                            <th>PRODUCTO</th>-->
+                            <th *ngFor="let header of headers">{{ header }}</th>
+                            <!--                            <th class="text-right">INGRESOS</th>-->
+                            <!--                            <th class="text-right">SALIDAS</th>-->
+                            <!--                            <th class="text-right">TOTAL</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let row of data">
+                            <td *ngFor="let header of headers">{{ row[header] }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="card-divider full-width"></div>
+
+
+                </div>
+                <!-- / CONTENT -->
+
             </div>
-            <!-- / CONTENT -->
+            <!-- / CENTER -->
 
         </div>
-        <!-- / CENTER -->
+        <!-- / CONTENT-->
 
     </div>
-    <!-- / CONTENT-->
-
-</div>
 

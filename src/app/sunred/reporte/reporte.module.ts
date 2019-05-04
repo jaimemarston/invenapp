@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
-import { ReporteComponent } from './reporte.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule, Routes} from '@angular/router';
+import {ReporteComponent} from './reporte.component';
 import {
     MatButtonModule,
     MatCheckboxModule,
@@ -13,10 +13,11 @@ import {
     MatRippleModule, MatSelectModule, MatSnackBarModule,
     MatTableModule, MatToolbarModule
 } from '@angular/material';
-import { FuseSharedModule } from '../../../@fuse/shared.module';
-import { ToolbarTableModule } from '../../shared/components/toolbar-table/toolbar-table.module';
-import { FuseConfirmDialogModule, FuseSidebarModule } from '../../../@fuse/components';
-import { ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
+import {FuseSharedModule} from '../../../@fuse/shared.module';
+import {ToolbarTableModule} from '../../shared/components/toolbar-table/toolbar-table.module';
+import {FuseConfirmDialogModule, FuseSidebarModule} from '../../../@fuse/components';
+import {ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const routes: Routes = [
     {
@@ -34,6 +35,8 @@ const routes: Routes = [
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
         RouterModule.forChild(routes),
         MatButtonModule,
         MatCheckboxModule,
