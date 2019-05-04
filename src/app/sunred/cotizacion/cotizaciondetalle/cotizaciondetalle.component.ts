@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
-import { Cotizacion } from '../../../dataservice/cotizacion';
-import { DataService } from '../../../dataservice/data.service';
-import { CotizaciondetalleService } from '../../../core/services/cotizaciondetalle.service';
-import { ICotizaciondetalle } from '../../../core/interfaces/cotizacion.interface';
-import { SelectionModel } from '@angular/cdk/collections';
-import { fuseAnimations } from '../../../../@fuse/animations';
-import { map } from 'rxjs/operators';
+import {Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
+import {MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator} from '@angular/material';
+import {Router} from '@angular/router';
+import {Cotizacion} from '../../../dataservice/cotizacion';
+import {DataService} from '../../../dataservice/data.service';
+import {CotizaciondetalleService} from '../../../core/services/cotizaciondetalle.service';
+import {ICotizaciondetalle} from '../../../core/interfaces/cotizacion.interface';
+import {SelectionModel} from '@angular/cdk/collections';
+import {fuseAnimations} from '../../../../@fuse/animations';
+import {map} from 'rxjs/operators';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -27,7 +27,7 @@ export class CotizaciondetalleComponent implements OnInit {
         descuento: 0,
         igv: 0,
         total_general: 0
-    }
+    };
 
     get cotizacionesDetalle(): Array<ICotizaciondetalle> {
         return this._cotizacionesDetalle;
@@ -39,6 +39,7 @@ export class CotizaciondetalleComponent implements OnInit {
         this.dataSource.data = this.cotizacionesDetalle;
         if (this.cotizacionesDetalle) {
             this.calculateTotales(0);
+            this.dataSource.paginator = this.paginatordet;
         }
     }
 
@@ -48,7 +49,7 @@ export class CotizaciondetalleComponent implements OnInit {
 
     @Output() updated: EventEmitter<any> = new EventEmitter();
 
-    displayedColumns: string[] = ['select', 'descripcion', 'desunimed', 'cantidad', 'imptotal', 'options']
+    displayedColumns: string[] = ['select', 'descripcion', 'desunimed', 'cantidad', 'imptotal', 'options'];
     @ViewChild(MatPaginator) paginatordet: MatPaginator;
 
     cotizacion: Array<ICotizaciondetalle>;
@@ -118,6 +119,7 @@ export class CotizaciondetalleComponent implements OnInit {
 
     updateDataTable(data: ICotizaciondetalle): void {
         this.updated.emit(data);
+        this.paginatordet.lastPage();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
