@@ -4,7 +4,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
-import {MatButtonModule, MatIconModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatSnackBarModule} from '@angular/material';
 import {TranslateModule} from '@ngx-translate/core';
 import 'hammerjs';
 
@@ -51,6 +51,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
         FuseSharedModule,
         FuseSidebarModule,
         FuseThemeOptionsModule,
+        MatSnackBarModule,
 
         // App modules
         LayoutModule,

@@ -1,12 +1,17 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { IArticulo } from '../../../core/interfaces/articulo.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Ibancos } from '../../../core/interfaces/varios.interface';
-import { ArticuloService } from '../../../core/services/articulo.service';
-import { BancoService } from '../../../core/services/banco.service';
-import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Router } from '@angular/router';
-import { fuseAnimations } from '../../../../@fuse/animations';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {IArticulo} from '../../../core/interfaces/articulo.interface';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Ibancos} from '../../../core/interfaces/varios.interface';
+import {ArticuloService} from '../../../core/services/articulo.service';
+import {BancoService} from '../../../core/services/banco.service';
+import {MatSnackBar} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
+import {fuseAnimations} from '../../../../@fuse/animations';
+
+import to from 'await-to-js';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {CommonService} from '../../../core/services/common.service';
 
 export interface Monedas {
     codigo: string;
@@ -20,7 +25,7 @@ export interface Monedas {
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations
 })
-export class ArticulosFormComponent implements OnInit {
+export class ArticulosFormComponent implements OnInit, OnDestroy {
 
     /**
      * mascara para poner formatos en inputs.
@@ -58,6 +63,8 @@ export class ArticulosFormComponent implements OnInit {
     registerForm: FormGroup;
     bancos: Array<Ibancos>;
 
+    unsubscribe = new Subject();
+
     @Output() update: EventEmitter<IArticulo> = new EventEmitter<IArticulo>();
 
     @ViewChildren('inputs') inputs: QueryList<ElementRef<HTMLInputElement>>;
@@ -67,7 +74,8 @@ export class ArticulosFormComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 public snackBar: MatSnackBar,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private commonService: CommonService) {
     }
 
     getBanco(): void {
@@ -89,9 +97,9 @@ export class ArticulosFormComponent implements OnInit {
                 Validators.required
             ])],
             descripcion: [null, Validators.compose([
-            Validators.required,
-            Validators.minLength(1),
-             ])],
+                Validators.required,
+                Validators.minLength(1),
+            ])],
             color: [''],
             talla: [''],
             modelo: [''],
@@ -100,7 +108,7 @@ export class ArticulosFormComponent implements OnInit {
             precioventa: [''],
             unimed: [''],
             tipo: [''],
-            
+
         });
     }
 
@@ -147,16 +155,18 @@ export class ArticulosFormComponent implements OnInit {
             });
     }
 
-    addArticulo(): void {
+    async addArticulo(): Promise<void> {
         const data: IArticulo = this.registerForm.getRawValue();
-        this.articuloService.addArticulo(data)
-            .subscribe(response => {
-                this.update.emit(response);
-                this.snackBar.open('Registro agregado satisfactoriamente...!');
-                this.registerForm.reset();
-                this.createForm();
-                this.inputs.first.nativeElement.focus();
-            });
+        const [error, response] = await to(this.articuloService.addArticulo(data).toPromise());
+        if (response) {
+            this.update.emit(response);
+            this.snackBar.open('Registro agregado satisfactoriamente...!');
+            this.registerForm.reset();
+            this.createForm();
+            this.inputs.first.nativeElement.focus();
+        } else {
+            this.commonService.showFormError(error);
+        }
     }
 
     saveClient(): void {
@@ -165,6 +175,11 @@ export class ArticulosFormComponent implements OnInit {
 
     back(): void {
         this.router.navigate(['articulos']);
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 }
 
