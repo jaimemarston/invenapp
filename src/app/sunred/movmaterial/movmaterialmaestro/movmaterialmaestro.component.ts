@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
-import { Movmaterial } from '../../../dataservice/Movmaterial';
-import { DataService } from '../../../dataservice/data.service';
-import { MovmaterialService } from '../../../core/services/Movmaterial.service';
 import { IMovmaterial, IMovmaterialdetalle } from '../../../core/interfaces/movmaterial.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MovmaterialdetalleService } from '../../../core/services/movmaterialdetalle.service';
 import { MovmaterialdetalleComponent } from '../movmaterialdetalle/movmaterialdetalle.component';
+import {MovmaterialService} from '../../../core/services/movmaterial.service';
 
 
 /**

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MovmaterialdetalleEndpoint } from '../endpoints/Movmaterial.endpoint';
 import { Observable } from 'rxjs';
-import { Movmaterialdetalle } from '../../dataservice/Movmaterial';
-import { IMovmaterialdetalle } from '../interfaces/Movmaterial.interface';
 import { filter, map } from 'rxjs/operators';
+import {MovmaterialdetalleEndpoint} from '../endpoints/movmaterial.endpoint';
+import {IMovmaterialdetalle} from '../interfaces/movmaterial.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MovmaterialService } from '../../../../core/services/Movmaterial.service';
-import { IMovmaterial } from '../../../../core/interfaces/Movmaterial.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSelectModule, MatFormFieldModule, MatListModule } from '@angular/material';
+import {IMovmaterial} from '../../../../core/interfaces/movmaterial.interface';
+import {MovmaterialService} from '../../../../core/services/movmaterial.service';
 
 export interface Estados {
     codigo: number;
