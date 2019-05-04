@@ -40,6 +40,10 @@ export const routes: Routes = [
                 loadChildren: './sunred/cotizacion/cotizacion.module#CotizacionModule'
             },
             {
+                path: 'movmaterial',
+                loadChildren: './sunred/movmaterial/movmaterial.module#MovmaterialModule'
+            },
+            {
                 path: 'materiales',
                 loadChildren: './sunred/materiales/materiales.module#MaterialesModule'
             },

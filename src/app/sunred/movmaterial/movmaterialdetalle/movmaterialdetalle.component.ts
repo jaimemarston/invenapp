@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
-import { Cotizacion } from '../../../dataservice/cotizacion';
+import { Movmaterial} from '../../../dataservice/movmaterial';
 import { DataService } from '../../../dataservice/data.service';
-import { CotizaciondetalleService } from '../../../core/services/cotizaciondetalle.service';
-import { ICotizaciondetalle } from '../../../core/interfaces/cotizacion.interface';
+import { MovmaterialdetalleService } from '../../../core/services/movmaterialdetalle.service';
+import { IMovmaterialdetalle } from '../../../core/interfaces/movmaterial.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { fuseAnimations } from '../../../../@fuse/animations';
 import { map } from 'rxjs/operators';
@@ -15,29 +15,29 @@ import { map } from 'rxjs/operators';
 
 
 @Component({
-    selector: 'app-cotizaciondetalle',
-    templateUrl: './cotizaciondetalle.component.html',
+    selector: 'app-movmaterialdetalle',
+    templateUrl: './movmaterialdetalle.component.html',
     animations: fuseAnimations
 })
 
-export class CotizaciondetalleComponent implements OnInit {
-    _cotizacionesDetalle: Array<ICotizaciondetalle>;
-    cotizacionTotales = {
+export class MovmaterialdetalleComponent implements OnInit {
+    _movmaterialDetalle: Array<IMovmaterialdetalle>;
+    movmaterialTotales = {
         subtotal: 0,
         descuento: 0,
         igv: 0,
         total_general: 0
     }
 
-    get cotizacionesDetalle(): Array<ICotizaciondetalle> {
-        return this._cotizacionesDetalle;
+    get movmaterialDetalle(): Array<IMovmaterialdetalle> {
+        return this._movmaterialDetalle;
     }
 
-    @Input() set cotizacionesDetalle(data: Array<ICotizaciondetalle>) {
-        this._cotizacionesDetalle = data;
-        /* console.log(this.cotizacionesDetalle); */
-        this.dataSource.data = this.cotizacionesDetalle;
-        if (this.cotizacionesDetalle) {
+    @Input() set movmaterialDetalle(data: Array<IMovmaterialdetalle>) {
+        this._movmaterialDetalle = data;
+        
+        this.dataSource.data = this.movmaterialDetalle;
+        if (this.movmaterialDetalle) {
             this.calculateTotales(0);
         }
     }
@@ -51,17 +51,17 @@ export class CotizaciondetalleComponent implements OnInit {
     displayedColumns: string[] = ['select', 'descripcion', 'desunimed', 'cantidad', 'imptotal', 'options']
     @ViewChild(MatPaginator) paginatordet: MatPaginator;
 
-    cotizacion: Array<ICotizaciondetalle>;
-    dataSource = new MatTableDataSource<ICotizaciondetalle>();
+    movmaterial: Array<IMovmaterialdetalle>;
+    dataSource = new MatTableDataSource<IMovmaterialdetalle>();
     errorMessage: String;
     selectedId: number;
     edit: boolean;
 
     /** checkbox datatable */
-    selection = new SelectionModel<ICotizaciondetalle>(true, []);
+    selection = new SelectionModel<IMovmaterialdetalle>(true, []);
 
     constructor(
-        private cotizacionService: CotizaciondetalleService,
+        private movmaterialService: MovmaterialdetalleService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar
@@ -69,22 +69,22 @@ export class CotizaciondetalleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.dataSource.data = this.cotizacionesDetalle;
+        this.dataSource.data = this.movmaterialDetalle;
     }
 
-    getCotizacion(): void {
-        this.cotizacionService.getCotizaciones()
-            .pipe(map(cotizaciones => {
-                cotizaciones = cotizaciones.map(c => {
+    getMovmaterial(): void {
+        this.movmaterialService.getMovmateriales()
+            .pipe(map(movmaterial => {
+                movmaterial = movmaterial.map(c => {
                     /*c.imptotal = c.cantidad * c.precio;*/
                     c.imptotal = c.precio;
                     return c;
                 });
-                return cotizaciones;
+                return movmaterial;
             }))
             .subscribe(response => {
-                this.cotizacion = response;
-                this.dataSource.data = this.cotizacion;
+                this.movmaterial = response;
+                this.dataSource.data = this.movmaterial;
                 this.dataSource.paginator = this.paginatordet;
                 this.paginatordet._intl.itemsPerPageLabel = 'Item por Pagina:';
             });
@@ -92,11 +92,11 @@ export class CotizaciondetalleComponent implements OnInit {
 
     delete(id: number): void {
         this.selectedId = id;
-        this.deleteCotizacion();
+        this.deleteMovmaterial();
     }
 
-    deleteCotizacion(): void {
-        this.cotizacionService.deleteCotizacion(this.selectedId)
+    deleteMovmaterial(): void {
+        this.movmaterialService.deleteMovmaterial(this.selectedId)
             .subscribe(response => {
                 this.updated.emit(true);
             });
@@ -116,7 +116,7 @@ export class CotizaciondetalleComponent implements OnInit {
         this.edit = false;
     }
 
-    updateDataTable(data: ICotizaciondetalle): void {
+    updateDataTable(data: IMovmaterialdetalle): void {
         this.updated.emit(data);
     }
 
@@ -145,10 +145,10 @@ export class CotizaciondetalleComponent implements OnInit {
     async deleteAllSelecteds(): Promise<void> {
         const selecteds = this.selection.selected;
         for (let index = 0; index < selecteds.length; index++) {
-            await this.cotizacionService.deleteCotizacion(selecteds[index].id).toPromise();
+            await this.movmaterialService.deleteMovmaterial(selecteds[index].id).toPromise();
             if (index === selecteds.length - 1) {
                 this.snackBar.open('ELIMINADOS TODOS');
-                // this.getCotizacion();
+                
                 this.updated.emit(true);
             }
         }
@@ -159,11 +159,11 @@ export class CotizaciondetalleComponent implements OnInit {
     }
 
     calculateTotales(descuento = 0): void {
-        this.cotizacionTotales.descuento = descuento;
-        /*this.cotizacionTotales.subtotal = this.cotizacionesDetalle.reduce((a, b) => (b.imptotal * b.cantidad) + a, 0);*/
-        this.cotizacionTotales.subtotal = this.cotizacionesDetalle.reduce((a, b) => (b.imptotal), 0);
-        this.cotizacionTotales.total_general = (this.cotizacionTotales.subtotal - this.cotizacionTotales.descuento) + this.cotizacionTotales.igv;
-        this.cotizacionTotales.igv = (this.cotizacionTotales.subtotal - this.cotizacionTotales.descuento) * 0.18;
+        this.movmaterialTotales.descuento = descuento;
+        
+        this.movmaterialTotales.subtotal = this.movmaterialDetalle.reduce((a, b) => (b.imptotal), 0);
+        this.movmaterialTotales.total_general = (this.movmaterialTotales.subtotal - this.movmaterialTotales.descuento) + this.movmaterialTotales.igv;
+        this.movmaterialTotales.igv = (this.movmaterialTotales.subtotal - this.movmaterialTotales.descuento) * 0.18;
     }
 
     onChangeDscto(event): void {

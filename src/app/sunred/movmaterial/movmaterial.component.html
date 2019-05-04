@@ -11,7 +11,7 @@
                           [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Movimientos - Productos
+                    Movimientos - Materiales
                 </span>
             </div>
 
@@ -29,9 +29,9 @@
             <!-- CONTENT -->
             <div class="content mat-elevation-z4">
 
-                <app-cotizacionmaestro (detalle)="setDetail($event)"></app-cotizacionmaestro>
-                <app-cotizaciondetalle [cotizacionesDetalle]="detail" [idMaster]="cotizacionMaestro.cotizacionSelected?.id"
-                                       (updated)="getCotizaciones()"></app-cotizaciondetalle>
+                <app-movmaterialmaestro (detalle)="setDetail($event)"></app-movmaterialmaestro>
+                <app-movmaterialdetalle [movmaterialDetalle]="detail" [idMaster]="movmaterialMaestro.movmaterialSelected?.id"
+                                       (updated)="getMovmateriales()"></app-movmaterialdetalle>
             </div>
             <!-- / CONTENT -->
 

@@ -37,6 +37,13 @@ export const navigation: FuseNavigation[] = [
                 url: '/materiales',
             },
             {
+                id: 'movmaterial',
+                title: 'Movimientos-Materiales',
+                type: 'item',
+                icon: 'email',
+                url: '/movmaterial',
+            },
+            {
                 id: 'articulos',
                 title: 'Productos',
                 type: 'item',
@@ -45,7 +52,7 @@ export const navigation: FuseNavigation[] = [
             },
             {
                 id: 'cotizacion',
-                title: 'Movimientos',
+                title: 'Movimientos-Productos',
                 type: 'item',
                 icon: 'email',
                 url: '/cotizacion',
