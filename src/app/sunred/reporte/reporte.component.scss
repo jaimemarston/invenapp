@@ -1,12 +1,7 @@
 
-  
-  //styles for material table
-  
-  
-  
-  .my-mat-row{
-    text-align:center;
-    font-size:9px;
-    font-family: Verdana,Sans-Serif;
-    
-   }
+.content {
+    table.simple tbody tr td {
+    font-size: 11px;
+    padding: 4px 4px !important;
+}
+}
