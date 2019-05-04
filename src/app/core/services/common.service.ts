@@ -10,6 +10,20 @@ export class CommonService {
     constructor(private snackBar: MatSnackBar, private http: HttpClient) {
     }
 
+    static printElement(content: any): boolean {
+        const mywindow = window.open('', 'Print');
+
+        mywindow.document.write('<html><head><title>Print</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(content.innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        mywindow.close();
+        return true;
+    }
 
     showFormError(error: any): void {
         const formError = (error as any).error;

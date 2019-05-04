@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
-import { IMaterial } from '../../../core/interfaces/material.interface';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MaterialService } from '../../../core/services/material.service';
-import { Router } from '@angular/router';
-import { fuseAnimations } from '../../../../@fuse/animations';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatDialog, MatPaginator, MatSnackBar, MatTableDataSource} from '@angular/material';
+import {IMaterial} from '../../../core/interfaces/material.interface';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MaterialService} from '../../../core/services/material.service';
+import {Router} from '@angular/router';
+import {fuseAnimations} from '../../../../@fuse/animations';
+import {CommonService} from '../../../core/services/common.service';
 
 @Component({
     selector: 'app-materiales-list',
@@ -102,12 +103,9 @@ export class MaterialesListComponent implements OnInit {
         // window.print();
 
         const prtContent = document.getElementById('div_print');
-       
-        console.log('Datos de printing');
-        console.log(document);
 
         const getTbody = () => {
-            
+
             const tbody = this.materiales.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td></tr>`).join('');
             return tbody;
         };
@@ -117,10 +115,9 @@ export class MaterialesListComponent implements OnInit {
                           <thead><th>ruc</th><th>Nombre</th></thead>
                           <tbody> ${getTbody()} </tbody>
                         </table>
-                        <tfoot><button  onclick='window.print();'>Imprimir</button><button (click)="mostrar=false">Descargar PDF</button></tfoot>`;
-        const WinPrint = window.open();
-        WinPrint.document.write(prtContent.innerHTML);
-   }
+                        <tfoot></tfoot>`;
+        CommonService.printElement(prtContent);
+    }
 
     /**
      * async await sirve para esperar que una promesa sea cumplida
@@ -135,6 +132,7 @@ export class MaterialesListComponent implements OnInit {
             }
         }
     }
+
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }

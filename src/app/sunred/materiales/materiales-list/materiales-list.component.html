@@ -1,17 +1,18 @@
 <div id="clientes" fxLayout="column">
-    <toolbar-table [title]="'Registro de Materiales'"  [urlPrint]="'export_xls'" (inputText)="applyFilter($event)"
-        [hidden]="edit" (printing)="printing()" (add)="addMaterial()" (delete)="deleteAllSelecteds()"  ></toolbar-table>
-       
+    <toolbar-table [title]="'Registro de Materiales'" [urlPrint]="'export_xls'" (inputText)="applyFilter($event)"
+                   [hidden]="edit" (printing)="printing()" (add)="addMaterial()"
+                   (delete)="deleteAllSelecteds()"></toolbar-table>
+
     <div fxFlex>
         <mat-table #table [dataSource]="dataSource">
             <ng-container matColumnDef="select">
-                <mat-header-cell  fxFlex="50px" *matHeaderCellDef>
+                <mat-header-cell fxFlex="50px" *matHeaderCellDef>
                     <mat-checkbox (change)="$event ? masterToggle() : null"
                                   [checked]="selection.hasValue() && isAllSelected()"
                                   [indeterminate]="selection.hasValue() && !isAllSelected()">
                     </mat-checkbox>
                 </mat-header-cell>
-                <mat-cell  fxFlex="50px" *matCellDef="let row">
+                <mat-cell fxFlex="50px" *matCellDef="let row">
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
                                   [checked]="selection.isSelected(row)">
                     </mat-checkbox>
@@ -66,5 +67,5 @@
         </mat-paginator>
     </div>
 </div>
-<div id="div_print">
+<div id="div_print" style="display: none">
 </div>

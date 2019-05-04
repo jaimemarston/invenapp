@@ -4,24 +4,43 @@
     <!-- / APP TITLE -->
     <!--https://material.io/tools/icons/?icon=highlight_off&style=baseline-->
     <!-- https://www.angularjswiki.com/angular/angular-material-icons-list-mat-icon-list/-->
-   <!--  https://jsfiddle.net/pawer13/qe1u1kaj/-->
+    <!--  https://jsfiddle.net/pawer13/qe1u1kaj/-->
     <!-- SEARCH -->
     <div class="crud-buttons" fxLayout="row" fxLayoutAlign="start center">
         <search *ngIf="search" (onKeyup)="inputText.emit($event)" fxFlex="90"></search>
-        
-       
+
+
         <!--<button mat-mini-fab color="accent" (click)="add.emit(true)"><mat-icon>cloud_download</mat-icon></button> -->
         <!-- aqui ocultaba el boton print -->
-        
-         <!--<button fxFlex mat-raised-button color="primary" (click)="print_pdf()">
-            Imprimir
-        </button>-->
-    
-        <button mat-mini-fab color="accent"  (click)="add.emit(true)"><mat-icon>description</mat-icon></button>
-        <button mat-mini-fab color="warn"    (click)="delete.emit(true)"><mat-icon>delete</mat-icon></button>
-        <button mat-mini-fab color="accent"  (click)="printing.emit(true)"><mat-icon>print</mat-icon></button>
-        <button mat-mini-fab color="accent"  (click)="print_pdf()"><mat-icon>settings</mat-icon></button>
+
+        <!--<button fxFlex mat-raised-button color="primary" (click)="print_pdf()">
+           Imprimir
+       </button>-->
+
+        <button mat-mini-fab color="accent" (click)="add.emit(true)">
+            <mat-icon>description</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" (click)="delete.emit(true)">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-mini-fab [matMenuTriggerFor]="menu" color="accent">
+            <mat-icon>print</mat-icon>
+        </button>
+        <button mat-mini-fab color="accent">
+            <mat-icon>settings</mat-icon>
+        </button>
     </div>
     <!-- / SEARCH -->
 
 </div>
+
+<mat-menu #menu="matMenu">
+    <button (click)="printing.emit(true)" mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Previo</span>
+    </button>
+    <button (click)="print_pdf()" mat-menu-item>
+        <mat-icon>file_copy</mat-icon>
+        <span>Excel</span>
+    </button>
+</mat-menu>
