@@ -11,7 +11,7 @@
                 <input #inputCodigo type="text" placeholder="Productos" aria-label="Number" matInput
                     formControlName="descripcion" [matAutocomplete]="auto">
                 <mat-autocomplete  #auto="matAutocomplete">
-                    <mat-option *ngFor="let optionu of filteredArticulos | async" [value]="optionu.descripcion">
+                    <mat-option *ngFor="let optionu of filteredMateriales | async" [value]="optionu.descripcion">
                         {{optionu.descripcion}}
                     </mat-option>
                 </mat-autocomplete>

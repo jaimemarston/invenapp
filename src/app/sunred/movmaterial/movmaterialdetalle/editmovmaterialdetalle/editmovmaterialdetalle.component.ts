@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MovmaterialdetalleService } from '../../../../core/services/movmaterialdetalle.service';
 import { IMovmaterialdetalle } from '../../../../core/interfaces/movmaterial.interface';
-import { IArticulo } from '../../../../core/interfaces/articulo.interface';
+import { IMaterial } from '../../../../core/interfaces/material.interface';
 import { IUnidad } from '../../../../core/interfaces/unidad.interface';
-import { ArticuloService } from '../../../../core/services/articulo.service';
+import { MaterialService } from '../../../../core/services/material.service';
 import { UnidadService } from '../../../../core/services/unidad.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
@@ -46,7 +46,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
     
     
     selectedopc = '0';
-    filteredArticulos: Observable<Array<IArticulo>>;
+    filteredMateriales: Observable<Array<IMaterial>>;
     filteredUnidades: Observable<Array<IUnidad>>;
 
     opcviaje: Opcviaje[] = [
@@ -56,7 +56,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
     ];
 
     movmaterial: IMovmaterialdetalle;
-    articulos: Array<IArticulo>;
+    materiales: Array<IMaterial>;
     unidades: Array<IUnidad>;
 
 
@@ -69,15 +69,15 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
 
     constructor(private movmaterialService: MovmaterialdetalleService,
         private formBuilder: FormBuilder,
-        private articuloService: ArticuloService,
+        private materialService: MaterialService,
         private unidadService: UnidadService,
         public snackBar: MatSnackBar) {
     }
 
-    getArticulo(): void {
-        this.articuloService.getArticulos()
+    getMaterial(): void {
+        this.materialService.getMateriales()
             .subscribe(response => {
-                this.articulos = response;
+                this.materiales = response;
             });
     }
 
@@ -93,7 +93,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
 
     ngOnInit(): void {
         this.createForm();
-        this.getArticulo();
+        this.getMaterial();
         this.getUnidad();
         
     }
@@ -108,10 +108,10 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         }
     }
 
-    private _filter(value: string): IArticulo[] {
-        if (value && this.articulos) {
+    private _filter(value: string): IMaterial[] {
+        if (value && this.materiales) {
             const filterValue = value.toLowerCase();
-            return this.articulos.filter(option => option.descripcion.toLowerCase().indexOf(filterValue) === 0);
+            return this.materiales.filter(option => option.descripcion.toLowerCase().indexOf(filterValue) === 0);
         }
 
         return [];
@@ -138,7 +138,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         const descripcionForm = this.registerForm.get('descripcion');
         const desunimedForm = this.registerForm.get('desunimed');
 
-        this.filteredArticulos = descripcionForm.valueChanges.pipe(
+        this.filteredMateriales = descripcionForm.valueChanges.pipe(
             map(value => this._filter(value))
         );
 
