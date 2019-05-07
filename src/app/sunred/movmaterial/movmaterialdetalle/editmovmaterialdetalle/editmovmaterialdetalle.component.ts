@@ -26,9 +26,12 @@ export interface Opcviaje {
 export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnChanges {
     $unsubscribe = new Subject();
     private _id: number;
+    
     get id(): number {
         return this._id;
     }
+
+    
 
     @Input() set id(id: number) {
         this._id = id;
@@ -73,6 +76,8 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         private unidadService: UnidadService,
         public snackBar: MatSnackBar) {
     }
+    
+
 
     getMaterial(): void {
         this.materialService.getMateriales()
@@ -132,6 +137,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
             cantidad: [''],
             precio: [''],
             imptotal: [''],
+            codpro: [''],
             codigo: [this.idMaster],
         });
 
@@ -171,6 +177,11 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         this.registerForm.get('imptotal').setValue(a);
     }
 
+    getcodigo(a): void {
+        console.log(a);
+        this.registerForm.get('codpro').setValue(a);
+        }   
+
     getMovmaterial(): void {
         this.movmaterialService.getMovmaterial(this.id)
             .subscribe(response => {
@@ -186,6 +197,7 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         this.registerForm.get('cantidad').setValue(this.movmaterial.cantidad);
         this.registerForm.get('precio').setValue(this.movmaterial.precio);
         this.registerForm.get('imptotal').setValue(this.movmaterial.imptotal);
+        this.registerForm.get('codpro').setValue(this.movmaterial.codpro);
     }
 
     onBack(): void {
@@ -204,10 +216,17 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
         }
     }
 
+
+   
+
+
     prepareData(): any {
         /** rest spread, paso de parametros REST, este método sirve para clonar objetos. destructuración de datos
          * http://www.etnassoft.com/2016/07/04/desestructuracion-en-javascript-parte-1/ */
+
+         
         this.registerForm.get('codigo').setValue(this.idMaster);
+        
         const data: IMovmaterialdetalle = { ...this.registerForm.getRawValue() };
         data.master = this.idMaster;
 

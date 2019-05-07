@@ -132,6 +132,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
             cantidad: [''],
             precio: [''],
             imptotal: [''],
+            codpro: [''],
             codigo: [this.idMaster],
         });
 
@@ -171,6 +172,12 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.registerForm.get('imptotal').setValue(a);
     }
 
+    getcodigo(a): void {
+        console.log(a);
+        this.registerForm.get('codpro').setValue(a);
+        }   
+
+    
     getCotizacion(): void {
         this.cotizacionService.getCotizacion(this.id)
             .subscribe(response => {
@@ -186,6 +193,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.registerForm.get('cantidad').setValue(this.cotizacion.cantidad);
         this.registerForm.get('precio').setValue(this.cotizacion.precio);
         this.registerForm.get('imptotal').setValue(this.cotizacion.imptotal);
+        this.registerForm.get('codpro').setValue(this.cotizacion.codpro);
     }
 
     onBack(): void {

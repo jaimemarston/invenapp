@@ -6,6 +6,7 @@ export interface IMaterial {
   talla: string;
   cantidad: string;
   color: string;
+  descolor: string;
   genero: string;
   desruc: string;
   unimed: string;

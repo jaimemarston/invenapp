@@ -210,23 +210,18 @@ $pink-dark-theme: mat-dark-theme($pink-dark-theme-primary-palette, $pink-dark-th
 // Add ".theme-pink-dark" class to the body to activate this theme.
 // Class name must start with "theme-" !!!
 body.theme-pink-dark {
-
     // Generate the Angular Material theme
     @include angular-material-theme($pink-dark-theme);
-
     // Apply the theme to the Fuse Core
     @include fuse-core-theme($pink-dark-theme);
-
     // Apply the theme to the user components
     @include components-theme($pink-dark-theme);
-
     // Generate Fuse color classes for primary, accent and warn colors
     $palettes: (
         primary: $pink-dark-theme-primary-palette,
         accent: $pink-dark-theme-accent-palette,
         warn: $pink-dark-theme-warn-palette
     );
-
     @include fuse-color-classes($palettes);
 }
 

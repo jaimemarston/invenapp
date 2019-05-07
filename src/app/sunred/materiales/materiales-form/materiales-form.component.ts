@@ -92,7 +92,7 @@ export class MaterialesFormComponent implements OnInit {
             Validators.required,
             Validators.minLength(1),
              ])],
-            color: [''],
+            descolor: [''],
             desruc: [''],
             precioventa: [''],
             unimed: [''],
@@ -112,7 +112,7 @@ export class MaterialesFormComponent implements OnInit {
     setForm(): void {
         this.registerForm.get('codigo').setValue(this.material.codigo);
         this.registerForm.get('descripcion').setValue(this.material.descripcion);
-        this.registerForm.get('color').setValue(this.material.color);
+        this.registerForm.get('descolor').setValue(this.material.descolor);
         this.registerForm.get('desruc').setValue(this.material.desruc);
         this.registerForm.get('precioventa').setValue(this.material.precioventa);
         this.registerForm.get('unimed').setValue(this.material.unimed);

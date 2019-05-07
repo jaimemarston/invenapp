@@ -100,7 +100,7 @@ export class ArticulosFormComponent implements OnInit, OnDestroy {
                 Validators.required,
                 Validators.minLength(1),
             ])],
-            color: [''],
+            descolor: [''],
             talla: [''],
             modelo: [''],
             genero: [''],
@@ -123,7 +123,7 @@ export class ArticulosFormComponent implements OnInit, OnDestroy {
     setForm(): void {
         this.registerForm.get('codigo').setValue(this.articulo.codigo);
         this.registerForm.get('descripcion').setValue(this.articulo.descripcion);
-        this.registerForm.get('color').setValue(this.articulo.color);
+        this.registerForm.get('descolor').setValue(this.articulo.descolor);
         this.registerForm.get('talla').setValue(this.articulo.talla);
         this.registerForm.get('modelo').setValue(this.articulo.modelo);
         this.registerForm.get('genero').setValue(this.articulo.genero);

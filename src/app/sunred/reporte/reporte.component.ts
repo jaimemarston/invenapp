@@ -18,7 +18,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
     listaReportes = [
         {
             name: 'Listado de productos',
-            api: ``,
+            api: `${BASEURL}articulo`,
         },
         {
             name: 'Inventarios Inicial',

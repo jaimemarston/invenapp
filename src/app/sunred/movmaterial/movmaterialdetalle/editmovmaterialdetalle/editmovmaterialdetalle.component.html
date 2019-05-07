@@ -9,19 +9,18 @@
         <div fxLayout="row" fxLayoutAlign="start center">
             <mat-form-field fxFlex="580px">
                 <input #inputCodigo type="text" placeholder="Productos" aria-label="Number" matInput
-                    formControlName="descripcion" [matAutocomplete]="auto">
-                <mat-autocomplete  #auto="matAutocomplete">
-                    <mat-option *ngFor="let optionu of filteredMateriales | async" [value]="optionu.descripcion">
+                    formControlName="descripcion" [matAutocomplete]="auto" >
+                <mat-autocomplete  #auto="matAutocomplete" >
+                    <mat-option (click)="getcodigo(optionu.codigo)" *ngFor="let optionu of filteredMateriales | async" [value]="optionu.descripcion" >
                         {{optionu.descripcion}}
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
         </div>
-
-
+        
     </div>
 
-
+    
 
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
 
