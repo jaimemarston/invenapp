@@ -32,7 +32,9 @@ export class ToolbarTableComponent implements OnInit {
     // imprime el urlPrint del html
     print_pdf(): void {
         if (this.urlPrint) {
+            console.log(`${BASEURL}${this.urlPrint}`);
             window.open(`${BASEURL}${this.urlPrint}`, '_blank');
+            
             // window.location.replace(`${BASEURL}${this.urlPrint}`);
         }
     }

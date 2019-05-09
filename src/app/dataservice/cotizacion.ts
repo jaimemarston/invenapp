@@ -86,6 +86,10 @@ export class Cotizaciondetalle {
   tipodoc: string;
   fechaini: Date;
   fechafin: Date;
+  modelo: string;
+  genero: string;
+  talla: string;
+  tipo: string;
   estadodoc: number;
 }
 

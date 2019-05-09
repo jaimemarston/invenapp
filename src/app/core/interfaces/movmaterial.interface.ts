@@ -87,6 +87,10 @@ export interface IMovmaterialdetalle {
     proveedor: string;
     obs: string;
     tipodoc: string;
+    modelo: string;
+    genero: string;
+    talla: string;
+    tipo: string;
     master: number | null;
     estado: number;
     estadodoc?: number;

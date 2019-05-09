@@ -18,7 +18,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
     listaReportes = [
         {
             name: 'Listado de productos',
-            api: `${BASEURL}articulo`,
+            api: `${BASEURL}lista_articulos`,
         },
         {
             name: 'Inventarios Inicial',
@@ -26,7 +26,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
         },
         {
             name: 'Kardex de Productos Detallado',
-            api: ''
+            api: `${BASEURL}lista_articulos_detalle`,
         },
         {
             name: 'Kardex de Productos Resumen',

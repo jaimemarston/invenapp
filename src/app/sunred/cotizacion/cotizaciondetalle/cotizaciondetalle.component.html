@@ -22,13 +22,23 @@
             </ng-container>
 
             <ng-container  matColumnDef="descripcion">
-                <mat-header-cell fxFlex="450px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
-                <mat-cell fxFlex="450px" *matCellDef="let element"> {{element.descripcion}}</mat-cell>
+                <mat-header-cell fxFlex="350px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
+                <mat-cell fxFlex="350px" *matCellDef="let element"> {{element.descripcion}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="desunimed">
                 <mat-header-cell fxFlex="100px" *matHeaderCellDef> MEDIDA</mat-header-cell>
                 <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.desunimed}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="talla">
+                <mat-header-cell fxFlex="100px" *matHeaderCellDef> TALLA</mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.talla}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="precio">
+                <mat-header-cell fxFlex="100px" *matHeaderCellDef> PRECIO</mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.precio}}</mat-cell>
             </ng-container>
   
             <ng-container matColumnDef="cantidad">
@@ -37,8 +47,8 @@
             </ng-container>
 
             <ng-container matColumnDef="imptotal">
-                <mat-header-cell  fxFlex="200px" *matHeaderCellDef> IMPORTE TOTAL</mat-header-cell>
-                <mat-cell fxFlex="200px" *matCellDef="let element"> {{element.imptotal}}</mat-cell>
+                <mat-header-cell  fxFlex="100px" *matHeaderCellDef> TOTAL</mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.imptotal}}</mat-cell>
             </ng-container>
             <!--<ng-container matColumnDef="codigo">-->
                     <!--<mat-header-cell *matHeaderCellDef> codigo</mat-header-cell>-->
