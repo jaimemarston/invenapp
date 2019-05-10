@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {fuseAnimations} from '../../../@fuse/animations';
 import {BASEURL} from '../../../environments/environment';
 import {FormControl} from '@angular/forms';
@@ -15,31 +15,40 @@ import to from 'await-to-js';
 })
 export class ReporteComponent implements OnInit, OnDestroy {
     listaReportesControl = new FormControl();
+    @Input() urlPrint;
     listaReportes = [
         {
             name: 'Listado de productos',
             api: `${BASEURL}lista_articulos`,
-            expandable: false
+            expandable: false,
+            excel: 'xls_lista',
+            display: 'False',
         },
         {
             name: 'Inventarios Inicial',
             api: '',
-            expandable: false
+            expandable: false,
+            excel: 'xls_invini',
+            display: 'False',
         },
         {
             name: 'Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
-            expandable: true
+            expandable: true,
+            excel: 'xls_proddetalle',
+            display: 'True',
         },
         {
             name: 'Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
-            expandable: false
+            expandable: false,
+            excel: 'xls_stock',
+            display: null
         },
 
     ];
 
-    reporteSelected: { name: string, api: string, expandable: boolean };
+    reporteSelected: { name: string, api: string, expandable: boolean, excel: string, display?: any };
 
     unsubscribe = new Subject();
 
@@ -63,6 +72,12 @@ export class ReporteComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.unsubscribe.next();
         this.unsubscribe.complete();
+    }
+     // imprime el urlPrint del html
+
+     print_pdf(): void {
+            console.log(`${BASEURL}${this.reporteSelected.excel}`);
+            window.open(`${BASEURL}${this.reporteSelected.excel}`, '_blank');
     }
 
     async getServiceFromUrl(url: string): Promise<void> {
