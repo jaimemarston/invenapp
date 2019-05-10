@@ -1,5 +1,5 @@
 <div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-    
+
     <!-- HEADER -->
     <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
          fxLayoutAlign.gt-xs="space-between center">
@@ -13,7 +13,7 @@
 
                 </span>
             </div>
- 
+
 
             <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
 
@@ -34,7 +34,7 @@
                     <input #inputs matInput type="date" class="form-control"/>
                 </mat-form-field>
                 <button mat-raised-button class="mat-raised-button mat-warn" color="warm">VISUALIZAR REPORTE</button> -->
-                
+
                 <div class="crud-buttons">
 
                     <button mat-mini-fab [matMenuTriggerFor]="menu" color="accent">
@@ -44,14 +44,14 @@
                         <mat-icon>settings</mat-icon>
                     </button>
                 </div>
-            
-            
+
+
                 <mat-menu #menu="matMenu">
-                    <button  mat-menu-item>
+                    <button mat-menu-item>
                         <mat-icon>dialpad</mat-icon>
                         <span>Previo</span>
                     </button>
-                    <button  mat-menu-item>
+                    <button mat-menu-item>
                         <mat-icon>file_copy</mat-icon>
                         <span>Excel</span>
                     </button>
@@ -81,15 +81,12 @@
 
                 <div class="my-mat-row" fxLayout="row" fxLayoutAlign="space-between center">
 
- 
-                    <table *ngIf="data && headers" class="simple clickable">
+
+                    <table *ngIf="data && headers && reporteSelected && !reporteSelected.expandable"
+                           class="simple clickable">
                         <thead>
                         <tr>
-                            <!--                            <th>PRODUCTO</th>-->
                             <th *ngFor="let header of headers">{{ header }}</th>
-                            <!--                            <th class="text-right">INGRESOS</th>-->
-                            <!--                            <th class="text-right">SALIDAS</th>-->
-                            <!--                            <th class="text-right">TOTAL</th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -99,6 +96,11 @@
                         </tbody>
                     </table>
 
+                    <app-table-expandable fxFlex="100"
+                                          *ngIf="data && headers && reporteSelected && reporteSelected.expandable"
+                                          [columnsToDisplay]="headers"
+                                          [dataSource]="data"
+                                          [expandedTemplate]="expandedTemplate"></app-table-expandable>
                     <div class="card-divider full-width"></div>
 
 
@@ -112,4 +114,23 @@
         <!-- / CONTENT-->
 
     </div>
+</div>
 
+<ng-template #expandedTemplate let-element="element">
+    <table *ngIf="element" class="p-32 simple clickable">
+        <thead>
+        <tr>
+            <th>Codigo</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ element.codigo  }}</td>
+            <td>{{ element.description  }}</td>
+            <td>{{ element.cantidad  }}</td>
+        </tr>
+        </tbody>
+    </table>
+</ng-template>

@@ -19,23 +19,27 @@ export class ReporteComponent implements OnInit, OnDestroy {
         {
             name: 'Listado de productos',
             api: `${BASEURL}lista_articulos`,
+            expandable: false
         },
         {
             name: 'Inventarios Inicial',
-            api: ''
+            api: '',
+            expandable: false
         },
         {
             name: 'Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
+            expandable: true
         },
         {
             name: 'Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
+            expandable: false
         },
 
     ];
 
-    reporteSelected: { name: string, api: string };
+    reporteSelected: { name: string, api: string, expandable: boolean };
 
     unsubscribe = new Subject();
 
@@ -66,8 +70,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             const [error, response] = await to(this.reporteService.getService(url).toPromise());
             this.data = response;
             if (this.data && this.data.length) {
-                this.headers = Object.keys(this.data[0]);
-                console.log(this.headers);
+                this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object').map(k => k);
             }
         } else {
             this.headers = [];

@@ -18,6 +18,7 @@ import {ToolbarTableModule} from '../../shared/components/toolbar-table/toolbar-
 import {FuseConfirmDialogModule, FuseSidebarModule} from '../../../@fuse/components';
 import {ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TableExpandableModule} from '../../shared/components/table-expandable/table-expandable.module';
 
 const routes: Routes = [
     {
@@ -56,7 +57,8 @@ const routes: Routes = [
         ToolbarTableModule,
         FuseConfirmDialogModule,
         ActionIconsModule,
-        FuseSidebarModule
+        FuseSidebarModule,
+        TableExpandableModule
     ],
     declarations: [ReporteComponent]
 })
