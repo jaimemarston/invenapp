@@ -21,16 +21,19 @@ export class ReporteComponent implements OnInit, OnDestroy {
             name: 'Listado de productos',
             api: `${BASEURL}lista_articulos`,
             excel: 'xls_lista',
+            display: 'False',
         },
         {
             name: 'Inventarios Inicial',
             api: '',
             excel: 'xls_invini',
+            display: 'False',
         },
         {
             name: 'Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
             excel: 'xls_proddetalle',
+            display: 'True',
         },
         {
             name: 'Kardex de Productos Resumen',
