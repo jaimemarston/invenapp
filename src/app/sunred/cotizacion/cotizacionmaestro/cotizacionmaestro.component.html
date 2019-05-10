@@ -1,5 +1,5 @@
 <div id="clientes" fxLayout="column">
-    <toolbar-table [title]="'Maestro'" [urlPrint]="'generate_pdf/'+cotizacionSelected" (inputText)="applyFilter($event)" [hidden]="edit"
+    <toolbar-table [title]="'Maestro'" [urlPrint]="'generate_pdf/'+cotizacionSelected?.id" (inputText)="applyFilter($event)" [hidden]="edit"
                    (add)="addRecord()"
                    (delete)="deleteAllSelecteds()"></toolbar-table>
     <div fxFlex [hidden]="edit">

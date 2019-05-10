@@ -73,11 +73,12 @@ export class ReporteComponent implements OnInit, OnDestroy {
         this.unsubscribe.next();
         this.unsubscribe.complete();
     }
-     // imprime el urlPrint del html
 
-     print_pdf(): void {
-            console.log(`${BASEURL}${this.reporteSelected.excel}`);
-            window.open(`${BASEURL}${this.reporteSelected.excel}`, '_blank');
+    // imprime el urlPrint del html
+
+    print_pdf(): void {
+        console.log(`${BASEURL}${this.reporteSelected.excel}`);
+        window.open(`${BASEURL}${this.reporteSelected.excel}`, '_blank');
     }
 
     async getServiceFromUrl(url: string): Promise<void> {
