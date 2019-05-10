@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {fuseAnimations} from '../../../@fuse/animations';
 import {BASEURL} from '../../../environments/environment';
 import {FormControl} from '@angular/forms';
@@ -15,27 +15,32 @@ import to from 'await-to-js';
 })
 export class ReporteComponent implements OnInit, OnDestroy {
     listaReportesControl = new FormControl();
+    @Input() urlPrint;
     listaReportes = [
         {
             name: 'Listado de productos',
             api: `${BASEURL}lista_articulos`,
+            excel: 'xls_lista',
         },
         {
             name: 'Inventarios Inicial',
-            api: ''
+            api: '',
+            excel: 'xls_invini',
         },
         {
             name: 'Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
+            excel: 'xls_proddetalle',
         },
         {
             name: 'Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
+            excel: 'xls_stock',
         },
 
     ];
 
-    reporteSelected: { name: string, api: string };
+    reporteSelected: { name: string, api: string, excel: string, };
 
     unsubscribe = new Subject();
 
@@ -60,7 +65,13 @@ export class ReporteComponent implements OnInit, OnDestroy {
         this.unsubscribe.next();
         this.unsubscribe.complete();
     }
-
+     // imprime el urlPrint del html
+    
+     print_pdf(): void {
+            console.log(`${BASEURL}${this.reporteSelected.excel}`);
+            window.open(`${BASEURL}${this.reporteSelected.excel}`, '_blank');
+    }
+    
     async getServiceFromUrl(url: string): Promise<void> {
         if (this.reporteSelected && this.reporteSelected.api) {
             const [error, response] = await to(this.reporteService.getService(url).toPromise());
