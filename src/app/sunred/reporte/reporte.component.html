@@ -16,44 +16,25 @@
 
 
             <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
-
-
                 <mat-form-field >
-
                     <mat-select [formControl]="listaReportesControl" class="simplified" value="A1">
-
                         <mat-option *ngFor="let lista of listaReportes" [value]="lista">{{ lista.name }}</mat-option>
-
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field fxFlex="25">
+                <mat-form-field fxFlex="20">
                     <input #inputs matInput type="date" class="form-control"/>
                 </mat-form-field>
-                <mat-form-field fxFlex="25">
+                <mat-form-field fxFlex="20">
                     <input #inputs matInput type="date" class="form-control"/>
                 </mat-form-field>
+                
                 <button mat-raised-button class="mat-raised-button mat-warn" (click)="reporte_visualizar()" color="warm">VISUALIZAR REPORTE</button> 
 
-                <div class="crud-buttons">
+                <button mat-mini-fab (click)="print_pdf()" color="accent">
+                    <mat-icon>print</mat-icon>
+                </button>
 
-                    <button mat-mini-fab (click)="print_pdf()" color="accent">
-                        <mat-icon>print</mat-icon>
-                    </button>
-
-                </div>
-
-
-                <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>dialpad</mat-icon>
-                        <span>Previo</span>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon>file_copy</mat-icon>
-                        <span>Excel</span>
-                    </button>
-                </mat-menu>
             </div>
 
 
