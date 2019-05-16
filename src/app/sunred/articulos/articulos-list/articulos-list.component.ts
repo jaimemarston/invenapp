@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ArticuloService } from '../../../core/services/articulo.service';
 import { Router } from '@angular/router';
 import { fuseAnimations } from '../../../../@fuse/animations';
+import {CommonService} from '../../../core/services/common.service';
 
 @Component({
     selector: 'app-articulos-list',
@@ -97,10 +98,27 @@ export class ArticulosListComponent implements OnInit {
             this.dataSource.data.forEach(row => this.selection.select(row));
     }
 
+    printing(): void {
+       
 
-    openPrint() {
-        window.print();
+        const prtContent = document.getElementById('div_print');
+
+        const getTbody = () => {
+
+            const tbody = this.articulos.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td>
+            <td>${c.descolor}</td><td>${c.tipo}</td><td>${c.talla}</td><td>${c.unimed}</td><td>${c.precioventa}</td></tr>`).join('');
+            return tbody;
+        };
+        prtContent.innerHTML = `
+                         <h1>Relacion de Materiales</h1>  
+                         <table border="1">
+                          <thead><th>CODIGO</th><th>NOMBRE</th><th>COLOR</th><th>TIPO</th><th>TALLA</th><th>UM</th><th>precioventa</th></thead>
+                          <tbody> ${getTbody()} </tbody>
+                        </table>
+                        <tfoot></tfoot>`;
+        CommonService.printElement(prtContent);
     }
+
 
     /**
      * async await sirve para esperar que una promesa sea cumplida

@@ -8,6 +8,8 @@ import { ICotizacion, ICotizaciondetalle } from '../../../core/interfaces/cotiza
 import { SelectionModel } from '@angular/cdk/collections';
 import { CotizaciondetalleService } from '../../../core/services/cotizaciondetalle.service';
 import { CotizaciondetalleComponent } from '../cotizaciondetalle/cotizaciondetalle.component';
+import { IProveedores } from 'app/core/interfaces/proveedores.interface';
+
 
 
 /**
@@ -34,6 +36,8 @@ export class CotizacionmaestroComponent implements OnInit {
     @Output() shower: EventEmitter<any> = new EventEmitter();
     @Output() detalle: EventEmitter<Array<ICotizaciondetalle>> = new EventEmitter();
 
+
+    
     /** checkbox datatable */
     selection = new SelectionModel<ICotizacion>(true, []);
 
@@ -50,6 +54,8 @@ export class CotizacionmaestroComponent implements OnInit {
         this.getCotizacion();
     }
 
+   
+
     getCotizacion(): void {
 
         this.cotizacionService.getCotizaciones()
@@ -62,6 +68,8 @@ export class CotizacionmaestroComponent implements OnInit {
                 this.updateCotizacionSelected(true);
             });
     }
+
+    
 
     updateCotizacionSelected(emit?: boolean) {
         if (this.cotizacionSelected) {

@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { fuseAnimations } from '../../../../../@fuse/animations';
+import { IProveedores } from 'app/core/interfaces/proveedores.interface';
 
 
 export interface Opcviaje {
@@ -43,8 +44,8 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
     }
 
     @Input() idMaster: number;
-    
-    
+
+
     selectedopc = '0';
     filteredArticulos: Observable<Array<IArticulo>>;
     filteredUnidades: Observable<Array<IUnidad>>;
@@ -81,6 +82,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
             });
     }
 
+
     getUnidad(): void {
         this.unidadService.getUnidades()
             .subscribe(response => {
@@ -95,10 +97,8 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.createForm();
         this.getArticulo();
         this.getUnidad();
-        
+
     }
-
-
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.idMaster) {
@@ -106,21 +106,24 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
                 this.registerForm.get('codigo').setValue(this.idMaster);
             }
         }
+
     }
 
     private _filter(value: string): IArticulo[] {
         if (value && this.articulos) {
             const filterValue = value.toLowerCase();
             return this.articulos.filter(option => option.descripcion.toLowerCase().indexOf(filterValue) === 0);
+
         }
 
         return [];
     }
 
+
     private _filter2(value: string): IUnidad[] {
         if (value && this.unidades) {
-        const filterValue2 = value.toLowerCase();
-        return this.unidades.filter(option => option.descripcion.toLowerCase().includes(filterValue2));
+            const filterValue2 = value.toLowerCase();
+            return this.unidades.filter(option => option.descripcion.toLowerCase().includes(filterValue2));
         }
         return [];
     }
@@ -129,6 +132,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.registerForm = this.formBuilder.group({
             descripcion: ['', Validators.required],
             desunimed: [''],
+            talla: [''],
             cantidad: [''],
             precio: [''],
             imptotal: [''],
@@ -148,12 +152,14 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         );
 
         this.valueChanges();
-        
+
     }
 
     valueChanges(): void {
         const precioControl = this.registerForm.get('precio');
         const cantidadControl = this.registerForm.get('cantidad');
+
+
         precioControl.valueChanges
             .pipe(takeUntil(this.$unsubscribe))
             .subscribe(value => {
@@ -168,16 +174,26 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
     }
 
     setImporteTotal(a, b): void {
-        /*this.registerForm.get('imptotal').setValue(a * b);*/
-        this.registerForm.get('imptotal').setValue(a);
+        this.registerForm.get('imptotal').setValue((a * b).toFixed(2));
     }
+
+    setdesunimed(a): void {
+        this.registerForm.get('desunimed').setValue(a);
+    }
+
 
     getcodigo(a): void {
         console.log(a);
-        this.registerForm.get('codpro').setValue(a);
-        }   
+        this.registerForm.get('codpro').setValue(a.codigo);
+        this.registerForm.get('desunimed').setValue(a.unimed);
+         if (a.talla != null) {
+             this.registerForm.get('talla').setValue(a.talla);
+          }
 
-    
+        this.registerForm.get('precio').setValue(a.precioventa);
+    }
+
+
     getCotizacion(): void {
         this.cotizacionService.getCotizacion(this.id)
             .subscribe(response => {
@@ -191,6 +207,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.registerForm.get('descripcion').setValue(this.cotizacion.descripcion);
         this.registerForm.get('desunimed').setValue(this.cotizacion.desunimed);
         this.registerForm.get('cantidad').setValue(this.cotizacion.cantidad);
+        this.registerForm.get('talla').setValue(this.cotizacion.talla);
         this.registerForm.get('precio').setValue(this.cotizacion.precio);
         this.registerForm.get('imptotal').setValue(this.cotizacion.imptotal);
         this.registerForm.get('codpro').setValue(this.cotizacion.codpro);
@@ -250,5 +267,5 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.$unsubscribe.complete();
     }
 
-   
+
 }

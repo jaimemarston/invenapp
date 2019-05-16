@@ -16,15 +16,8 @@ export const navigation: FuseNavigation[] = [
             },
             
             {
-                id: 'clientes',
-                title: 'Clientes',
-                type: 'item',
-                icon: 'local_shipping',
-                url: '/clientes',
-            },
-            {
                 id: 'proveedores',
-                title: 'Proveedores',
+                title: 'Proveedores - Clientes',
                 type: 'item',
                 icon: 'local_shipping',
                 url: '/proveedores',

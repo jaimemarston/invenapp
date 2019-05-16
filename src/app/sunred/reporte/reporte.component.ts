@@ -18,34 +18,68 @@ export class ReporteComponent implements OnInit, OnDestroy {
     @Input() urlPrint;
     listaReportes = [
         {
-            name: 'Listado de productos',
+            name: '1.- Listado de productos',
             api: `${BASEURL}lista_articulos`,
             expandable: false,
             excel: 'xls_lista',
             display: 'False',
         },
         {
-            name: 'Inventarios Inicial',
+            name: '1.2.- Inventarios Inicial',
             api: '',
             expandable: false,
             excel: 'xls_invini',
             display: 'False',
         },
         {
-            name: 'Kardex de Productos Detallado',
+            name: '1.3.- Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
             expandable: true,
             excel: 'xls_proddetalle',
             display: 'True',
         },
         {
-            name: 'Kardex de Productos Resumen',
+            name: '1.4.- Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
             expandable: false,
             excel: 'xls_stock',
             display: null
         },
-
+        {
+            name: '1.5.- Pago de Proveedores - Productos',
+            api: `${BASEURL}lista_materiales`,
+            expandable: false,
+            excel: 'xls_lista_materiales',
+            display: 'False',
+        },
+        {
+            name: '2.- Listado de materiales',
+            api: `${BASEURL}lista_materiales`,
+            expandable: false,
+            excel: 'xls_lista_materiales',
+            display: 'False',
+        },
+        {
+            name: '2.2.- Inventarios Inicial',
+            api: '',
+            expandable: false,
+            excel: 'xls_invini_mat',
+            display: 'False',
+        },
+        {
+            name: '2.3.- Kardex de Materiales Detallado',
+            api: `${BASEURL}lista_materiales_detalle`,
+            expandable: true,
+            excel: 'xls_matdetalle',
+            display: 'True',
+        },
+        {
+            name: '2.4.- Kardex de Materiales Resumen',
+            api: `${BASEURL}lista_stock_mat`,
+            expandable: false,
+            excel: 'xls_stock_mat',
+            display: null
+        },
     ];
 
     reporteSelected: { name: string, api: string, expandable: boolean, excel: string, display?: any };
@@ -79,6 +113,12 @@ export class ReporteComponent implements OnInit, OnDestroy {
     print_pdf(): void {
         console.log(`${BASEURL}${this.reporteSelected.excel}`);
         window.open(`${BASEURL}${this.reporteSelected.excel}`, '_blank');
+    }
+
+    reporte_visualizar(): void {
+        
+        console.log(`${BASEURL}filtro`);
+        window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');
     }
 
     async getServiceFromUrl(url: string): Promise<void> {

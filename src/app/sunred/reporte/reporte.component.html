@@ -18,7 +18,7 @@
             <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
 
 
-                <mat-form-field>
+                <mat-form-field >
 
                     <mat-select [formControl]="listaReportesControl" class="simplified" value="A1">
 
@@ -27,13 +27,13 @@
                     </mat-select>
                 </mat-form-field>
 
-                <!-- <mat-form-field fxFlex="22">
+                <mat-form-field fxFlex="25">
                     <input #inputs matInput type="date" class="form-control"/>
                 </mat-form-field>
-                <mat-form-field fxFlex="22">
+                <mat-form-field fxFlex="25">
                     <input #inputs matInput type="date" class="form-control"/>
                 </mat-form-field>
-                <button mat-raised-button class="mat-raised-button mat-warn" color="warm">VISUALIZAR REPORTE</button> -->
+                <button mat-raised-button class="mat-raised-button mat-warn" (click)="reporte_visualizar()" color="warm">VISUALIZAR REPORTE</button> 
 
                 <div class="crud-buttons">
 
@@ -60,7 +60,7 @@
         </div>
 
         <div class="content">
-            <img src="/src/assets/images/logos/logo.jpg">
+            <img src="assets/images/logos/fuse.svg" height="350" width="95" >
         </div>
         <!-- / APP TITLE -->
 
@@ -113,6 +113,7 @@
 
     </div>
 </div>
+headers = ['codigo','descripcion','cantidad','precio','imptotal']
 
 <ng-template #expandedTemplate let-element="element">
     <table *ngIf="element" class="p-32 simple clickable">
@@ -120,15 +121,27 @@
         <tr>
             <th>Codigo</th>
             <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Total</th>
             <th>Cantidad</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>{{ element.codigo  }}</td>
-            <td>{{ element.description  }}</td>
-            <td>{{ element.cantidad  }}</td>
+<!--   
+                <table *ngFor="let det of element">
+                        <td>{{det.codigo}}</td>
+                </table> -->
+                <!-- <tr *ngFor="let row of element | filter : 'codpro' :  element.codigo ">
+                        <td *ngFor="let header of headers">{{ row[header] }}</td>
+                </tr> -->
+        <tr *ngFor="let item of element.cotizaciones">
+                        <td>{{ item.codigo}}</td>
+                        <td>{{ item.descripcion}}</td>
+                        <td>{{ item.precio}}</td>
+                        <td>{{ item.imptotal}}</td>
+                        <td>{{ item.cantidad}}</td>
         </tr>
+
         </tbody>
     </table>
 </ng-template>

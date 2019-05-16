@@ -16,7 +16,7 @@ import {CommonService} from '../../../core/services/common.service';
 })
 export class MaterialesListComponent implements OnInit {
 
-    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'color', 'unimed', 'options'];
+    displayedColumns: string[] = ['select', 'codigo', 'descripcion', 'descolor', 'unimed', 'options'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     materiales: Array<IMaterial>;
@@ -106,19 +106,21 @@ export class MaterialesListComponent implements OnInit {
 
         const getTbody = () => {
 
-            const tbody = this.materiales.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td></tr>`).join('');
+            const tbody = this.materiales.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td>
+            <td>${c.descolor}</td><td>${c.tipo}</td><td>${c.unimed}</td><td>${c.precioventa}</td></tr>`).join('');
             return tbody;
         };
         prtContent.innerHTML = `
                          <h1>Relacion de Materiales</h1>  
                          <table border="1">
-                          <thead><th>ruc</th><th>Nombre</th></thead>
+                          <thead><th>CODIGO</th><th>NOMBRE</th><th>COLOR</th><th>TIPO</th><th>UM</th><th>precioventa</th></thead>
                           <tbody> ${getTbody()} </tbody>
                         </table>
                         <tfoot></tfoot>`;
         CommonService.printElement(prtContent);
     }
 
+    
     /**
      * async await sirve para esperar que una promesa sea cumplida
      * */

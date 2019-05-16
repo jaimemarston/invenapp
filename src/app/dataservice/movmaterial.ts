@@ -47,6 +47,7 @@ export class Movmaterial {
   horafin: string;
   fechaini: Date;
   fechafin: Date;
+  imppagado: number;
   estado: number;
 }
 

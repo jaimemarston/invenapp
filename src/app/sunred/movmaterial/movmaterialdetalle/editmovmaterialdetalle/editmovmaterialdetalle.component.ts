@@ -26,7 +26,6 @@ export interface Opcviaje {
 export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnChanges {
     $unsubscribe = new Subject();
     private _id: number;
-    
     get id(): number {
         return this._id;
     }
@@ -173,15 +172,18 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
     }
 
     setImporteTotal(a, b): void {
-        /*this.registerForm.get('imptotal').setValue(a * b);*/
-        this.registerForm.get('imptotal').setValue(a);
+        this.registerForm.get('imptotal').setValue((a * b).toFixed(2));
     }
 
     getcodigo(a): void {
         console.log(a);
-        this.registerForm.get('codpro').setValue(a);
-        }   
-
+        this.registerForm.get('codpro').setValue(a.codigo);
+        this.registerForm.get('desunimed').setValue(a.unimed);
+        //  if (a.talla != null) {
+        //      this.registerForm.get('talla').setValue(a.talla);
+        //   }
+        this.registerForm.get('precio').setValue(a.precioventa);
+    }
     getMovmaterial(): void {
         this.movmaterialService.getMovmaterial(this.id)
             .subscribe(response => {

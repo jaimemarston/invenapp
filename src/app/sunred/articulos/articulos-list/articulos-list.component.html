@@ -1,7 +1,6 @@
 <div id="clientes" fxLayout="column">
-    <toolbar-table [title]="'Registro de Productos'"  (inputText)="applyFilter($event)"
-        [hidden]="edit" (add)="addArticulo()" (delete)="deleteAllSelecteds()"  ></toolbar-table>
-
+    <toolbar-table [title]="'Registro de Productos'"  [urlPrint]="'export_xls_arti'" (inputText)="applyFilter($event)"
+        [hidden]="edit" (printing)="printing()" (add)="addArticulo()" (delete)="deleteAllSelecteds()"  ></toolbar-table>
     
     <div fxFlex>
         <mat-table #table [dataSource]="dataSource">
@@ -53,17 +52,17 @@
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
             <mat-row
                 (click)="selectedId = row.id"
                 *matRowDef="let row; columns: displayedColumns;"
                 [ngClass]="{ 'highlight': row.id === selectedId }">
             </mat-row>
-
         </mat-table>
     </div>
     <div fxFlex>
-        <mat-paginator #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100, 500]">
+        <mat-paginator [showFirstLastButtons]="true" #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100, 500]">
         </mat-paginator>
     </div>
+</div>
+<div id="div_print" style="display: none">
 </div>

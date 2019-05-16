@@ -48,6 +48,7 @@ export interface IMovmaterial {
     horaini: string;
     horafin: string;
     unidadtransporte: string;
+    imppagado: number;
     materiales?: Array<IMovmaterialdetalle> | null;
 }
 

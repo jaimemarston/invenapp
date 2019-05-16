@@ -3,6 +3,10 @@ import { CotizacionService } from '../../../../core/services/cotizacion.service'
 import { ICotizacion } from '../../../../core/interfaces/cotizacion.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSelectModule, MatFormFieldModule, MatListModule } from '@angular/material';
+import { ProveedorService } from '../../../../core/services/proveedor.service';
+import { IProveedores } from '../../../../core/interfaces/proveedores.interface';
+import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 export interface Estados {
     codigo: number;
@@ -59,7 +63,8 @@ export class EditCotizacionComponent implements OnInit {
     }
 
     cotizacion: ICotizacion;
-
+    filteredProveedores: Observable<Array<IProveedores>>;
+    proveedores: Array<IProveedores>;
     registerForm: FormGroup;
 
     @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -67,11 +72,30 @@ export class EditCotizacionComponent implements OnInit {
 
     constructor(private cotizacionService: CotizacionService,
                 private formBuilder: FormBuilder,
+                private proveedoresService: ProveedorService,
                 public snackBar: MatSnackBar) {
     }
 
+    getProveedor(): void {
+        this.proveedoresService.getProveedores()
+            .subscribe(response => {
+                this.proveedores = response;
+            });
+    }
+    
+
+
     ngOnInit(): void {
         this.createForm();
+        this.getProveedor();
+    }
+    
+    private _filter(value: string): IProveedores[] {
+        if (value && this.proveedores) {
+            const filterValue = value.toLowerCase();
+            return this.proveedores.filter(option => option.nombre.toLowerCase().indexOf(filterValue) === 0);
+        }
+        return [];
     }
 
     createForm(): void {
@@ -85,8 +109,26 @@ export class EditCotizacionComponent implements OnInit {
             telruc: [''],
             correoruc: [''],
             desmonepago: [''],
+            imppagado: [''],
             estado: [0],
         });
+        
+        const desrucForm = this.registerForm.get('desruc');
+
+        this.filteredProveedores = desrucForm.valueChanges.pipe(
+            map(value => this._filter(value))
+        );
+    }
+
+
+    getcodigo(a): void {
+        console.log(a);
+        this.registerForm.get('ruc').setValue(a.ruc);
+        this.registerForm.get('desruc').setValue(a.nombre);
+        this.registerForm.get('telruc').setValue(a.telefono1);
+        this.registerForm.get('correoruc').setValue(a.correo);
+         
+        
     }
 
     getCotizacion(): void {
@@ -97,6 +139,7 @@ export class EditCotizacionComponent implements OnInit {
             });
     }
 
+    
     setForm(): void {
 
         this.registerForm.get('codigo').setValue(this.cotizacion.codigo);
@@ -107,6 +150,8 @@ export class EditCotizacionComponent implements OnInit {
         this.registerForm.get('correoruc').setValue(this.cotizacion.correoruc);
         this.registerForm.get('desmonepago').setValue(this.cotizacion.desmonepago);
         this.registerForm.get('estado').setValue(this.cotizacion.estado);
+        this.registerForm.get('imppagado').setValue(this.cotizacion.imppagado);
+        
     }
 
     onBack(): void {

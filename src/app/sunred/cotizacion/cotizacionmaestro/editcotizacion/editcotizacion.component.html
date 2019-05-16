@@ -9,16 +9,31 @@
             <input #inputs matInput placeholder="Código" formControlName="codigo">
         </mat-form-field>
 
-        <mat-form-field fxFlex="10">
+        <mat-form-field fxFlex="15">
             <input #inputs matInput type="date" placeholder="Fecha Documento" formControlName="fechadoc">
         </mat-form-field>
 
-        <mat-form-field fxFlex="25">
+        <!-- <mat-form-field fxFlex="25">
             <input #inputs matInput placeholder="Cliente" formControlName="desruc">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-form-field fxFlex="280px">
+                <input #inputCodigo type="text" placeholder="Ruc" aria-label="Number" matInput
+                    formControlName="desruc" [matAutocomplete]="auto">
+                <mat-autocomplete  #auto="matAutocomplete">
+                    <mat-option (click)="getcodigo(optionu)" *ngFor="let optionu of filteredProveedores | async" [value]="optionu.nombre">
+                        {{optionu.nombre}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
 
         <mat-form-field fxFlex="10">
             <input #inputs matInput placeholder="RUC" formControlName="ruc">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="10">
+            <input type="number" #inputs matInput placeholder="Importe Pagado" formControlName="imppagado">
         </mat-form-field>
     </div>
 
@@ -41,7 +56,7 @@
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="10">
+        <mat-form-field fxFlex="15">
            
                 <mat-select formControlName="estado" class="form-control" placeholder="Estado"
                 [(value)]="selectedestado">

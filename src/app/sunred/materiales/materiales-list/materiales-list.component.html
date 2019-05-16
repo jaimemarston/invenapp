@@ -34,9 +34,9 @@
                 <mat-cell fxFlex="450px" *matCellDef="let element"> {{element.descripcion}}</mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="color">
+            <ng-container matColumnDef="descolor">
                 <mat-header-cell fxFlex="180px" *matHeaderCellDef> COLOR</mat-header-cell>
-                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.color}}</mat-cell>
+                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.descolor}}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="unimed">
@@ -63,7 +63,7 @@
         </mat-table>
     </div>
     <div fxFlex>
-        <mat-paginator #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+        <mat-paginator [showFirstLastButtons]="true" #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>
 </div>
