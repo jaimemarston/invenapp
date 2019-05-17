@@ -133,6 +133,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
             descripcion: ['', Validators.required],
             desunimed: [''],
             talla: [''],
+            genero: [''],
             cantidad: [''],
             precio: [''],
             imptotal: [''],
@@ -186,6 +187,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         console.log(a);
         this.registerForm.get('codpro').setValue(a.codigo);
         this.registerForm.get('desunimed').setValue(a.unimed);
+        this.registerForm.get('genero').setValue(a.genero);
          if (a.talla != null) {
              this.registerForm.get('talla').setValue(a.talla);
           }
@@ -208,6 +210,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
         this.registerForm.get('desunimed').setValue(this.cotizacion.desunimed);
         this.registerForm.get('cantidad').setValue(this.cotizacion.cantidad);
         this.registerForm.get('talla').setValue(this.cotizacion.talla);
+        this.registerForm.get('genero').setValue(this.cotizacion.genero);
         this.registerForm.get('precio').setValue(this.cotizacion.precio);
         this.registerForm.get('imptotal').setValue(this.cotizacion.imptotal);
         this.registerForm.get('codpro').setValue(this.cotizacion.codpro);

@@ -36,6 +36,11 @@
                 <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.talla}}</mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="genero">
+                <mat-header-cell fxFlex="100px" *matHeaderCellDef> GENERO</mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.genero}}</mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="precio">
                 <mat-header-cell fxFlex="100px" *matHeaderCellDef> PRECIO</mat-header-cell>
                 <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.precio}}</mat-cell>
