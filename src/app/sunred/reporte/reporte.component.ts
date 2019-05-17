@@ -47,10 +47,10 @@ export class ReporteComponent implements OnInit, OnDestroy {
         },
         {
             name: '1.5.- Pago de Proveedores - Productos',
-            api: `${BASEURL}lista_materiales`,
-            expandable: false,
-            excel: 'xls_lista_materiales',
-            display: 'False',
+            api: `${BASEURL}control_pagos`,
+            expandable: true,
+            excel: 'xls_control_pagos',
+            display: 'True',
         },
         {
             name: '2.- Listado de materiales',

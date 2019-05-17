@@ -108,13 +108,7 @@ headers = ['codigo','descripcion','cantidad','precio','imptotal']
         </tr>
         </thead>
         <tbody>
-<!--   
-                <table *ngFor="let det of element">
-                        <td>{{det.codigo}}</td>
-                </table> -->
-                <!-- <tr *ngFor="let row of element | filter : 'codpro' :  element.codigo ">
-                        <td *ngFor="let header of headers">{{ row[header] }}</td>
-                </tr> -->
+
         <tr *ngFor="let item of element.cotizaciones">
                         <td>{{ item.codigo}}</td>
                         <td>{{ item.descripcion}}</td>
