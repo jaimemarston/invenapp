@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Input} from '@angular/core';
+import {Component, OnDestroy, OnInit, Input, EventEmitter} from '@angular/core';
 import {fuseAnimations} from '../../../@fuse/animations';
 import {BASEURL} from '../../../environments/environment';
 import {FormControl} from '@angular/forms';
@@ -141,7 +141,27 @@ export class ReporteComponent implements OnInit, OnDestroy {
     private hideLoader(): void {
         console.log('Hide loader');
     }
-    
+
+    printing(): void {
+       
+
+        const prtContent = document.getElementById('div_print');
+
+        const getTbody = () => {
+
+            const tbody = this.data.map(c => `<tr><td>${c.codigo}</td><td>${c.descripcion}</td>
+            <td>${c.descolor}</td><td>${c.tipo}</td><td>${c.talla}</td><td>${c.unimed}</td><td>${c.precioventa}</td></tr>`).join('');
+            return tbody;
+        };
+        prtContent.innerHTML = `
+                         <h1>Relacion de Materiales</h1>  
+                         <table border="1">
+                          <thead><th>CODIGO</th><th>NOMBRE</th><th>COLOR</th><th>TIPO</th><th>TALLA</th><th>UM</th><th>precioventa</th></thead>
+                          <tbody> ${getTbody()} </tbody>
+                        </table>
+                        <tfoot></tfoot>`;
+        // CommonService.printElement(prtContent);
+    }
     async getServiceFromUrl(url: string): Promise<void> {
         
         if (this.reporteSelected && this.reporteSelected.api) {
