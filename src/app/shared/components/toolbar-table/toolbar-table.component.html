@@ -9,7 +9,6 @@
     <div class="crud-buttons" fxLayout="row" fxLayoutAlign="start center">
         <search *ngIf="search" (onKeyup)="inputText.emit($event)" fxFlex="90"></search>
 
-
         <!--<button mat-mini-fab color="accent" (click)="add.emit(true)"><mat-icon>cloud_download</mat-icon></button> -->
         <!-- aqui ocultaba el boton print -->
 
@@ -40,7 +39,7 @@
         <span>Previo</span>
     </button>
     <button (click)="print_pdf()" mat-menu-item>
-        <mat-icon>file_copy</mat-icon>
-        <span>Excel</span>
+        <mat-icon>get_app</mat-icon>
+        <span>get_app</span>
     </button>
 </mat-menu>

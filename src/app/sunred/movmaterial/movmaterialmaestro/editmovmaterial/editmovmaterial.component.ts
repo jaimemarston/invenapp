@@ -106,6 +106,7 @@ export class EditMovmaterialComponent implements OnInit {
             correoruc: [''],
             desmonepago: [''],
             imppagado: [''],
+            tc_dolares: [''],
             estado: [0],
         });
         const desrucForm = this.registerForm.get('desruc');
@@ -144,6 +145,7 @@ export class EditMovmaterialComponent implements OnInit {
         this.registerForm.get('correoruc').setValue(this.movmaterial.correoruc);
         this.registerForm.get('desmonepago').setValue(this.movmaterial.desmonepago);
         this.registerForm.get('estado').setValue(this.movmaterial.estado);
+        this.registerForm.get('tc_dolares').setValue(this.movmaterial.tc_dolares);
         this.registerForm.get('imppagado').setValue(this.movmaterial.imppagado);
     }
 

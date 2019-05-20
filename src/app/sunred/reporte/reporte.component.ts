@@ -15,9 +15,12 @@ import to from 'await-to-js';
 })
 export class ReporteComponent implements OnInit, OnDestroy {
     listaReportesControl = new FormControl();
+    
+    
     @Input() urlPrint;
     listaReportes = [
         {
+            id: 1,    
             name: '1.- Listado de productos',
             api: `${BASEURL}lista_articulos`,
             expandable: false,
@@ -25,6 +28,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'False',
         },
         {
+            id: 1.2,    
             name: '1.2.- Inventarios Inicial',
             api: '',
             expandable: false,
@@ -32,6 +36,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'False',
         },
         {
+            id: 1.3,
             name: '1.3.- Kardex de Productos Detallado',
             api: `${BASEURL}lista_articulos_detalle`,
             expandable: true,
@@ -39,6 +44,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'True',
         },
         {
+            id: 1.4,    
             name: '1.4.- Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
             expandable: false,
@@ -46,6 +52,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: null
         },
         {
+            id: 1.5,    
             name: '1.5.- Pago de Proveedores - Productos',
             api: `${BASEURL}control_pagos`,
             expandable: true,
@@ -53,6 +60,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'True',
         },
         {
+            id: 2,
             name: '2.- Listado de materiales',
             api: `${BASEURL}lista_materiales`,
             expandable: false,
@@ -60,6 +68,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'False',
         },
         {
+            id: 2.2,
             name: '2.2.- Inventarios Inicial',
             api: '',
             expandable: false,
@@ -67,6 +76,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'False',
         },
         {
+            id: 2.3,
             name: '2.3.- Kardex de Materiales Detallado',
             api: `${BASEURL}lista_materiales_detalle`,
             expandable: true,
@@ -74,6 +84,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'True',
         },
         {
+            id: 2.4,
             name: '2.4.- Kardex de Materiales Resumen',
             api: `${BASEURL}lista_stock_mat`,
             expandable: false,
@@ -82,25 +93,29 @@ export class ReporteComponent implements OnInit, OnDestroy {
         },
     ];
 
-    reporteSelected: { name: string, api: string, expandable: boolean, excel: string, display?: any };
+    reporteSelected: {id: number, name: string, api: string, expandable: boolean, excel: string, display?: any };
 
     unsubscribe = new Subject();
 
-
+    
+    
+    today = new Date().toISOString().split('T')[0];
+    
     headers: Array<string>;
     data: Array<any>;
 
     constructor(private reporteService: ReporteService) {
+        
         this.listaReportesControl.valueChanges
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(value => {
                 this.reporteSelected = value;
-                this.getServiceFromUrl(this.reporteSelected.api);
+                // this.getServiceFromUrl(this.reporteSelected.api);
             });
     }
-
+   
     ngOnInit(): void {
-
+        
     }
 
     ngOnDestroy(): void {
@@ -116,18 +131,27 @@ export class ReporteComponent implements OnInit, OnDestroy {
     }
 
     reporte_visualizar(): void {
-        
-        console.log(`${BASEURL}filtro`);
-        window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');
+        this.getServiceFromUrl(this.reporteSelected.api);
+        // console.log(`${BASEURL}filtro`);
+        // window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');
     }
-
+    private showLoader(): void {
+        console.log('Show loader');
+    }
+    private hideLoader(): void {
+        console.log('Hide loader');
+    }
+    
     async getServiceFromUrl(url: string): Promise<void> {
+        
         if (this.reporteSelected && this.reporteSelected.api) {
+            this.showLoader();
             const [error, response] = await to(this.reporteService.getService(url).toPromise());
             this.data = response;
             if (this.data && this.data.length) {
                 this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object').map(k => k);
             }
+            this.hideLoader();
         } else {
             this.headers = [];
             this.data = [];

@@ -110,6 +110,7 @@ export class EditCotizacionComponent implements OnInit {
             correoruc: [''],
             desmonepago: [''],
             imppagado: [''],
+            tc_dolares: [''],
             estado: [0],
         });
         
@@ -149,6 +150,7 @@ export class EditCotizacionComponent implements OnInit {
         this.registerForm.get('telruc').setValue(this.cotizacion.telruc);
         this.registerForm.get('correoruc').setValue(this.cotizacion.correoruc);
         this.registerForm.get('desmonepago').setValue(this.cotizacion.desmonepago);
+        this.registerForm.get('tc_dolares').setValue(this.cotizacion.tc_dolares);
         this.registerForm.get('estado').setValue(this.cotizacion.estado);
         this.registerForm.get('imppagado').setValue(this.cotizacion.imppagado);
         
