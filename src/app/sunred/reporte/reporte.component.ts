@@ -96,7 +96,8 @@ export class ReporteComponent implements OnInit, OnDestroy {
     reporteSelected: {id: number, name: string, api: string, expandable: boolean, excel: string, display?: any };
 
     unsubscribe = new Subject();
-
+    
+    loading: boolean;
     
     
     today = new Date().toISOString().split('T')[0];
@@ -105,7 +106,8 @@ export class ReporteComponent implements OnInit, OnDestroy {
     data: Array<any>;
 
     constructor(private reporteService: ReporteService) {
-        
+       
+
         this.listaReportesControl.valueChanges
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(value => {
@@ -136,9 +138,11 @@ export class ReporteComponent implements OnInit, OnDestroy {
         // window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');
     }
     private showLoader(): void {
+        this.loading = true;
         console.log('Show loader');
     }
     private hideLoader(): void {
+        this.loading = false;
         console.log('Hide loader');
     }
 

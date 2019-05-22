@@ -1,3 +1,4 @@
+
 <div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
 
     <div class="header accent" fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-xs="row"
@@ -11,10 +12,13 @@
 
         </div>
         <div fxFlex="35">
-            <input fxFlex="40" #inputs matInput type="date" value="2019-01-01" class="form-control" />
-            <input fxFlex="40" #inputs matInput type="date" [(ngModel)]="today" class="form-control" />
+            <input fxFlex="40" #inputs matInput type="date" required="required" value="2019-01-01" class="mat-raised-button mat-accent" />
+            <input fxFlex="40" #inputs matInput type="date" required="required" [(ngModel)]="today" class="mat-raised-button mat-accent" />
             <button fxFlex="40" mat-raised-button class="mat-raised-button mat-accent" (click)="reporte_visualizar()"
                 >VISUALIZAR</button>
+                <div class ="loading" *ngIf="loading">
+                    <img src="assets/images/logos/loader.gif">
+                </div>
         </div>
         <div class="crud-buttons" fxLayout="row" fxLayoutAlign="start center">
 
