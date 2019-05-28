@@ -5,6 +5,7 @@ import {FormControl} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {ReporteService} from '../../core/services/reporte.service';
+import {FuseProgressBarService } from '@fuse/services/progress-bar.service';
 import to from 'await-to-js';
 
 @Component({
@@ -105,7 +106,10 @@ export class ReporteComponent implements OnInit, OnDestroy {
     headers: Array<string>;
     data: Array<any>;
 
-    constructor(private reporteService: ReporteService) {
+    constructor(
+        private reporteService: ReporteService,
+        private _fuseProgressBarService: FuseProgressBarService
+        ) {
        
 
         this.listaReportesControl.valueChanges
@@ -139,10 +143,14 @@ export class ReporteComponent implements OnInit, OnDestroy {
     }
     private showLoader(): void {
         this.loading = true;
+        // mode: 'determinate' | 'indeterminate' | 'buffer' | 'query'
+        
+        this._fuseProgressBarService.show();
         console.log('Show loader');
     }
     private hideLoader(): void {
         this.loading = false;
+        this._fuseProgressBarService.hide();
         console.log('Hide loader');
     }
 

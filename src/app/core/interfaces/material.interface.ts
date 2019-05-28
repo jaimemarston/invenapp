@@ -12,6 +12,8 @@ export interface IMaterial {
   unimed: string;
   umdsali: string;
   precioventa: string;
+  monedacompra: string;
+  desmonecompra: string;
   stock1: string;
   stockalm1: string;
   stockalm2: string;

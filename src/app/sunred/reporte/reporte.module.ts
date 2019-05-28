@@ -19,6 +19,7 @@ import {FuseConfirmDialogModule, FuseSidebarModule} from '../../../@fuse/compone
 import {ActionIconsModule} from '../../shared/components/action-icons/action-icons.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TableExpandableModule} from '../../shared/components/table-expandable/table-expandable.module';
+import {FuseProgressBarModule} from '../../shared/components/progress-bar/progress-bar.module';
 
 const routes: Routes = [
     {
@@ -58,6 +59,7 @@ const routes: Routes = [
         FuseConfirmDialogModule,
         ActionIconsModule,
         FuseSidebarModule,
+        FuseProgressBarModule,
         TableExpandableModule
     ],
     declarations: [ReporteComponent]

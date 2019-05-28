@@ -19,5 +19,7 @@ export class Materiales {
   afectoigv: string;
   preciocosto: string;
   aplicadscto: string;
+  monedacompra: string;
+  desmonecompra: string;
   tipo: string;
 }

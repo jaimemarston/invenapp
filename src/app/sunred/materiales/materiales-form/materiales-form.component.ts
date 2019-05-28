@@ -115,6 +115,7 @@ export class MaterialesFormComponent implements OnInit {
         this.registerForm.get('descolor').setValue(this.material.descolor);
         this.registerForm.get('desruc').setValue(this.material.desruc);
         this.registerForm.get('precioventa').setValue(this.material.precioventa);
+        this.registerForm.get('desmonecompra').setValue(this.material.desmonecompra);
         this.registerForm.get('unimed').setValue(this.material.unimed);
         this.registerForm.get('tipo').setValue(this.material.tipo);
     }

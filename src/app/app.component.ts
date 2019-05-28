@@ -10,7 +10,7 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { FuseSplashScreenService } from '@fuse/services/splash-screen.service';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
-
+import { FuseProgressBarService } from '@fuse/services/progress-bar.service';
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
@@ -48,7 +48,8 @@ export class AppComponent implements OnInit, OnDestroy
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private _fuseProgressBarService: FuseProgressBarService
     )
     {
         // Get default navigation
@@ -71,6 +72,9 @@ export class AppComponent implements OnInit, OnDestroy
 
         // Use a language
         this._translateService.use('en');
+
+
+       
 
         /**
          * ------------------------------------------------------------------
