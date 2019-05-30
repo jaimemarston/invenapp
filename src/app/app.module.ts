@@ -15,6 +15,8 @@ import {FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule} from '
 import {fuseConfig} from 'app/fuse-config';
 
 import {AppComponent} from 'app/app.component';
+import {FooterComponent} from './shared/components/footer/footer.component';
+
 import {LayoutModule} from 'app/layout/layout.module';
 import {SampleModule} from 'app/sunred/sample/sample.module';
 import {routes} from './app.routing';
@@ -24,7 +26,8 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -52,7 +55,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
         FuseSidebarModule,
         FuseThemeOptionsModule,
         MatSnackBarModule,
-
+        
         // App modules
         LayoutModule,
         SampleModule
