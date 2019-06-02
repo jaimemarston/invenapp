@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
@@ -15,7 +15,6 @@ import {FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule} from '
 import {fuseConfig} from 'app/fuse-config';
 
 import {AppComponent} from 'app/app.component';
-import {FooterComponent} from './shared/components/footer/footer.component';
 
 import {LayoutModule} from 'app/layout/layout.module';
 import {SampleModule} from 'app/sunred/sample/sample.module';
@@ -23,11 +22,12 @@ import {routes} from './app.routing';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {FakeDbService} from './fake-db/fake-db.service';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {JwtInterceptor} from './shared/interceptors/jwt.service';
+import {FooterModule} from './shared/components/footer/footer.module';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        FooterComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
@@ -55,12 +55,16 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
         FuseSidebarModule,
         FuseThemeOptionsModule,
         MatSnackBarModule,
-        
+
         // App modules
         LayoutModule,
-        SampleModule
+        SampleModule,
+        FooterModule
     ],
-    providers: [{provide: LocationStrategy, useClass: HashLocationStrategy},],
+    providers: [
+        {provide: LocationStrategy, useClass: HashLocationStrategy},
+        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    ],
     bootstrap: [
         AppComponent
     ]

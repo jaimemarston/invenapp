@@ -3,10 +3,11 @@ import {fuseAnimations} from '../../../@fuse/animations';
 import {BASEURL} from '../../../environments/environment';
 import {FormControl} from '@angular/forms';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {startWith, takeUntil} from 'rxjs/operators';
 import {ReporteService} from '../../core/services/reporte.service';
-import {FuseProgressBarService } from '@fuse/services/progress-bar.service';
+import {FuseProgressBarService} from '@fuse/services/progress-bar.service';
 import to from 'await-to-js';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-reporte',
@@ -16,12 +17,15 @@ import to from 'await-to-js';
 })
 export class ReporteComponent implements OnInit, OnDestroy {
     listaReportesControl = new FormControl();
-    
-    
+
+    fromControl = new FormControl('2019-01-01');
+
+    endControl = new FormControl(moment(new Date()).format('YYYY-MM-DD'));
+
     @Input() urlPrint;
     listaReportes = [
         {
-            id: 1,    
+            id: 1,
             name: '1.- Listado de productos',
             api: `${BASEURL}lista_articulos`,
             expandable: false,
@@ -29,7 +33,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'False',
         },
         {
-            id: 1.2,    
+            id: 1.2,
             name: '1.2.- Inventarios Inicial',
             api: '',
             expandable: false,
@@ -45,7 +49,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'True',
         },
         {
-            id: 1.4,    
+            id: 1.4,
             name: '1.4.- Kardex de Productos Resumen',
             api: `${BASEURL}lista_stock`,
             expandable: false,
@@ -53,7 +57,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: null
         },
         {
-            id: 1.5,    
+            id: 1.5,
             name: '1.5.- Pago de Proveedores - Productos',
             api: `${BASEURL}control_pagos`,
             expandable: true,
@@ -94,23 +98,24 @@ export class ReporteComponent implements OnInit, OnDestroy {
         },
     ];
 
-    reporteSelected: {id: number, name: string, api: string, expandable: boolean, excel: string, display?: any };
+    reporteSelected: { id: number, name: string, api: string, expandable: boolean, excel: string, display?: any };
 
     unsubscribe = new Subject();
-    
+
     loading: boolean;
-    
-    
+
+
     today = new Date().toISOString().split('T')[0];
-    
+
     headers: Array<string>;
     data: Array<any>;
+
+    queryParamsDate = {from: null, end: null};
 
     constructor(
         private reporteService: ReporteService,
         private _fuseProgressBarService: FuseProgressBarService
-        ) {
-       
+    ) {
 
         this.listaReportesControl.valueChanges
             .pipe(takeUntil(this.unsubscribe))
@@ -118,10 +123,18 @@ export class ReporteComponent implements OnInit, OnDestroy {
                 this.reporteSelected = value;
                 // this.getServiceFromUrl(this.reporteSelected.api);
             });
+
+        this.fromControl.valueChanges
+            .pipe(startWith(this.fromControl.value))
+            .subscribe(value => this.queryParamsDate.from = value);
+
+        this.endControl.valueChanges
+            .pipe(startWith(this.endControl.value))
+            .subscribe(value => this.queryParamsDate.end = value);
     }
-   
+
     ngOnInit(): void {
-        
+
     }
 
     ngOnDestroy(): void {
@@ -141,13 +154,15 @@ export class ReporteComponent implements OnInit, OnDestroy {
         // console.log(`${BASEURL}filtro`);
         // window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');
     }
+
     private showLoader(): void {
         this.loading = true;
         // mode: 'determinate' | 'indeterminate' | 'buffer' | 'query'
-        
+
         this._fuseProgressBarService.show();
         console.log('Show loader');
     }
+
     private hideLoader(): void {
         this.loading = false;
         this._fuseProgressBarService.hide();
@@ -155,7 +170,7 @@ export class ReporteComponent implements OnInit, OnDestroy {
     }
 
     printing(): void {
-       
+
 
         const prtContent = document.getElementById('div_print');
 
@@ -174,11 +189,12 @@ export class ReporteComponent implements OnInit, OnDestroy {
                         <tfoot></tfoot>`;
         // CommonService.printElement(prtContent);
     }
+
     async getServiceFromUrl(url: string): Promise<void> {
-        
+
         if (this.reporteSelected && this.reporteSelected.api) {
             this.showLoader();
-            const [error, response] = await to(this.reporteService.getService(url).toPromise());
+            const [error, response] = await to(this.reporteService.getService(url, this.queryParamsDate).toPromise());
             this.data = response;
             if (this.data && this.data.length) {
                 this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object').map(k => k);

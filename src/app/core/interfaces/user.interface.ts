@@ -7,4 +7,11 @@ export interface IUser {
     telefono1: string;
     correo: string;
     sexo: number;
+    role?: number;
 }
+
+export interface IUserAuth {
+    token: string;
+    user: IUser;
+}
+

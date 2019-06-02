@@ -10,7 +10,13 @@ export class ReporteService {
     constructor(private http: HttpClient) {
     }
 
-    getService(url: string): Observable<any> {
-        return this.http.get(url);
+    getService(url: string, params?: { from: string, end: string }): Observable<any> {
+        let queryParams = '';
+        if (params) {
+            queryParams = Object.keys(params).map(function (key) {
+                return key + '=' + params[key];
+            }).join('&');
+        }
+        return this.http.get(`${url}?${queryParams}`);
     }
 }

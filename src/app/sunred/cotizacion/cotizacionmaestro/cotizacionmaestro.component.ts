@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
-import { MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
-import { Cotizacion } from '../../../dataservice/cotizacion';
-import { DataService } from '../../../dataservice/data.service';
-import { CotizacionService } from '../../../core/services/cotizacion.service';
-import { ICotizacion, ICotizaciondetalle } from '../../../core/interfaces/cotizacion.interface';
-import { SelectionModel } from '@angular/cdk/collections';
-import { CotizaciondetalleService } from '../../../core/services/cotizaciondetalle.service';
-import { CotizaciondetalleComponent } from '../cotizaciondetalle/cotizaciondetalle.component';
-import { IProveedores } from 'app/core/interfaces/proveedores.interface';
-
+import {Component, OnInit, ViewChild, EventEmitter, Output, OnDestroy} from '@angular/core';
+import {MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator} from '@angular/material';
+import {Router} from '@angular/router';
+import {Cotizacion} from '../../../dataservice/cotizacion';
+import {DataService} from '../../../dataservice/data.service';
+import {CotizacionService} from '../../../core/services/cotizacion.service';
+import {ICotizacion, ICotizaciondetalle} from '../../../core/interfaces/cotizacion.interface';
+import {SelectionModel} from '@angular/cdk/collections';
+import {CotizaciondetalleService} from '../../../core/services/cotizaciondetalle.service';
+import {CotizaciondetalleComponent} from '../cotizaciondetalle/cotizaciondetalle.component';
+import {IProveedores} from 'app/core/interfaces/proveedores.interface';
+import {MonthService} from '../../../shared/components/footer/month.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 
 /**
@@ -20,7 +22,7 @@ import { IProveedores } from 'app/core/interfaces/proveedores.interface';
     templateUrl: './cotizacionmaestro.component.html',
 })
 
-export class CotizacionmaestroComponent implements OnInit {
+export class CotizacionmaestroComponent implements OnInit, OnDestroy {
 
     displayedColumns: string[] = ['select', 'codigo', 'fechadoc', 'ruc', 'desruc', 'telruc', 'correoruc', 'estado', 'options'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -37,9 +39,12 @@ export class CotizacionmaestroComponent implements OnInit {
     @Output() detalle: EventEmitter<Array<ICotizaciondetalle>> = new EventEmitter();
 
 
-    
     /** checkbox datatable */
     selection = new SelectionModel<ICotizacion>(true, []);
+
+    monthSelected: number;
+
+    unsubscribe = new Subject();
 
     constructor(
         private cotizacionService: CotizacionService,
@@ -47,20 +52,27 @@ export class CotizacionmaestroComponent implements OnInit {
         public dialog: MatDialog,
         private snackBar: MatSnackBar,
         private cotizacionServicedetalle: CotizaciondetalleService,
+        private monthService: MonthService
     ) {
+        this.monthService.monthSelected
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(month => {
+                this.monthSelected = month;
+                this.getCotizacion();
+            });
     }
 
     ngOnInit(): void {
         this.getCotizacion();
     }
 
-   
 
     getCotizacion(): void {
 
-        this.cotizacionService.getCotizaciones()
+        this.cotizacionService.getCotizaciones(this.monthSelected)
             .subscribe(response => {
                 this.cotizacion = response;
+                this.cotizacionSelected = this.cotizacion[0];
                 this.dataSource.data = this.cotizacion;
                 this.dataSource.paginator = this.paginator;
                 this.paginator._intl.itemsPerPageLabel = 'Item por Pagina:';
@@ -69,9 +81,8 @@ export class CotizacionmaestroComponent implements OnInit {
             });
     }
 
-    
 
-    updateCotizacionSelected(emit?: boolean) {
+    updateCotizacionSelected(emit?: boolean): void {
         if (this.cotizacionSelected) {
             this.cotizacionSelected = this.cotizacion.find((v, i) => v.id === this.cotizacionSelected.id);
         } else {
@@ -102,7 +113,7 @@ export class CotizacionmaestroComponent implements OnInit {
                 });
         }
     }
-    
+
     public editRecord(row: any): void {
         this.selectedId = row.id;
         this.edit = true;
@@ -156,5 +167,10 @@ export class CotizacionmaestroComponent implements OnInit {
 
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 }

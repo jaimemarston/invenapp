@@ -13,8 +13,8 @@ export class CotizacionService {
     constructor(private http: HttpClient) {
     }
 
-    getCotizaciones(): Observable<Array<ICotizacion>> {
-        return this.http.get<Array<ICotizacion>>(CotizacionEndpoint.rest);
+    getCotizaciones(month?: number): Observable<Array<ICotizacion>> {
+        return this.http.get<Array<ICotizacion>>(!month ? CotizacionEndpoint.rest : `${CotizacionEndpoint.rest}?month=${month}`);
     }
 
     getClientesdetail(): Observable<Array<any>> {

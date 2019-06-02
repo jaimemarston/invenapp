@@ -1,17 +1,16 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 
 @Component({
-    selector     : 'fuse-navigation',
-    templateUrl  : './navigation.component.html',
-    styleUrls    : ['./navigation.component.scss'],
+    selector: 'fuse-navigation',
+    templateUrl: './navigation.component.html',
+    styleUrls: ['./navigation.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class FuseNavigationComponent implements OnInit
-{
+export class FuseNavigationComponent implements OnInit {
     @Input()
     layout = 'vertical';
 
@@ -26,8 +25,7 @@ export class FuseNavigationComponent implements OnInit
      */
     constructor(
         private _fuseNavigationService: FuseNavigationService
-    )
-    {
+    ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
@@ -39,15 +37,15 @@ export class FuseNavigationComponent implements OnInit
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Load the navigation either from the input or from the service
-        this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
+        this.navigation = this._fuseNavigationService.getCurrentNavigation();
 
         // Subscribe to the current navigation changes
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
+                console.log(this.navigation);
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
             });
     }
