@@ -186,7 +186,7 @@ export class AppComponent implements OnInit, OnDestroy {
                     if (user.user.role === ROLES.ADMINISTRADOR) {
                         this.setMenuAdmin();
 
-                    } else if (user.user.role === ROLES.OPERARIO_MATERIAL) {
+                    } else if (user.user.role === ROLES.OPERARIO_PRODUCTOS) {
                         // this.updateMenu();
                         setTimeout(() => {
                             this._fuseNavigationService.updateNavigationItem('users', {
@@ -199,7 +199,7 @@ export class AppComponent implements OnInit, OnDestroy {
                                 hidden: true
                             });
                         }, 1);
-                    } else if (user.user.role === ROLES.OPERARIO_PRODUCTOS) {
+                    } else if (user.user.role === ROLES.OPERARIO_MATERIAL) {
                         // this.updateMenu();
                         setTimeout(() => {
                             this._fuseNavigationService.updateNavigationItem('materiales', {
