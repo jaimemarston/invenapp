@@ -197,6 +197,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
 
 
     getCotizacion(): void {
+        
         this.cotizacionService.getCotizacion(this.id)
             .subscribe(response => {
                 this.cotizacion = response;
@@ -221,6 +222,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
     }
 
     saveForm(clear?: boolean): void {
+        
         if (this.registerForm.valid) {
             this.saveCotizacion();
             if (clear) {
@@ -244,6 +246,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
 
     updateCotizacion(): void {
         const data = this.prepareData();
+        
         this.cotizacionService.updateCotizacion(this.id, data)
             .subscribe(response => {
                 this.update.emit(response);
@@ -253,7 +256,7 @@ export class EditcotizaciondetalleComponent implements OnInit, OnDestroy, OnChan
 
     addCotizacion(): void {
         const data = this.prepareData();
-
+        // console.log('addCotizacion' + this.idMaster);
         this.cotizacionService.addCotizacion(data)
             .subscribe(response => {
                 this.update.emit(response);

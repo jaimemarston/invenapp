@@ -72,7 +72,7 @@ export class CotizacionmaestroComponent implements OnInit, OnDestroy {
         this.cotizacionService.getCotizaciones(this.monthSelected)
             .subscribe(response => {
                 this.cotizacion = response;
-                this.cotizacionSelected = this.cotizacion[0];
+                // this.cotizacionSelected = this.cotizacion[0];
                 this.dataSource.data = this.cotizacion;
                 this.dataSource.paginator = this.paginator;
                 this.paginator._intl.itemsPerPageLabel = 'Item por Pagina:';
