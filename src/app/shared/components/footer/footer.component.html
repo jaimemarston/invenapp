@@ -1,11 +1,13 @@
 <footer>
     <div>
         {{ year }}
-        <mat-form-field>
-            <mat-select [formControl]="monthControl" placeholder="Seleccione un mes" disableRipple>
+        <mat-form-field >
+            <mat-select [formControl]="monthControl" >
                 <mat-option *ngFor="let month of months; let i=index" [value]="i">{{ month }}</mat-option>
             </mat-select>
         </mat-form-field>
         INVENTARIOS
     </div>
 </footer>
+
+    

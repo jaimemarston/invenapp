@@ -35,7 +35,8 @@ export class CotizaciondetalleComponent implements OnInit {
 
     @Input() set cotizacionesDetalle(data: Array<ICotizaciondetalle>) {
         this._cotizacionesDetalle = data;
-        /* console.log(this.cotizacionesDetalle); */
+        console.log(data);
+        console.log('cotizacionesDetalle');
         this.dataSource.data = this.cotizacionesDetalle;
         if (this.cotizacionesDetalle) {
             this.calculateTotales(0);
