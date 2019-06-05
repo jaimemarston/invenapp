@@ -18,6 +18,7 @@ import {locale as navigationTurkish} from 'app/navigation/i18n/tr';
 import {FooterComponent} from './shared/components/footer/footer.component';
 import {AuthService} from './core/services/auth.service';
 import {ROLES} from './core/const';
+import {IUser, IUserAuth} from './core/interfaces/user.interface';
 
 @Component({
     selector: 'app',
@@ -182,39 +183,34 @@ export class AppComponent implements OnInit, OnDestroy {
         this.authService.onLogout
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(user => {
-                if (user) {
-                    if (user.user.role === ROLES.ADMINISTRADOR) {
-                        this.setMenuAdmin();
-
-                    } else if (user.user.role === ROLES.OPERARIO_MATERIAL) {
-                        // this.updateMenu();
-                        setTimeout(() => {
-                            this._fuseNavigationService.updateNavigationItem('users', {
-                                hidden: true
-                            });
-                            this._fuseNavigationService.updateNavigationItem('cotizacion', {
-                                hidden: true
-                            });
-                            this._fuseNavigationService.updateNavigationItem('articulos', {
-                                hidden: true
-                            });
-                        }, 1);
-                    } else if (user.user.role === ROLES.OPERARIO_PRODUCTOS) {
-                        // this.updateMenu();
-                        setTimeout(() => {
-                            this._fuseNavigationService.updateNavigationItem('materiales', {
-                                hidden: true
-                            });
-                            this._fuseNavigationService.updateNavigationItem('movmaterial', {
-                                hidden: true
-                            });
-                            this._fuseNavigationService.updateNavigationItem('users', {
-                                hidden: true
-                            });
-                        }, 1);
-                    }
+                if (user && user.user) {
+                    this.setMenuPermissions(user.user);
                 }
             });
+    }
+
+    setMenuPermissions(user: IUser): void {
+        const getRole = (_user: IUser) => {
+            return ROLES.find(r => r.id === _user.role);
+        };
+
+        const getAllNavigationIDS = () => {
+            return navigation[0].children.map((n) => n.id);
+        };
+
+        const roleDetail = getRole(user);
+        const navigationsIds = getAllNavigationIDS();
+        navigationsIds.map(permission => {
+            if (roleDetail.permissions.indexOf(permission) > -1) {
+                this._fuseNavigationService.updateNavigationItem(permission, {
+                    hidden: false
+                });
+            } else {
+                this._fuseNavigationService.updateNavigationItem(permission, {
+                    hidden: true
+                });
+            }
+        });
     }
 
     setMenuAdmin(): void {
