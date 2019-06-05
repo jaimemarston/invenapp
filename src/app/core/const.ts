@@ -3,17 +3,17 @@ export const ROLES = [
     {
         id: 1,
         name: 'Administrador',
-        permissions: ['users', 'proveedores', 'materiales'],
-    },
-    {
-        id: 3,
-        name: 'Operario Material',
-        permissions: ['movmaterial', 'articulos']
+        permissions: ['users', 'proveedores', 'materiales', 'movmaterial', 'articulos', 'cotizacion', 'reporte', 'dashboard'],
     },
     {
         id: 2,
+        name: 'Operario Material',
+        permissions: ['movmaterial', 'proveedores', 'materiales', 'reporte']
+    },
+    {
+        id: 3,
         name: 'Operario Productos',
-        permissions: ['cotizacion', 'reporte']
+        permissions: ['cotizacion', 'proveedores', 'articulos', 'reporte',]
     }
 ];
 
