@@ -41,10 +41,14 @@
             <input #inputs matInput placeholder="precio" formControlName="precioventa">
         </mat-form-field>
         <mat-form-field fxFlex="50">
-            <input #inputs matInput placeholder="moneda" formControlName="desmoneda">
+            <input #inputs matInput placeholder="moneda" formControlName="desmonecompra">
         </mat-form-field>
     </div>
-
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+        <mat-form-field fxFlex="20">
+            <input #inputs matInput placeholder="stockmin" formControlName="stockmin">
+        </mat-form-field>
+    </div>
 
 
     <div class="crud-buttons" fxLayout="row" fxLayoutAlign="start center">

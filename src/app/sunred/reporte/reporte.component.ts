@@ -1,11 +1,13 @@
-import {Component, OnDestroy, OnInit, Input, EventEmitter} from '@angular/core';
-import {fuseAnimations} from '../../../@fuse/animations';
-import {BASEURL} from '../../../environments/environment';
-import {FormControl} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {startWith, takeUntil} from 'rxjs/operators';
-import {ReporteService} from '../../core/services/reporte.service';
-import {FuseProgressBarService} from '@fuse/services/progress-bar.service';
+import { Component, OnDestroy, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { fuseAnimations } from '../../../@fuse/animations';
+import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { BASEURL } from '../../../environments/environment';
+import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { startWith, takeUntil } from 'rxjs/operators';
+import { ReporteService } from '../../core/services/reporte.service';
+import { FuseProgressBarService } from '@fuse/services/progress-bar.service';
+import { IArticulo } from '../../core/interfaces/articulo.interface';
 import to from 'await-to-js';
 import * as moment from 'moment';
 
@@ -22,6 +24,10 @@ export class ReporteComponent implements OnInit, OnDestroy {
 
     endControl = new FormControl(moment(new Date()).format('YYYY-MM-DD'));
 
+
+    @Output() inputText: EventEmitter<string> = new EventEmitter<string>();
+
+    @Input() search = true;
     @Input() urlPrint;
     listaReportes = [
         {
@@ -109,8 +115,9 @@ export class ReporteComponent implements OnInit, OnDestroy {
 
     headers: Array<string>;
     data: Array<any>;
+    
 
-    queryParamsDate = {from: null, end: null};
+    queryParamsDate = { from: null, end: null };
 
     constructor(
         private reporteService: ReporteService,
@@ -204,5 +211,12 @@ export class ReporteComponent implements OnInit, OnDestroy {
             this.headers = [];
             this.data = [];
         }
+    }
+
+    applyFilter(filterValue: any): void {
+        
+
+        this.data.filter = filterValue.trim().toLowerCase();
+        console.log(this.data);
     }
 }

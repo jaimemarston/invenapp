@@ -22,6 +22,8 @@ export interface IMaterial {
   preciocosto: string;
   aplicadscto: string;
   tipo: string;
+  stockmin: string;
+  stockmax: string;
 }
 
 //https://www.desarrolloweb.com/articulos/clases-interfaces-servicios-angular.html

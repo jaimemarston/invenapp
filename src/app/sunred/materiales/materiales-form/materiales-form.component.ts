@@ -96,7 +96,9 @@ export class MaterialesFormComponent implements OnInit {
             desruc: [''],
             precioventa: [''],
             unimed: [''],
+            desmonecompra: [''], 
             tipo: [''],
+            stockmin: [''],
             
         });
     }
@@ -118,6 +120,7 @@ export class MaterialesFormComponent implements OnInit {
         this.registerForm.get('desmonecompra').setValue(this.material.desmonecompra);
         this.registerForm.get('unimed').setValue(this.material.unimed);
         this.registerForm.get('tipo').setValue(this.material.tipo);
+        this.registerForm.get('stockmin').setValue(this.material.stockmin);
     }
 
     saveForm(clear?: boolean): void {

@@ -22,4 +22,6 @@ export class Materiales {
   monedacompra: string;
   desmonecompra: string;
   tipo: string;
+  stockmin: string;
+  stockmax: string;
 }

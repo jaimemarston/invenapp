@@ -20,6 +20,7 @@ import {ActionIconsModule} from '../../shared/components/action-icons/action-ico
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TableExpandableModule} from '../../shared/components/table-expandable/table-expandable.module';
 import {FuseProgressBarModule} from '../../shared/components/progress-bar/progress-bar.module';
+import {SearchModule} from '../../shared/components/search/search.module';
 
 const routes: Routes = [
     {
@@ -41,6 +42,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         RouterModule.forChild(routes),
         MatButtonModule,
+        SearchModule,
         MatCheckboxModule,
         MatDatepickerModule,
         MatFormFieldModule,

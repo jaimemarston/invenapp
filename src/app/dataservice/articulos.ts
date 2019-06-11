@@ -20,4 +20,6 @@ export class Articulos {
   preciocosto: string;
   aplicadscto: string;
   tipo: string;
+  stockmin: string;
+  stockmax: string;
 }

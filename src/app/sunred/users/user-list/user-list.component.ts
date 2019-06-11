@@ -132,6 +132,10 @@ export class UserListComponent implements OnInit {
         }
     }
 
+    applyFilter(filterValue: string): void {
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+
     addUser(): void {
         this.router.navigate(['users/add']);
     }

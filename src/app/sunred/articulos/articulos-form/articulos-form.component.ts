@@ -108,6 +108,7 @@ export class ArticulosFormComponent implements OnInit, OnDestroy {
             precioventa: [''],
             unimed: [''],
             tipo: [''],
+            stockmin: [''],
 
         });
     }
@@ -131,6 +132,7 @@ export class ArticulosFormComponent implements OnInit, OnDestroy {
         this.registerForm.get('precioventa').setValue(this.articulo.precioventa);
         this.registerForm.get('unimed').setValue(this.articulo.unimed);
         this.registerForm.get('tipo').setValue(this.articulo.tipo);
+        this.registerForm.get('stockmin').setValue(this.articulo.stockmin);
     }
 
     saveForm(clear?: boolean): void {
