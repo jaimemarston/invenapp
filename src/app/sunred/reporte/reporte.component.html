@@ -59,7 +59,7 @@
 
             <div class="content mat-elevation-z4">
                 <div>
-                    <search (onKeyup)="applyFilter($event)"></search>
+                    <search [disabled]="!(data && headers && reporteSelected)" (onKeyup)="applyFilter($event)"></search>
                 </div>
                 <div class="my-mat-row" fxLayout="row" fxLayoutAlign="space-between center">
 
@@ -74,14 +74,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let row of data">
+                            <tr *ngFor="let row of dataFiltered">
                                 <td *ngFor="let header of headers">{{ row[header] }}</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <app-table-expandable fxFlex="100"
-                        *ngIf="data && headers && reporteSelected && reporteSelected.expandable"
+                        *ngIf="dataFiltered && headers && reporteSelected && reporteSelected.expandable"
                         [columnsToDisplay]="headers" [dataSource]="data" [expandedTemplate]="expandedTemplate">
                     </app-table-expandable>
                     <div class="card-divider full-width"></div>

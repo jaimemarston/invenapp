@@ -1,13 +1,13 @@
-import { Component, OnDestroy, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { fuseAnimations } from '../../../@fuse/animations';
-import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
-import { BASEURL } from '../../../environments/environment';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { startWith, takeUntil } from 'rxjs/operators';
-import { ReporteService } from '../../core/services/reporte.service';
-import { FuseProgressBarService } from '@fuse/services/progress-bar.service';
-import { IArticulo } from '../../core/interfaces/articulo.interface';
+import {Component, OnDestroy, OnInit, Output, Input, EventEmitter} from '@angular/core';
+import {fuseAnimations} from '../../../@fuse/animations';
+import {MatDialog, MatPaginator, MatSnackBar, MatTableDataSource} from '@angular/material';
+import {BASEURL} from '../../../environments/environment';
+import {FormControl} from '@angular/forms';
+import {Subject} from 'rxjs';
+import {startWith, takeUntil} from 'rxjs/operators';
+import {ReporteService} from '../../core/services/reporte.service';
+import {FuseProgressBarService} from '@fuse/services/progress-bar.service';
+import {IArticulo} from '../../core/interfaces/articulo.interface';
 import to from 'await-to-js';
 import * as moment from 'moment';
 
@@ -115,9 +115,15 @@ export class ReporteComponent implements OnInit, OnDestroy {
 
     headers: Array<string>;
     data: Array<any>;
-    
 
-    queryParamsDate = { from: null, end: null };
+
+    queryParamsDate = {from: null, end: null};
+
+    searchControl = new FormControl();
+
+    dataFiltered: Array<any>;
+
+    exclude_headers = ['query_search'];
 
     constructor(
         private reporteService: ReporteService,
@@ -203,20 +209,26 @@ export class ReporteComponent implements OnInit, OnDestroy {
             this.showLoader();
             const [error, response] = await to(this.reporteService.getService(url, this.queryParamsDate).toPromise());
             this.data = response;
+            this.setSearchTextToData();
             if (this.data && this.data.length) {
-                this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object').map(k => k);
+                this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object' && this.exclude_headers.indexOf(k) === -1).map(k => k);
             }
             this.hideLoader();
         } else {
             this.headers = [];
             this.data = [];
         }
+        this.dataFiltered = [...this.data];
     }
 
-    applyFilter(filterValue: any): void {
-        
+    setSearchTextToData(): void {
+        this.data = this.data.map(s => {
+            s.query_search = Object.keys(s).map(k => `${s[k]}`.trim().toLowerCase()).join(' ');
+            return s;
+        });
+    }
 
-        this.data.filter = filterValue.trim().toLowerCase();
-        console.log(this.data);
+    applyFilter(queryString: string): void {
+        this.dataFiltered = this.data.filter(s => s.query_search.includes(queryString.trim().toLowerCase()));
     }
 }
