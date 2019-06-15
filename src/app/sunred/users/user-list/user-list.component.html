@@ -1,6 +1,6 @@
 <div id="clientes" fxLayout="column">
     <toolbar-table [title]="'Usuarios'" [urlPrint]="'export_xls'" (inputText)="applyFilter($event)"
-    [hidden]="edit" (printing)="printing()" (add)="addUser()"
+    [hidden]="edit"  (add)="addUser()"
     (delete)="deleteAllSelecteds()"></toolbar-table>
     
     <div fxFlex>

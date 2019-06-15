@@ -71,6 +71,14 @@ export class ReporteComponent implements OnInit, OnDestroy {
             display: 'True',
         },
         {
+            id: 1.6,
+            name: '1.6.- Alerta Stock Minimo - Productos',
+            api: `${BASEURL}alerta_stock_prod`,
+            expandable: true,
+            excel: 'xls_alerta_stock_prod',
+            display: null,
+        },
+        {
             id: 2,
             name: '2.- Listado de materiales',
             api: `${BASEURL}lista_materiales`,
@@ -101,6 +109,14 @@ export class ReporteComponent implements OnInit, OnDestroy {
             expandable: false,
             excel: 'xls_stock_mat',
             display: null
+        },
+        {
+            id: 2.5,
+            name: '1.6.- Alerta Stock Minimo - Materiales',
+            api: `${BASEURL}alerta_stock_mat`,
+            expandable: true,
+            excel: 'xls_alerta_stock_mat',
+            display: null,
         },
     ];
 
