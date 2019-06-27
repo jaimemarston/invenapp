@@ -115,7 +115,6 @@ headers = ['codigo','descripcion','cantidad','precio','imptotal']
             </tr>
         </thead>
         <tbody>
-
             <tr *ngFor="let item of element.cotizaciones">
                 <td>{{ item.codigo}}</td>
                 <td>{{ item.descripcion}}</td>
@@ -159,6 +158,8 @@ headers = ['codigo','descripcion','cantidad','precio','imptotal']
                 <th>Total</th>
             </tr>
         </thead>
+
+        
         <tbody>
 
             <tr *ngFor="let item of element.cotizaciones">
