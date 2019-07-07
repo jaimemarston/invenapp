@@ -1,6 +1,8 @@
 /* export const BASEURL = 'http://localhost:8000/'; */
 
-export const BASEURL = 'http://188.166.63.89:8080/'; 
+ export const BASEURL = '/sunredbe/'; 
+
+/*export const BASEURL = 'https://188.166.63.89:8080/';*/ 
 
 
 export const DEFAULT_ROUTE = 'articulos';
