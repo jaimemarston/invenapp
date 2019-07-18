@@ -173,4 +173,5 @@ export class CotizacionmaestroComponent implements OnInit, OnDestroy {
         this.unsubscribe.next();
         this.unsubscribe.complete();
     }
+    
 }

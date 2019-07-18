@@ -13,8 +13,10 @@ export class MovmaterialService {
     constructor(private http: HttpClient) {
     }
 
-    getMovmateriales(): Observable<Array<IMovmaterial>> {
-        return this.http.get<Array<IMovmaterial>>(MovmaterialEndpoint.rest);
+    getMovmateriales(month?: number): Observable<Array<IMovmaterial>> {
+        // return this.http.get<Array<IMovmaterial>>(MovmaterialEndpoint.rest);
+        console.log('messelccionado', month);
+        return this.http.get<Array<IMovmaterial>>(!month ? MovmaterialEndpoint.rest : `${MovmaterialEndpoint.rest}?month=${month}`);
     }
 
     getClientesdetail(): Observable<Array<any>> {

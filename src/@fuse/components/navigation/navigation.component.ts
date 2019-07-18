@@ -45,7 +45,6 @@ export class FuseNavigationComponent implements OnInit {
         this._fuseNavigationService.onNavigationChanged
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe(() => {
-                console.log(this.navigation);
                 this.navigation = this._fuseNavigationService.getCurrentNavigation();
             });
     }

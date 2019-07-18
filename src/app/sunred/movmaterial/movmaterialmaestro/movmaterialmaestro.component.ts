@@ -6,7 +6,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MovmaterialdetalleService } from '../../../core/services/movmaterialdetalle.service';
 import { MovmaterialdetalleComponent } from '../movmaterialdetalle/movmaterialdetalle.component';
 import {MovmaterialService} from '../../../core/services/movmaterial.service';
-
+import {MonthService} from '../../../shared/components/footer/month.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -35,13 +37,24 @@ export class MovmaterialmaestroComponent implements OnInit {
     /** checkbox datatable */
     selection = new SelectionModel<IMovmaterial>(true, []);
 
+    monthSelected: number;
+
+    unsubscribe = new Subject();
+
     constructor(
         private movmaterialService: MovmaterialService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar,
         private movmaterialServicedetalle: MovmaterialdetalleService,
+        private monthService: MonthService
     ) {
+        this.monthService.monthSelected
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe(month => {
+            this.monthSelected = month;
+            this.getMovmaterial();
+        });
     }
 
     ngOnInit(): void {
@@ -50,7 +63,7 @@ export class MovmaterialmaestroComponent implements OnInit {
 
     getMovmaterial(): void {
 
-        this.movmaterialService.getMovmateriales()
+        this.movmaterialService.getMovmateriales(this.monthSelected)
             .subscribe(response => {
                 this.movmaterial = response;
                 this.dataSource.data = this.movmaterial;
@@ -61,7 +74,7 @@ export class MovmaterialmaestroComponent implements OnInit {
             });
     }
 
-    updateMovmaterialSelected(emit?: boolean) {
+    updateMovmaterialSelected(emit?: boolean): void {
         if (this.movmaterialSelected) {
             this.movmaterialSelected = this.movmaterial.find((v, i) => v.id === this.movmaterialSelected.id);
         } else {
@@ -147,4 +160,10 @@ export class MovmaterialmaestroComponent implements OnInit {
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
+
+    ngOnDestroy(): void {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+    
 }

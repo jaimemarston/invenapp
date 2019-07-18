@@ -15,6 +15,7 @@ export class MaterialService {
 
   getMateriales(): Observable<Array<IMaterial>> {
     return this.http.get<Array<IMaterial>>(MaterialEndpoint.rest);
+    
   }
 
   getMaterial(id: number): Observable<Materiales> {
