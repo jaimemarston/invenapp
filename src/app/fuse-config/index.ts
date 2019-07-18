@@ -13,7 +13,7 @@ export const fuseConfig: FuseConfig = {
     colorTheme      : 'theme-default',
     customScrollbars: true,
     layout          : {
-        style    : 'vertical-layout-1',
+        style    : 'vertical-layout-2',
         width    : 'fullwidth',
         navbar   : {
             primaryBackground  : 'fuse-navy-50',
@@ -31,9 +31,9 @@ export const fuseConfig: FuseConfig = {
         },
         footer   : {
             customBackgroundColor: true,
-            background           : 'fuse-navy-900',
+            background           : 'primary-50-bg',
             hidden               : false,
-            position             : 'below-fixed'
+            position             : 'below'
         },
         sidepanel: {
             hidden  : false,
