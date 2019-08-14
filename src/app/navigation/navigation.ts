@@ -91,31 +91,52 @@ export const navigationEmpleados: FuseNavigation[] = [
         type: 'group',
         children: [
             {
-                id: 'reporte',
-                title: 'Reportes',
+                id: 'empleados',
+                title: 'Empleados',
                 type: 'item',
                 icon: 'print',
-                url: '/reporte',
+                url: '/empleados',
+            },
+            {
+                id: 'cotizacion',
+                title: 'Importar txt de Reloj Marcador ',
+                type: 'item',
+                icon: 'email',
+                url: '/cotizacion',
+            },
+            {
+                id: 'cotizacion',
+                title: 'Registro de Tareo Semanal',
+                type: 'item',
+                icon: 'email',
+                url: '/cotizacion',
+            },
+            {
+                id: 'cotizacion',
+                title: 'Registro de Adelantos - Descuentos',
+                type: 'item',
+                icon: 'email',
+                url: '/cotizacion',
             },
             {
                 id: 'dashboard',
-                title: 'Dashboard',
+                title: 'Calculos',
                 type: 'collapsable',
                 icon: 'email',
                 children: [
                     {
                         id: 'dashboard_analytics',
-                        title: 'Analitica',
+                        title: 'Calculo de Planilla Semanal',
                         type: 'item',
                         icon: 'email',
-                        url: '/dashboards/analytics',
+                        url: '/cotizacion',
                     },
                     {
                         id: 'dashboard_projects',
-                        title: 'Proyectos',
+                        title: 'Cálculo de Gratificación',
                         type: 'item',
                         icon: 'email',
-                        url: '/dashboards/projects',
+                        url: '/cotizacion',
                     }
                 ]
             },
@@ -132,7 +153,7 @@ export const navigationProduccion: FuseNavigation[] = [
         children: [
             {
                 id: 'articulos',
-                title: 'Productos',
+                title: 'Maestro de Recetas',
                 type: 'item',
                 icon: 'print',
                 url: '/articulos',
@@ -144,32 +165,40 @@ export const navigationProduccion: FuseNavigation[] = [
                 icon: 'email',
                 url: '/cotizacion',
             },
-            {
-                id: 'reporte',
-                title: 'Reportes',
-                type: 'item',
-                icon: 'print',
-                url: '/reporte',
-            },
+            
             {
                 id: 'dashboard',
-                title: 'Dashboard',
+                title: 'MOVIMIENTOS ',
                 type: 'collapsable',
                 icon: 'email',
                 children: [
                     {
                         id: 'dashboard_analytics',
-                        title: 'Analitica',
+                        title: 'Ordenes de trabajo',
                         type: 'item',
                         icon: 'email',
-                        url: '/dashboards/analytics',
+                        url: '/cotizacion',
                     },
                     {
                         id: 'dashboard_projects',
-                        title: 'Proyectos',
+                        title: 'Producción Real',
                         type: 'item',
                         icon: 'email',
-                        url: '/dashboards/projects',
+                        url: '/cotizacion',
+                    },
+                    {
+                        id: 'dashboard_projects',
+                        title: 'Producción Proyectada',
+                        type: 'item',
+                        icon: 'email',
+                        url: '/cotizacion',
+                    },
+                    {
+                        id: 'dashboard_projects',
+                        title: 'Ingreso Almacen',
+                        type: 'item',
+                        icon: 'email',
+                        url: '/cotizacion',
                     }
                 ]
             },

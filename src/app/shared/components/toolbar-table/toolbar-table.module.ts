@@ -5,6 +5,7 @@ import {FuseSharedModule} from '../../../../@fuse/shared.module';
 import {SearchModule} from '../search/search.module';
 import {MatButtonModule, MatIconModule, MatMenuModule} from '@angular/material';
 import {FuseSearchBarModule} from '../../../../@fuse/components';
+import { ExcelService } from '../../../core/services/excel.service';
 
 @NgModule({
     imports: [
@@ -14,10 +15,12 @@ import {FuseSearchBarModule} from '../../../../@fuse/components';
         MatButtonModule,
         MatIconModule,
         FuseSearchBarModule,
-        MatMenuModule
+        MatMenuModule,
+        
     ],
     declarations: [ToolbarTableComponent],
-    exports: [ToolbarTableComponent]
+    exports: [ToolbarTableComponent],
+    providers: [ExcelService]
 })
 export class ToolbarTableModule {
 }
