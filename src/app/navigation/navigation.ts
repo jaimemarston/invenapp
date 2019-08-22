@@ -98,11 +98,11 @@ export const navigationEmpleados: FuseNavigation[] = [
                 url: '/empleados',
             },
             {
-                id: 'cotizacion',
+                id: 'impreloj',
                 title: 'Importar txt de Reloj Marcador ',
                 type: 'item',
-                icon: 'email',
-                url: '/cotizacion',
+                icon: 'access_time',
+                url: '/impreloj',
             },
             {
                 id: 'cotizacion',

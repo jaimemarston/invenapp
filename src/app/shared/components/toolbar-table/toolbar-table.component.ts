@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { BASEURL } from '../../../../environments/environment';
 import {ExcelService} from '../../../core/services/excel.service';
+import { MatDialog } from '@angular/material';
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 @Component({
     selector: 'toolbar-table',
@@ -21,8 +23,11 @@ export class ToolbarTableComponent implements OnInit {
     @Output() settings: EventEmitter<any> = new EventEmitter();
 
     @Output() inputText: EventEmitter<string> = new EventEmitter<string>();
-
-    constructor(private excelService: ExcelService) {
+    @Output() fileSelected: EventEmitter<any> = new EventEmitter();
+ 
+    constructor(
+        public dialog: MatDialog ,
+        private excelService: ExcelService) {
     }
 
     ngOnInit(): void {
@@ -47,5 +52,17 @@ export class ToolbarTableComponent implements OnInit {
             // window.location.replace(`${BASEURL}${this.urlPrint}`);
     }
 
+    uploadFile(): void {
+        const dialogRef = this.dialog.open(UploadFileComponent, {
+            data: {}
+          });
+      
+          dialogRef.afterClosed().pipe(data => data).subscribe(data => {
+              if (data) {
+                  console.log(data);
+                  this.fileSelected.emit(data);
+              }
+          });
+    }
  }
 
