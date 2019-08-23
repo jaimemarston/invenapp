@@ -16,7 +16,9 @@ import { CommonService} from '../../../core/services/common.service';
 })
 export class ImprelojListComponent implements OnInit {
 
-    displayedColumns: string[] = ['select', 'codigo', 'nombre'];
+    displayedColumns: string[] = ['select', 'codemp', 'nombre', 'fechaini', 'hrentrada',
+    'hrinidesc', 'hrfindesc', 'hrsalida'];
+
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     impreloj: Array<IImpreloj>;
