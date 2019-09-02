@@ -1,0 +1,73 @@
+<div id="clientes" fxLayout="column">
+    <toolbar-table [title]="'Maestro'" [urlPrint]="'generate_pdf/'+tareoSelected?.id" (inputText)="applyFilter($event)" [hidden]="edit"
+                   (add)="addRecord()"
+                   (delete)="deleteAllSelecteds()"></toolbar-table>
+    <div fxFlex [hidden]="edit">
+        <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="select">
+                <mat-header-cell fxFlex="50px" *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                                  [checked]="selection.hasValue() && isAllSelected()"
+                                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell fxFlex="50px" *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                                  [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="codigo">
+                <mat-header-cell fxFlex="80px"*matHeaderCellDef> CÓDIGO</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.codigo}}</mat-cell>
+            </ng-container>
+           
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell fxFlex="350px"*matHeaderCellDef> NOMBRE</mat-header-cell>
+                <mat-cell fxFlex="350px" *matCellDef="let element"> {{element.nombre}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="nsemana">
+                <mat-header-cell fxFlex="80px"*matHeaderCellDef> SEMANA</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.nsemana}}</mat-cell>
+            </ng-container>
+                      
+            <ng-container matColumnDef="fechaini">
+                <mat-header-cell fxFlex="180px"*matHeaderCellDef> FECHA INICIO</mat-header-cell>
+                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.fechaini}}</mat-cell>
+            </ng-container>
+            
+            <ng-container matColumnDef="fechafin">
+                <mat-header-cell fxFlex="180px"*matHeaderCellDef> FECHA FIN</mat-header-cell>
+                <mat-cell fxFlex="180px" *matCellDef="let element"> {{element.fechafin}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="options">
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> Options</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let row">
+                    <app-action-icons (edit)="editRecord(row.id)" (remove)="delete(row.id)"></app-action-icons>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row
+                (click)="viewRecorddetail(row)"
+                class="element-row"
+                [ngClass]="{ 'highlight': row.id === tareoSelected?.id }"
+                *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+
+        </mat-table>
+    </div>
+    <div fxFlex [hidden]="edit">
+        <mat-paginator [showFirstLastButtons]="true" #paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxFlex [hidden]="!edit">
+        <app-edittareo [id]="selectedId" (back)="showDataTable()"
+                            (update)="updateDataTable($event)"></app-edittareo>
+    </div>
+</div>

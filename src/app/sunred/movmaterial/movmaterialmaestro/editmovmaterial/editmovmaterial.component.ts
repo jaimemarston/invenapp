@@ -104,6 +104,7 @@ export class EditMovmaterialComponent implements OnInit {
             ruc: [''],
             telruc: [''],
             correoruc: [''],
+            dirruc: [''],
             desmonepago: [''],
             imppagado: [''],
             tc_dolares: [''],
@@ -122,7 +123,7 @@ export class EditMovmaterialComponent implements OnInit {
         this.registerForm.get('desruc').setValue(a.nombre);
         this.registerForm.get('telruc').setValue(a.telefono1);
         this.registerForm.get('correoruc').setValue(a.correo);
-         
+        this.registerForm.get('dirruc').setValue(a.direccion);
         
     }
 
@@ -142,6 +143,7 @@ export class EditMovmaterialComponent implements OnInit {
         this.registerForm.get('ruc').setValue(this.movmaterial.ruc);
         this.registerForm.get('desruc').setValue(this.movmaterial.desruc);
         this.registerForm.get('telruc').setValue(this.movmaterial.telruc);
+        this.registerForm.get('dirruc').setValue(this.movmaterial.dirruc);
         this.registerForm.get('correoruc').setValue(this.movmaterial.correoruc);
         this.registerForm.get('desmonepago').setValue(this.movmaterial.desmonepago);
         this.registerForm.get('estado').setValue(this.movmaterial.estado);

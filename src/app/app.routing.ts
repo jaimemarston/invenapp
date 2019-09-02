@@ -60,8 +60,8 @@ export const routes: Routes = [
                 loadChildren: './sunred/empleados/empleados.module#EmpleadosModule'
             },
             {
-                path: 'impreloj',
-                loadChildren: './sunred/impreloj/impreloj.module#ImprelojModule'
+                path: 'tareo',
+                loadChildren: './sunred/tareo/tareo.module#TareoModule'
             },
             {
                 path: 'dashboards/analytics',
