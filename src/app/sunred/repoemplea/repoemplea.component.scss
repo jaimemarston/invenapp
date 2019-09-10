@@ -1,0 +1,12 @@
+
+.content {
+    table.simple tbody tr td {
+    font-size: 11px;
+    padding: 4px 4px !important;
+}
+}
+
+input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}

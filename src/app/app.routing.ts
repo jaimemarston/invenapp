@@ -56,8 +56,16 @@ export const routes: Routes = [
                 loadChildren: './sunred/reporte/reporte.module#ReporteModule'
             },
             {
+                path: 'repoemplea',
+                loadChildren: './sunred/repoemplea/repoemplea.module#RepoempleaModule'
+            },
+            {
                 path: 'empleados',
                 loadChildren: './sunred/empleados/empleados.module#EmpleadosModule'
+            },
+            {
+                path: 'empctacte',
+                loadChildren: './sunred/empctacte/empctacte.module#EmpctactesModule'
             },
             {
                 path: 'tareo',

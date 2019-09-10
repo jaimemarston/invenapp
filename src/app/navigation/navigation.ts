@@ -112,34 +112,41 @@ export const navigationEmpleados: FuseNavigation[] = [
             //     url: '/cotizacion',
             // },
             {
-                id: 'cotizacion',
-                title: 'Registro de Adelantos - Descuentos',
+                id: 'empctacte',
+                title: 'Adelantos - Descuentos',
                 type: 'item',
                 icon: 'email',
-                url: '/cotizacion',
+                url: '/empctacte',
             },
             {
-                id: 'dashboard',
-                title: 'Calculos',
-                type: 'collapsable',
+                id: 'repoemplea',
+                title: 'Planilla',
+                type: 'item',
                 icon: 'email',
-                children: [
-                    {
-                        id: 'dashboard_analytics',
-                        title: 'Calculo de Planilla Semanal',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    },
-                    {
-                        id: 'dashboard_projects',
-                        title: 'Cálculo de Gratificación',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    }
-                ]
+                url: '/repoemplea',
             },
+            // {
+            //     id: 'dashboard',
+            //     title: 'Calculos',
+            //     type: 'collapsable',
+            //     icon: 'email',
+            //     children: [
+            //         {
+            //             id: 'dashboard_analytics',
+            //             title: 'Calculo de Planilla Semanal',
+            //             type: 'item',
+            //             icon: 'email',
+            //             url: '/cotizacion',
+            //         },
+            //         {
+            //             id: 'dashboard_projects',
+            //             title: 'Cálculo de Gratificación',
+            //             type: 'item',
+            //             icon: 'email',
+            //             url: '/cotizacion',
+            //         }
+            //     ]
+            // },
         ]
     }
 ];

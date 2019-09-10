@@ -22,3 +22,23 @@ export class Empleadosdetalle {
   turno: string;
   importe: string;
 }
+
+
+export class Empctactedetalle {
+  id: number;
+  codigo: number;
+  codpro: string;
+  descripcion: string;
+  tipo: string;
+  estado: number;
+  codemp: string;
+  nombre: string;
+  cc: string;
+  descc: string;
+  codctacte: string;
+  desctacte: string;
+  fechaini: Date;
+  fechafin: Date;
+  turno: string;
+  importe: string;
+}
