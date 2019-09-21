@@ -6,7 +6,7 @@
     [hidden]="edit">
     </toolbar-table>
 
-    <div fxFlex>
+    <div fxFlex [hidden]="edit">
         <mat-table #table [dataSource]="dataSource">
             <ng-container matColumnDef="select">
                 <mat-header-cell  fxFlex="50px" *matHeaderCellDef>
@@ -25,12 +25,12 @@
             </ng-container>
 
             <ng-container matColumnDef="nombre">
-                <mat-header-cell fxFlex="400px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
-                <mat-cell fxFlex="450px" *matCellDef="let element"> {{element.nombre}}</mat-cell>
+                <mat-header-cell fxFlex="350px" *matHeaderCellDef> DESCRIPCIÓN</mat-header-cell>
+                <mat-cell fxFlex="350px" *matCellDef="let element"> {{element.nombre}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="fechaini">
-                <mat-header-cell fxFlex="150px" *matHeaderCellDef> FECHA INI</mat-header-cell>
-                <mat-cell fxFlex="150px" *matCellDef="let element"> {{element.fechaini}}</mat-cell>
+                <mat-header-cell fxFlex="100px" *matHeaderCellDef> FECHA INI</mat-header-cell>
+                <mat-cell fxFlex="100px" *matCellDef="let element"> {{element.fechaini}}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="hrentrada">
                 <mat-header-cell fxFlex="80px" *matHeaderCellDef> HORA DE ENTRADA</mat-header-cell>
@@ -48,12 +48,10 @@
                 <mat-header-cell fxFlex="80px" *matHeaderCellDef> HORA DE SALIDA</mat-header-cell>
                 <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.hrsalida}}</mat-cell>
             </ng-container>
-            
 
-            
             <ng-container matColumnDef="options">
-                <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
-                <mat-cell *matCellDef="let row">
+                <mat-header-cell fxFlex="80px"*matHeaderCellDef> Options</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let row">
                     <app-action-icons (edit)="editRecord(row.id)" (remove)="delete(row.id)"></app-action-icons>
                 </mat-cell>
             </ng-container>
@@ -72,8 +70,9 @@
         <mat-paginator [showFirstLastButtons]="true" [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100, 500]">
         </mat-paginator>
     </div>
-    <div>
-        <div fxFlex="50"></div>
-        
+    <mat-divider></mat-divider>
+    <div fxFlex [hidden]="!edit">
+        <app-edittareodetalle [nombreMaster]="nombreMaster" [codempMaster]="codempMaster" [id]="selectedId" (back)="showDataTable()"
+                            (update)="updateDataTable($event)"></app-edittareodetalle>
     </div>
 </div>

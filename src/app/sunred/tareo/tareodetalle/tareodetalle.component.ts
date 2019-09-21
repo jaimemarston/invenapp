@@ -7,7 +7,8 @@ import {TareodetalleService} from '../../../core/services/tareodetalle.service';
 import {ITareodetalle} from '../../../core/interfaces/tareo.interface';
 import {SelectionModel} from '@angular/cdk/collections';
 import {fuseAnimations} from '../../../../@fuse/animations';
-import {map} from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -22,12 +23,7 @@ import {map} from 'rxjs/operators';
 
 export class TareodetalleComponent implements OnInit {
     _tareoDetalle: Array<ITareodetalle>;
-    tareoTotales = {
-        subtotal: 0,
-        descuento: 0,
-        igv: 0,
-        total_general: 0
-    };
+    
 
     get tareoDetalle(): Array<ITareodetalle> {
         return this._tareoDetalle;
@@ -35,6 +31,7 @@ export class TareodetalleComponent implements OnInit {
 
     @Input() set tareoDetalle(data: Array<ITareodetalle>) {
         this._tareoDetalle = data;
+        
         this.dataSource.data = this.tareoDetalle;
         if (this.tareoDetalle) {
             this.dataSource.paginator = this.paginatordet;
@@ -49,7 +46,7 @@ export class TareodetalleComponent implements OnInit {
     
     @Output() updated: EventEmitter<any> = new EventEmitter();
     displayedColumns: string[] = ['select', 'codemp', 'nombre', 'fechaini', 'hrentrada',
-    'hrinidesc', 'hrfindesc', 'hrsalida'];
+    'hrinidesc', 'hrfindesc', 'hrsalida', 'options'];
  
     @ViewChild(MatPaginator) paginatordet: MatPaginator;
 
@@ -72,9 +69,10 @@ export class TareodetalleComponent implements OnInit {
 
     ngOnInit(): void {
         this.dataSource.data = this.tareoDetalle;
+       
     }
 
-    getTareo(): void {
+    getTareos(): void {
         this.tareoService.getTareo()
             .pipe(map(tareo => {
                 tareo = tareo.map(c => {
@@ -84,6 +82,7 @@ export class TareodetalleComponent implements OnInit {
             }))
             .subscribe(response => {
                 this.tareo = response;
+                console.log('this.tareo' , this.tareo);
                 this.dataSource.data = this.tareo;
                 this.dataSource.paginator = this.paginatordet;
                 this.paginatordet._intl.itemsPerPageLabel = 'Item por Pagina:';
@@ -105,10 +104,11 @@ export class TareodetalleComponent implements OnInit {
     public editRecord(id: number): void {
         this.selectedId = id;
         this.edit = true;
+        console.log('editRecord', this.selectedId);
     }
 
     public addRecord(): void {
-        console.log('addRecord', this.idMaster, this.nombreMaster);
+        
         this.edit = true;
         this.selectedId = null;
     }
@@ -159,7 +159,7 @@ export class TareodetalleComponent implements OnInit {
     }
     
     setFileSelected(event): void {
-        console.log(event);
+        
         if (event != null) {
             this.tareoService.uploadFile(event)
                 .subscribe(response => {
@@ -167,15 +167,5 @@ export class TareodetalleComponent implements OnInit {
                 });
         }
     }
-    // calculateTotales(descuento = 0): void {
-    //     this.tareoTotales.descuento = descuento;
-    //     /*this.tareoTotales.subtotal = this.tareoDetalle.reduce((a, b) => (b.imptotal * b.cantidad) + a, 0);*/
-    //     this.tareoTotales.subtotal = this.tareoDetalle.reduce((a, b) => (b.imptotal), 0);
-    //     this.tareoTotales.total_general = (this.tareoTotales.subtotal - this.tareoTotales.descuento) + this.tareoTotales.igv;
-    //     this.tareoTotales.igv = (this.tareoTotales.subtotal - this.tareoTotales.descuento) * 0.18;
-    // }
-
-    // onChangeDscto(event): void {
-    //     this.calculateTotales(+(event.target.value ? event.target.value !== '' : 0));
-    // }
+  
 }

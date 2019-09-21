@@ -92,17 +92,12 @@ export class EditmovmaterialdetalleComponent implements OnInit, OnDestroy, OnCha
             });
     }
 
-
-
-
     ngOnInit(): void {
         this.createForm();
         this.getMaterial();
         this.getUnidad();
         
     }
-
-
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.idMaster) {

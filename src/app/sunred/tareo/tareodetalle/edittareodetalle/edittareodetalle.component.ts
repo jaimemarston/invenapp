@@ -13,10 +13,7 @@ import { fuseAnimations } from '../../../../../@fuse/animations';
 import { IProveedores } from 'app/core/interfaces/proveedores.interface';
 
 
-export interface Opcviaje {
-    codigo: string;
-    descripcion: string;
-}
+
 
 @Component({
     selector: 'app-edittareodetalle',
@@ -54,11 +51,7 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
     filteredArticulos: Observable<Array<IArticulo>>;
     filteredUnidades: Observable<Array<IUnidad>>;
 
-    opcviaje: Opcviaje[] = [
-        { codigo: 'Solo ida', descripcion: 'Solo ida' },
-        { codigo: 'Ida y vuelta', descripcion: 'Ida y vuelta' },
-        { codigo: 'Full Day', descripcion: 'Full Day' },
-    ];
+
 
     tareo: ITareodetalle;
     articulos: Array<IArticulo>;
@@ -72,40 +65,30 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
 
     @ViewChild('inputCodigo') inputCodigo: ElementRef<HTMLInputElement>;
 
-    constructor(private tareoService: TareodetalleService,
+    constructor(private tareodetalleService: TareodetalleService,
         private formBuilder: FormBuilder,
         private articuloService: ArticuloService,
         private unidadService: UnidadService,
         public snackBar: MatSnackBar) {
     }
 
-    getArticulo(): void {
-        this.articuloService.getArticulos()
+    getTareodetalle(): void {
+        this.tareodetalleService.getTareo()
             .subscribe(response => {
-                this.articulos = response;
+                this.tareo = response;
             });
     }
-
-
-    getUnidad(): void {
-        this.unidadService.getUnidades()
-            .subscribe(response => {
-                this.unidades = response;
-            });
-    }
-
-
 
 
     ngOnInit(): void {
         this.createForm();
-        this.getArticulo();
+        this.getTareodetalle();
         
 
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngngOnChanges');
+        
         if (changes.idMaster) {
             if (this.registerForm) {
                 this.registerForm.get('codigo').setValue(this.idMaster);
@@ -115,18 +98,17 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
 
     }
 
-
-
-
     createForm(): void {
-        
+       
         this.registerForm = this.formBuilder.group({
             nombre: [this.nombreMaster],
             codemp: [this.codempMaster],
             codigo: [this.idMaster],
             fechaini: [null],
-            fechafin: [null],
-
+            hrentrada: [null],
+            hrinidesc: [null],
+            hrfindesc: [null],
+            hrsalida: [null],
         });
        
 
@@ -178,15 +160,17 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
         // this.registerForm.get('nombre').setValue(this.tareo.nombre);
         // this.registerForm.get('codemp').setValue(this.tareo.codemp);
         this.registerForm.get('fechaini').setValue(this.tareo.fechaini);
-        this.registerForm.get('fechafin').setValue(this.tareo.fechafin);
- 
-
+        this.registerForm.get('hrentrada').setValue(this.tareo.hrentrada);
+        this.registerForm.get('hrinidesc').setValue(this.tareo.hrinidesc);
+        this.registerForm.get('hrfindesc').setValue(this.tareo.hrfindesc);
+        this.registerForm.get('hrsalida').setValue(this.tareo.hrsalida);
+        
     }
 
 
     getTareo(): void {
 
-        this.tareoService.getTareounico(this.id)
+        this.tareodetalleService.getTareounico(this.id)
             .subscribe(response => {
                 this.tareo = response;
                 this.setForm();
@@ -196,10 +180,14 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
     setForm(): void {
         
         // this.registerForm.get('codigo').setValue(this.tareo.codigo);
-        // this.registerForm.get('nombre').setValue(this.tareo.nombre);
-        // this.registerForm.get('codemp').setValue(this.tareo.codemp);
+        this.registerForm.get('nombre').setValue(this.tareo.nombre);
+        this.registerForm.get('codemp').setValue(this.tareo.codemp);
+        
         this.registerForm.get('fechaini').setValue(this.tareo.fechaini);
-        this.registerForm.get('fechafin').setValue(this.tareo.fechafin);
+        this.registerForm.get('hrentrada').setValue(this.tareo.hrentrada);
+        this.registerForm.get('hrinidesc').setValue(this.tareo.hrinidesc);
+        this.registerForm.get('hrfindesc').setValue(this.tareo.hrfindesc);
+        this.registerForm.get('hrsalida').setValue(this.tareo.hrsalida);
     }
 
     onBack(): void {
@@ -236,7 +224,7 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
     updateTareo(): void {
         const data = this.prepareData();
 
-        this.tareoService.updateTareo(this.id, data)
+        this.tareodetalleService.updateTareo(this.id, data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');
@@ -246,7 +234,7 @@ export class EdittareodetalleComponent implements OnInit, OnDestroy, OnChanges {
     addTareo(): void {
         const data = this.prepareData();
         console.log('addTareo' + this.idMaster);
-        this.tareoService.addTareo(data)
+        this.tareodetalleService.addTareo(data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ImprelojComponent } from './impreloj.component';
 import { ImprelojListComponent } from './impreloj-list/impreloj-list.component';
-import { ImprelojFormComponent } from './impreloj-form/Impreloj-form.component';
+import { ImprelojFormComponent } from './impreloj-form/impreloj-form.component';
 import {
     MatButtonModule,
     MatCheckboxModule,

@@ -55,12 +55,12 @@
             </ng-container>
             
 
-            <!-- <ng-container matColumnDef="options">
-                <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
-                <mat-cell *matCellDef="let row">
+            <ng-container matColumnDef="options">
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> Options</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let row">
                     <app-action-icons (edit)="editRecord(row.id)" (remove)="delete(row.id)"></app-action-icons>
                 </mat-cell>
-            </ng-container> -->
+            </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row

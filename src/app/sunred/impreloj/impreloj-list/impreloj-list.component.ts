@@ -17,7 +17,7 @@ import { CommonService} from '../../../core/services/common.service';
 export class ImprelojListComponent implements OnInit {
 
     displayedColumns: string[] = ['select', 'codemp', 'nombre', 'fechaini', 'hrentrada',
-    'hrinidesc', 'hrfindesc', 'hrsalida'];
+    'hrinidesc', 'hrfindesc', 'hrsalida', 'options'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -53,7 +53,31 @@ export class ImprelojListComponent implements OnInit {
             });
     }
 
-  
+    public editRecord(row: any): void {
+        this.selectedId = row.id;
+        this.edit = true;
+    }
+
+    public addRecord(): void {
+        this.edit = true;
+        this.selectedId = null;
+    }
+
+    delete(id: number): void {
+        this.selectedId = id;
+        this.deleteLista();
+    }
+
+    deleteLista(): void {
+        if (confirm('Esta seguro que desea borrar este registro?')) {
+            this.imprelojService.delete(this.selectedId)
+                .subscribe(response => {
+                    /* console.log(response); */
+                    this.getlista();
+                });
+        }
+    }
+
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }

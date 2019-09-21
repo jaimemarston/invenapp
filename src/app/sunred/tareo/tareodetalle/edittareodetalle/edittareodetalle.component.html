@@ -1,4 +1,4 @@
-<form class="mat-card mat-elevation-z4 p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+<form class="mat-card mat-elevation-z4 p-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
     [formGroup]="registerForm">
 
     <div class="h2 mb-24">Agregar Tareo</div>
@@ -14,35 +14,31 @@
             <input matInput placeholder="Nombre"  readonly formControlName="nombre" style="background: gainsboro;">
         </mat-form-field>
 
-
-        
     </div>
-    <!-- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
 
-        <mat-form-field fxFlex="50">
-            <input matInput placeholder="turno" formControlName="turno">
+    <div fxLayout="row" fxLayoutGap="25px" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="60">
+            <input #inputs matInput placeholder="Fecha" formControlName="fechaini">
         </mat-form-field>
 
-        <mat-form-field fxFlex="50">
-            <input matInput placeholder="importe" formControlName="importe">
-        </mat-form-field>
-    </div> -->
-   
-    
-    <!-- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
-
-        <mat-form-field fxFlex="33">
-            <input #inputs matInput type="date" formControlName="fechaini" class="form-control"
-                   placeholder="Fecha Inicial"/>
+        <mat-form-field fxFlex="25">
+            <input matInput placeholder="Hra Entrada" formControlName="hrentrada">
         </mat-form-field>
 
-        <mat-form-field fxFlex="34">
-            <input #inputs matInput type="date" formControlName="fechafin" class="form-control"
-                   placeholder="Fecha Fin"/>
+        <mat-form-field fxFlex="25">
+            <input matInput placeholder="Hra ini Desc" formControlName="hrinidesc">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="25">
+            <input matInput  placeholder="Hra fin Desc" formControlName="hrfindesc">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="25">
+            <input matInput  placeholder="Hra salida" formControlName="hrsalida">
         </mat-form-field>
     </div>
-     -->
-    <div fxLayout="row" class="crud-buttons" fxLayoutAlign="start center">
+     
+     <div class="crud-buttons" fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
         <button (click)="onBack()" mat-raised-button class="mat-primary">Volver</button>
         <button (click)="saveTareo()" mat-raised-button [disabled]="registerForm.invalid" class="mat-accent">
             Guardar
