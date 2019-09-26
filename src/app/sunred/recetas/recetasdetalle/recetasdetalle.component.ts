@@ -1,14 +1,13 @@
 import {Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import {MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator} from '@angular/material';
 import {Router} from '@angular/router';
-import {Tareo} from '../../../dataservice/tareo';
+import {Recetas} from '../../../dataservice/recetas';
 import {DataService} from '../../../dataservice/data.service';
-import {TareodetalleService} from '../../../core/services/tareodetalle.service';
-import {ITareodetalle} from '../../../core/interfaces/tareo.interface';
+import {RecetasdetalleService} from '../../../core/services/recetasdetalle.service';
+import {IRecetasdetalle} from '../../../core/interfaces/recetas.interface';
 import {SelectionModel} from '@angular/cdk/collections';
 import {fuseAnimations} from '../../../../@fuse/animations';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 /**
  * @title Basic use of `<table mat-table>`
@@ -16,24 +15,28 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
 
 
 @Component({
-    selector: 'app-tareodetalle',
-    templateUrl: './tareodetalle.component.html',
+    selector: 'app-recetasdetalle',
+    templateUrl: './recetasdetalle.component.html',
     animations: fuseAnimations
 })
 
-export class TareodetalleComponent implements OnInit {
-    _tareoDetalle: Array<ITareodetalle>;
-    
+export class RecetasdetalleComponent implements OnInit {
+    _recetasDetalle: Array<IRecetasdetalle>;
+    recetasTotales = {
+        subtotal: 0,
+        descuento: 0,
+        igv: 0,
+        total_general: 0
+    };
 
-    get tareoDetalle(): Array<ITareodetalle> {
-        return this._tareoDetalle;
+    get recetasDetalle(): Array<IRecetasdetalle> {
+        return this._recetasDetalle;
     }
 
-    @Input() set tareoDetalle(data: Array<ITareodetalle>) {
-        this._tareoDetalle = data;
-        
-        this.dataSource.data = this.tareoDetalle;
-        if (this.tareoDetalle) {
+    @Input() set recetasDetalle(data: Array<IRecetasdetalle>) {
+        this._recetasDetalle = data;
+        this.dataSource.data = this.recetasDetalle;
+        if (this.recetasDetalle) {
             this.dataSource.paginator = this.paginatordet;
         }
     }
@@ -45,22 +48,21 @@ export class TareodetalleComponent implements OnInit {
     @Input() nombreMaster: string;
     
     @Output() updated: EventEmitter<any> = new EventEmitter();
-    displayedColumns: string[] = ['select', 'codemp', 'nombre', 'fechaini', 'hrentrada',
-    'hrinidesc', 'hrfindesc', 'hrsalida', 'options'];
- 
+
+    displayedColumns: string[] = ['select', 'codigo', 'codemp', 'nombre', 'fechaini', 'fechafin', 'importe', 'options'];
     @ViewChild(MatPaginator) paginatordet: MatPaginator;
 
-    tareo: Array<ITareodetalle>;
-    dataSource = new MatTableDataSource<ITareodetalle>();
+    recetas: Array<IRecetasdetalle>;
+    dataSource = new MatTableDataSource<IRecetasdetalle>();
     errorMessage: String;
     selectedId: number;
     edit: boolean;
 
     /** checkbox datatable */
-    selection = new SelectionModel<ITareodetalle>(true, []);
+    selection = new SelectionModel<IRecetasdetalle>(true, []);
 
     constructor(
-        private tareoService: TareodetalleService,
+        private recetasService: RecetasdetalleService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar
@@ -68,22 +70,20 @@ export class TareodetalleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.dataSource.data = this.tareoDetalle;
-       
+        this.dataSource.data = this.recetasDetalle;
     }
 
-    getTareos(): void {
-        this.tareoService.getTareodetalles()
-            .pipe(map(tareo => {
-                tareo = tareo.map(c => {
+    getRecetas(): void {
+        this.recetasService.getRecetas()
+            .pipe(map(recetas => {
+                recetas = recetas.map(c => {
                     return c;
                 });
-                return tareo;
+                return recetas;
             }))
             .subscribe(response => {
-                this.tareo = response;
-                console.log('this.tareo' , this.tareo);
-                this.dataSource.data = this.tareo;
+                this.recetas = response;
+                this.dataSource.data = this.recetas;
                 this.dataSource.paginator = this.paginatordet;
                 this.paginatordet._intl.itemsPerPageLabel = 'Item por Pagina:';
             });
@@ -91,11 +91,11 @@ export class TareodetalleComponent implements OnInit {
 
     delete(id: number): void {
         this.selectedId = id;
-        this.deleteTareo();
+        this.deleteRecetas();
     }
 
-    deleteTareo(): void {
-        this.tareoService.deleteTareo(this.selectedId)
+    deleteRecetas(): void {
+        this.recetasService.deleteRecetas(this.selectedId)
             .subscribe(response => {
                 this.updated.emit(true);
             });
@@ -104,11 +104,10 @@ export class TareodetalleComponent implements OnInit {
     public editRecord(id: number): void {
         this.selectedId = id;
         this.edit = true;
-        console.log('editRecord', this.selectedId);
     }
 
     public addRecord(): void {
-        
+        console.log('addRecord', this.idMaster, this.nombreMaster);
         this.edit = true;
         this.selectedId = null;
     }
@@ -117,7 +116,7 @@ export class TareodetalleComponent implements OnInit {
         this.edit = false;
     }
 
-    updateDataTable(data: ITareodetalle): void {
+    updateDataTable(data: IRecetasdetalle): void {
         this.updated.emit(data);
         this.paginatordet.lastPage();
     }
@@ -136,6 +135,7 @@ export class TareodetalleComponent implements OnInit {
             this.dataSource.data.forEach(row => this.selection.select(row));
     }
 
+
     openPrint(): void {
         window.print();
     }
@@ -146,7 +146,7 @@ export class TareodetalleComponent implements OnInit {
     async deleteAllSelecteds(): Promise<void> {
         const selecteds = this.selection.selected;
         for (let index = 0; index < selecteds.length; index++) {
-            await this.tareoService.deleteTareo(selecteds[index].id).toPromise();
+            await this.recetasService.deleteRecetas(selecteds[index].id).toPromise();
             if (index === selecteds.length - 1) {
                 this.snackBar.open('ELIMINADOS TODOS');
                 this.updated.emit(true);
@@ -157,15 +157,16 @@ export class TareodetalleComponent implements OnInit {
     applyFilter(filterValue: string): void {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
-    
-    setFileSelected(event): void {
-        
-        if (event != null) {
-            this.tareoService.uploadFile(event)
-                .subscribe(response => {
-                    console.log(response);
-                });
-        }
-    }
-  
+
+    // calculateTotales(descuento = 0): void {
+    //     this.recetasTotales.descuento = descuento;
+    //     /*this.recetasTotales.subtotal = this.recetasDetalle.reduce((a, b) => (b.imptotal * b.cantidad) + a, 0);*/
+    //     this.recetasTotales.subtotal = this.recetasDetalle.reduce((a, b) => (b.imptotal), 0);
+    //     this.recetasTotales.total_general = (this.recetasTotales.subtotal - this.recetasTotales.descuento) + this.recetasTotales.igv;
+    //     this.recetasTotales.igv = (this.recetasTotales.subtotal - this.recetasTotales.descuento) * 0.18;
+    // }
+
+    // onChangeDscto(event): void {
+    //     this.calculateTotales(+(event.target.value ? event.target.value !== '' : 0));
+    // }
 }

@@ -72,6 +72,10 @@ export const routes: Routes = [
                 loadChildren: './sunred/tareo/tareo.module#TareoModule'
             },
             {
+                path: 'recetas',
+                loadChildren: './sunred/recetas/recetas.module#RecetasModule'
+            },
+            {
                 path: 'dashboards/analytics',
                 loadChildren: './sunred/dashboards/analytics/analytics.module#AnalyticsDashboardModule'
             },

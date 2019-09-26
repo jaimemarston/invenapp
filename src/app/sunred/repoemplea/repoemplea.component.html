@@ -54,6 +54,10 @@
                                 <!-- <th>Rotativa</th>
                                 <th>Inyectoria</th> -->
                                 <th>LUNES</th>
+                                <!-- <tr>
+                                    <th>hrs</th>
+                                    <th>imp</th>
+                                </tr> -->
                                 <th>MARTES</th>
                                 <th>MIERCOLES</th>
                                 <th>JUEVES</th>
@@ -64,23 +68,22 @@
 
                             </tr>
                         </thead>
+                        
                         <tbody>
                             <tr *ngFor="let item of data">
                                 <td>{{ item.codigo}}</td>
                                 <td>{{ item.nombre}}</td>
-                                <td>DÍA</td>
-                                <!-- <td>0.00</td>
-                                <td>0.00</td> -->
+                                <td>{{item.turno}}</td>
+                                <td>{{item.sueldo}}</td>
                                 <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>0.00</td>
-                                <td>100.00</td>
+                                <td>{{item.dia1}}</td>
+                                <td>{{item.dia2}}</td>
+                                <td>{{item.dia3}}</td>
+                                <td>{{item.dia4}}</td>
+                                <td>{{item.dia5}}</td>
+                                <td>{{item.dia6}}</td>
+                                <td>{{item.dia7}}</td>
+                                <td>{{item.total}}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -159,11 +159,11 @@ export const navigationProduccion: FuseNavigation[] = [
         type: 'group',
         children: [
             {
-                id: 'articulos',
+                id: 'recetas',
                 title: 'Maestro de Recetas',
                 type: 'item',
                 icon: 'print',
-                url: '/articulos',
+                url: '/recetas',
             },
             {
                 id: 'cotizacion',

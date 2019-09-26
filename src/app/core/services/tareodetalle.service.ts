@@ -13,8 +13,8 @@ export class TareodetalleService {
   constructor(private http: HttpClient) {
   }
 
-  getTareo(): Observable<Array<ITareodetalle>> {
-    return this.http.get<Array<ITareodetalle>>(TareodetalleEndpoint.rest)
+  getTareodetalles(): Observable<Array<ITareodetalle>> {
+    return this.http.get<Array<ITareodetalle>>(TareodetalleEndpoint.rest);
   }
 
 
