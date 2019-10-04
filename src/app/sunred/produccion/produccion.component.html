@@ -10,7 +10,7 @@
                 <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">account_box
                 </mat-icon>
                 <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    Recetas
+                    PRODUCCION
                 </span>
             </div>
 
@@ -32,14 +32,14 @@
             <div class="content mat-elevation-z4">
 
                     
-                        <app-recetasmaestro (detalle)="setDetail($event)"></app-recetasmaestro>
+                        <app-produccionmaestro (detalle)="setDetail($event)"></app-produccionmaestro>
 
-                        <app-recetasdetalle [recetasDetalle]="detail"
-                            [idMaster]="recetasMaestro.recetasSelected?.id" 
-                            [nombreMaster]="recetasMaestro.recetasSelected?.nombre"
-                            [codempMaster]="recetasMaestro.recetasSelected?.codigo"
-                            (updated)="getRecetas()">
-                        </app-recetasdetalle>
+                        <app-producciondetalle [produccionDetalle]="detail"
+                            [idMaster]="produccionMaestro.produccionSelected?.id" 
+                            [nombreMaster]="produccionMaestro.produccionSelected?.nombre"
+                            [codempMaster]="produccionMaestro.produccionSelected?.codigo"
+                            (updated)="getProduccion()">
+                        </app-producciondetalle>
             </div>
             <!-- / CONTENT -->
 

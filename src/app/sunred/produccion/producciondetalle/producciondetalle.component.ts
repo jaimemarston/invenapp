@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import {MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator} from '@angular/material';
 import {Router} from '@angular/router';
-import {Recetas} from '../../../dataservice/recetas';
+import {Produccion} from '../../../dataservice/produccion';
 import {DataService} from '../../../dataservice/data.service';
-import {RecetasdetalleService} from '../../../core/services/recetasdetalle.service';
-import {IRecetasdetalle} from '../../../core/interfaces/recetas.interface';
+import {ProducciondetalleService} from '../../../core/services/producciondetalle.service';
+import {IProducciondetalle} from '../../../core/interfaces/produccion.interface';
 import {SelectionModel} from '@angular/cdk/collections';
 import {fuseAnimations} from '../../../../@fuse/animations';
 import {map} from 'rxjs/operators';
@@ -15,28 +15,28 @@ import {map} from 'rxjs/operators';
 
 
 @Component({
-    selector: 'app-recetasdetalle',
-    templateUrl: './recetasdetalle.component.html',
+    selector: 'app-producciondetalle',
+    templateUrl: './producciondetalle.component.html',
     animations: fuseAnimations
 })
 
-export class RecetasdetalleComponent implements OnInit {
-    _recetasDetalle: Array<IRecetasdetalle>;
-    recetasTotales = {
+export class ProducciondetalleComponent implements OnInit {
+    _produccionDetalle: Array<IProducciondetalle>;
+    produccionTotales = {
         subtotal: 0,
         descuento: 0,
         igv: 0,
         total_general: 0
     };
 
-    get recetasDetalle(): Array<IRecetasdetalle> {
-        return this._recetasDetalle;
+    get produccionDetalle(): Array<IProducciondetalle> {
+        return this._produccionDetalle;
     }
 
-    @Input() set recetasDetalle(data: Array<IRecetasdetalle>) {
-        this._recetasDetalle = data;
-        this.dataSource.data = this.recetasDetalle;
-        if (this.recetasDetalle) {
+    @Input() set produccionDetalle(data: Array<IProducciondetalle>) {
+        this._produccionDetalle = data;
+        this.dataSource.data = this.produccionDetalle;
+        if (this.produccionDetalle) {
             this.dataSource.paginator = this.paginatordet;
         }
     }
@@ -49,20 +49,20 @@ export class RecetasdetalleComponent implements OnInit {
     
     @Output() updated: EventEmitter<any> = new EventEmitter();
 
-    displayedColumns: string[] = ['select', 'cc', 'descc', 'cantidad', 'importe',  'options'];
+    displayedColumns: string[] = ['select', 'codigo', 'nombre', 'cc', 'descc', 'cantidad',  'options'];
     @ViewChild(MatPaginator) paginatordet: MatPaginator;
 
-    recetas: Array<IRecetasdetalle>;
-    dataSource = new MatTableDataSource<IRecetasdetalle>();
+    produccion: Array<IProducciondetalle>;
+    dataSource = new MatTableDataSource<IProducciondetalle>();
     errorMessage: String;
     selectedId: number;
     edit: boolean;
 
     /** checkbox datatable */
-    selection = new SelectionModel<IRecetasdetalle>(true, []);
+    selection = new SelectionModel<IProducciondetalle>(true, []);
 
     constructor(
-        private recetasService: RecetasdetalleService,
+        private produccionService: ProducciondetalleService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar
@@ -70,20 +70,20 @@ export class RecetasdetalleComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.dataSource.data = this.recetasDetalle;
+        this.dataSource.data = this.produccionDetalle;
     }
 
-    getRecetas(): void {
-        this.recetasService.getRecetas()
-            .pipe(map(recetas => {
-                recetas = recetas.map(c => {
+    getAll(): void {
+        this.produccionService.getAll()
+            .pipe(map(produccion => {
+                produccion = produccion.map(c => {
                     return c;
                 });
-                return recetas;
+                return produccion;
             }))
             .subscribe(response => {
-                this.recetas = response;
-                this.dataSource.data = this.recetas;
+                this.produccion = response;
+                this.dataSource.data = this.produccion;
                 this.dataSource.paginator = this.paginatordet;
                 this.paginatordet._intl.itemsPerPageLabel = 'Item por Pagina:';
             });
@@ -91,11 +91,11 @@ export class RecetasdetalleComponent implements OnInit {
 
     delete(id: number): void {
         this.selectedId = id;
-        this.deleteRecetas();
+        this.deleteProduccion();
     }
 
-    deleteRecetas(): void {
-        this.recetasService.deleteRecetas(this.selectedId)
+    deleteProduccion(): void {
+        this.produccionService.deleteProduccion(this.selectedId)
             .subscribe(response => {
                 this.updated.emit(true);
             });
@@ -116,7 +116,7 @@ export class RecetasdetalleComponent implements OnInit {
         this.edit = false;
     }
 
-    updateDataTable(data: IRecetasdetalle): void {
+    updateDataTable(data: IProducciondetalle): void {
         this.updated.emit(data);
         this.paginatordet.lastPage();
     }
@@ -146,7 +146,7 @@ export class RecetasdetalleComponent implements OnInit {
     async deleteAllSelecteds(): Promise<void> {
         const selecteds = this.selection.selected;
         for (let index = 0; index < selecteds.length; index++) {
-            await this.recetasService.deleteRecetas(selecteds[index].id).toPromise();
+            await this.produccionService.deleteProduccion(selecteds[index].id).toPromise();
             if (index === selecteds.length - 1) {
                 this.snackBar.open('ELIMINADOS TODOS');
                 this.updated.emit(true);
@@ -159,11 +159,11 @@ export class RecetasdetalleComponent implements OnInit {
     }
 
     // calculateTotales(descuento = 0): void {
-    //     this.recetasTotales.descuento = descuento;
-    //     /*this.recetasTotales.subtotal = this.recetasDetalle.reduce((a, b) => (b.imptotal * b.cantidad) + a, 0);*/
-    //     this.recetasTotales.subtotal = this.recetasDetalle.reduce((a, b) => (b.imptotal), 0);
-    //     this.recetasTotales.total_general = (this.recetasTotales.subtotal - this.recetasTotales.descuento) + this.recetasTotales.igv;
-    //     this.recetasTotales.igv = (this.recetasTotales.subtotal - this.recetasTotales.descuento) * 0.18;
+    //     this.produccionTotales.descuento = descuento;
+    //     /*this.produccionTotales.subtotal = this.produccionDetalle.reduce((a, b) => (b.imptotal * b.cantidad) + a, 0);*/
+    //     this.produccionTotales.subtotal = this.produccionDetalle.reduce((a, b) => (b.imptotal), 0);
+    //     this.produccionTotales.total_general = (this.produccionTotales.subtotal - this.produccionTotales.descuento) + this.produccionTotales.igv;
+    //     this.produccionTotales.igv = (this.produccionTotales.subtotal - this.produccionTotales.descuento) * 0.18;
     // }
 
     // onChangeDscto(event): void {

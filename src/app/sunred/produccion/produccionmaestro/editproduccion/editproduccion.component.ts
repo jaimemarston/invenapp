@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ProduccionService } from '../../../../core/services/produccion.service';
+import { IProduccion } from '../../../../core/interfaces/produccion.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSelectModule, MatFormFieldModule, MatListModule } from '@angular/material';
-import {IMovmaterial} from '../../../../core/interfaces/movmaterial.interface';
-import {MovmaterialService} from '../../../../core/services/movmaterial.service';
-import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
 import { ProveedorService } from '../../../../core/services/proveedor.service';
 import { IProveedores } from '../../../../core/interfaces/proveedores.interface';
+import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 
 export interface Estados {
     codigo: number;
@@ -20,12 +20,12 @@ export interface Opcmoneda {
 
 
 @Component({
-    selector: 'app-editmovmaterial',
-    templateUrl: './editmovmaterial.component.html',
+    selector: 'app-editproduccion',
+    templateUrl: './editproduccion.component.html',
     styleUrls: ['./../../../../app.component.scss']
 })
 
-export class EditMovmaterialComponent implements OnInit {
+export class EditProduccionComponent implements OnInit {
     private _id: number;
     get id(): number {
         return this._id;
@@ -49,11 +49,12 @@ export class EditMovmaterialComponent implements OnInit {
         {codigo: 4, descripcion: 'Anulado'},
     ];
 
+
     @Input() set id(id: number) {
         this._id = id;
         /* console.log(this.id); */
         if (id) {
-            this.getMovmaterial();
+            this.getOne();
         } else {
             if (this.registerForm) {
                 this.registerForm.reset();
@@ -61,15 +62,15 @@ export class EditMovmaterialComponent implements OnInit {
         }
     }
 
-    movmaterial: IMovmaterial;
+    produccion: IProduccion;
     filteredProveedores: Observable<Array<IProveedores>>;
     proveedores: Array<IProveedores>;
     registerForm: FormGroup;
 
     @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() update: EventEmitter<IMovmaterial> = new EventEmitter<IMovmaterial>();
+    @Output() update: EventEmitter<IProduccion> = new EventEmitter<IProduccion>();
 
-    constructor(private movmaterialService: MovmaterialService,
+    constructor(private empleadoService: ProduccionService,
                 private formBuilder: FormBuilder,
                 private proveedoresService: ProveedorService,
                 public snackBar: MatSnackBar) {
@@ -81,7 +82,7 @@ export class EditMovmaterialComponent implements OnInit {
                 this.proveedores = response;
             });
     }
-    
+
     ngOnInit(): void {
         this.createForm();
         this.getProveedor();
@@ -94,42 +95,39 @@ export class EditMovmaterialComponent implements OnInit {
         }
         return [];
     }
+
     createForm(): void {
         this.registerForm = this.formBuilder.group({
+            nombre: [null, Validators.compose([
+                Validators.required,
+                Validators.minLength(1),
+            ])],
             codigo: ['', Validators.compose([
                 Validators.required
             ])],
-            fechadoc: [''],
-            desruc: [''],
-            ruc: [''],
-            telruc: [''],
-            correoruc: [''],
-            dirruc: [''],
-            desmonepago: [''],
-            imppagado: [''],
-            tc_dolares: [''],
-            estado: [0],
-        });
-        const desrucForm = this.registerForm.get('desruc');
+            cantidad: [null],
 
-        this.filteredProveedores = desrucForm.valueChanges.pipe(
-            map(value => this._filter(value))
-        );
+        });
+        
+        // const desrucForm = this.registerForm.get('desruc');
+
+        // this.filteredProveedores = desrucForm.valueChanges.pipe(
+        //     map(value => this._filter(value))
+        // );
     }
+
 
     getcodigo(a): void {
         console.log(a);
-        this.registerForm.get('ruc').setValue(a.ruc);
-        this.registerForm.get('desruc').setValue(a.nombre);
-        this.registerForm.get('telruc').setValue(a.telefono1);
-        this.registerForm.get('correoruc').setValue(a.correo);
-        this.registerForm.get('dirruc').setValue(a.direccion);
+        this.registerForm.get('nombre').setValue(this.produccion.nombre);
+        this.registerForm.get('cantidad').setValue(this.produccion.totcant);
+
     }
 
-    getMovmaterial(): void {
-        this.movmaterialService.getMovmaterial(this.id)
+    getOne(): void {
+        this.empleadoService.getOne(this.id)
             .subscribe(response => {
-                this.movmaterial = response;
+                this.produccion = response;
                 this.setForm();
             });
     }
@@ -137,17 +135,11 @@ export class EditMovmaterialComponent implements OnInit {
     
     setForm(): void {
 
-        this.registerForm.get('codigo').setValue(this.movmaterial.codigo);
-        this.registerForm.get('fechadoc').setValue(this.movmaterial.fechadoc);
-        this.registerForm.get('ruc').setValue(this.movmaterial.ruc);
-        this.registerForm.get('desruc').setValue(this.movmaterial.desruc);
-        this.registerForm.get('telruc').setValue(this.movmaterial.telruc);
-        this.registerForm.get('dirruc').setValue(this.movmaterial.dirruc);
-        this.registerForm.get('correoruc').setValue(this.movmaterial.correoruc);
-        this.registerForm.get('desmonepago').setValue(this.movmaterial.desmonepago);
-        this.registerForm.get('estado').setValue(this.movmaterial.estado);
-        this.registerForm.get('tc_dolares').setValue(this.movmaterial.tc_dolares);
-        this.registerForm.get('imppagado').setValue(this.movmaterial.imppagado);
+        this.registerForm.get('codigo').setValue(this.produccion.codigo);
+        this.registerForm.get('nombre').setValue(this.produccion.nombre);
+        this.registerForm.get('cantidad').setValue(this.produccion.totcant);
+
+      
     }
 
     onBack(): void {
@@ -156,7 +148,7 @@ export class EditMovmaterialComponent implements OnInit {
 
     saveForm(clear?: boolean): void {
         if (this.registerForm.valid) {
-            this.saveMovmaterial();
+            this.saveProduccion();
             if (clear) {
                 this.registerForm.reset();
             }
@@ -165,9 +157,9 @@ export class EditMovmaterialComponent implements OnInit {
         }
     }
 
-    updateMovmaterial(): void {
-        const data: IMovmaterial = this.registerForm.getRawValue();
-        this.movmaterialService.updateMovmaterial(this.id, data)
+    updateProduccion(): void {
+        const data: IProduccion = this.registerForm.getRawValue();
+        this.empleadoService.updateProduccion(this.id, data)
             .subscribe(response => {
                 this.update.emit(response);
                 console.log('graba Maestro');
@@ -176,16 +168,16 @@ export class EditMovmaterialComponent implements OnInit {
             });
     }
 
-    addMovmaterial(): void {
-        const data: IMovmaterial = this.registerForm.getRawValue();
-        this.movmaterialService.addMovmaterial(data)
+    addProduccion(): void {
+        const data: IProduccion = this.registerForm.getRawValue();
+        this.empleadoService.addProduccion(data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');
             });
     }
 
-    saveMovmaterial(): void {
-        this.id ? this.updateMovmaterial() : this.addMovmaterial();
+    saveProduccion(): void {
+        this.id ? this.updateProduccion() : this.addProduccion();
     }
 }

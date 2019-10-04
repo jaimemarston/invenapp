@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { EmpleadoService } from '../../../../core/services/empleado.service';
+import { RecetaService } from '../../../../core/services/recetas.service';
 import { IRecetas } from '../../../../core/interfaces/recetas.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSelectModule, MatFormFieldModule, MatListModule } from '@angular/material';
@@ -70,7 +70,7 @@ export class EditRecetasComponent implements OnInit {
     @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() update: EventEmitter<IRecetas> = new EventEmitter<IRecetas>();
 
-    constructor(private empleadoService: EmpleadoService,
+    constructor(private empleadoService: RecetaService,
                 private formBuilder: FormBuilder,
                 private proveedoresService: ProveedorService,
                 public snackBar: MatSnackBar) {
@@ -82,8 +82,6 @@ export class EditRecetasComponent implements OnInit {
                 this.proveedores = response;
             });
     }
-    
-
 
     ngOnInit(): void {
         this.createForm();
@@ -107,8 +105,7 @@ export class EditRecetasComponent implements OnInit {
             codigo: ['', Validators.compose([
                 Validators.required
             ])],
-            telefono1: [null],
-            direccion: [null],
+            cantidad: [null],
 
         });
         
@@ -123,12 +120,12 @@ export class EditRecetasComponent implements OnInit {
     getcodigo(a): void {
         console.log(a);
         this.registerForm.get('nombre').setValue(this.recetas.nombre);
-        this.registerForm.get('telefono1').setValue(this.recetas.telefono1);
-        this.registerForm.get('direccion').setValue(this.recetas.direccion);
+        this.registerForm.get('cantidad').setValue(this.recetas.totcant);
+
     }
 
     getRecetas(): void {
-        this.empleadoService.getEmpleado(this.id)
+        this.empleadoService.getReceta(this.id)
             .subscribe(response => {
                 this.recetas = response;
                 this.setForm();
@@ -140,8 +137,8 @@ export class EditRecetasComponent implements OnInit {
 
         this.registerForm.get('codigo').setValue(this.recetas.codigo);
         this.registerForm.get('nombre').setValue(this.recetas.nombre);
-        this.registerForm.get('direccion').setValue(this.recetas.direccion);
-        this.registerForm.get('telefono1').setValue(this.recetas.telefono1);
+        this.registerForm.get('totcant').setValue(this.recetas.totcant);
+
       
     }
 
@@ -162,7 +159,7 @@ export class EditRecetasComponent implements OnInit {
 
     updateRecetas(): void {
         const data: IRecetas = this.registerForm.getRawValue();
-        this.empleadoService.updateEmpleado(this.id, data)
+        this.empleadoService.updateReceta(this.id, data)
             .subscribe(response => {
                 this.update.emit(response);
                 console.log('graba Maestro');
@@ -173,7 +170,7 @@ export class EditRecetasComponent implements OnInit {
 
     addRecetas(): void {
         const data: IRecetas = this.registerForm.getRawValue();
-        this.empleadoService.addEmpleado(data)
+        this.empleadoService.addReceta(data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');

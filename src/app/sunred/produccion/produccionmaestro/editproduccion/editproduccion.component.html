@@ -14,7 +14,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="65">
-            <input #inputs matInput placeholder="cantidad" formControlName="totcant">
+            <input #inputs matInput placeholder="cantidad" formControlName="cantidad">
         </mat-form-field>
 
     </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="crud-buttons" fxLayout="row" fxLayoutAlign="end center" fxFlex="1 0 auto">
         <button type="button" (click)="onBack()" mat-raised-button class="mat-primary">Volver</button>
-        <button (click)="saveRecetas()" mat-raised-button [disabled]="registerForm.invalid" class="mat-accent">
+        <button (click)="saveProduccion()" mat-raised-button [disabled]="registerForm.invalid" class="mat-accent">
             Guardar
         </button>
     </div>

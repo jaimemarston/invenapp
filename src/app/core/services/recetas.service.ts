@@ -17,9 +17,9 @@ export class RecetaService {
     return this.http.get<Array<IRecetas>>(RecetasEndpoint.rest)
   }
 
-  getReceta(id: number): Observable<Recetas> {
+  getReceta(id: number): Observable<IRecetas> {
     const url = `${RecetasEndpoint.rest}/${id}/`;
-    return this.http.get<Recetas>(url);
+    return this.http.get<IRecetas>(url);
   }
 
 

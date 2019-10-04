@@ -37,10 +37,11 @@ export class TareodetalleService {
     return this.http.delete(url);
   }
 
-  uploadFile(file: File): Observable<any>{
+  uploadFile(idMaster: number, file: File): Observable<any>{
     const url = `${TareodetalleEndpoint.rest}/uploadfiles`;
     const data = new FormData();
     data.append('file', file);
+    data.append('idMasterReloj', idMaster.toString());
     let params = new HttpParams();
 
     const options = {

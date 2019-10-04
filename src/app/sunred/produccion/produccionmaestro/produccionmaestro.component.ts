@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild, EventEmitter, Output, OnDestroy} from '@angular/core';
 import {MatDialog, MatSnackBar, MatTabChangeEvent, MatTableDataSource, MatPaginator} from '@angular/material';
 import {Router} from '@angular/router';
-import {Recetas} from '../../../dataservice/recetas';
+import {Produccion} from '../../../dataservice/produccion';
 import {DataService} from '../../../dataservice/data.service';
-import {RecetaService} from '../../../core/services/recetas.service';
-import {IRecetas, IRecetasdetalle} from '../../../core/interfaces/recetas.interface';
+import {ProduccionService} from '../../../core/services/produccion.service';
+import {IProduccion, IProducciondetalle} from '../../../core/interfaces/produccion.interface';
 import {SelectionModel} from '@angular/cdk/collections';
-import {RecetasdetalleService} from '../../../core/services/recetasdetalle.service';
-import {RecetasdetalleComponent} from '../recetasdetalle/recetasdetalle.component';
+import {ProducciondetalleService} from '../../../core/services/producciondetalle.service';
+import {ProducciondetalleComponent} from '../producciondetalle/producciondetalle.component';
 import {IProveedores} from 'app/core/interfaces/proveedores.interface';
 import {MonthService} from '../../../shared/components/footer/month.service';
 import {Subject} from 'rxjs';
@@ -18,101 +18,101 @@ import {takeUntil} from 'rxjs/operators';
  * @title Basic use of `<table mat-table>`
  */
 @Component({
-    selector: 'app-recetasmaestro',
-    templateUrl: './recetasmaestro.component.html',
+    selector: 'app-produccionmaestro',
+    templateUrl: './produccionmaestro.component.html',
 })
 
-export class RecetasmaestroComponent implements OnInit, OnDestroy {
+export class ProduccionmaestroComponent implements OnInit, OnDestroy {
 
     displayedColumns: string[] = ['select', 'codigo', 'nombre' , 'cantidad', 'options'];
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    recetas: Array<IRecetas>;
-    recetasdetalle: Array<IRecetasdetalle>;
-    recetasSelected: IRecetas;
-    dataSource = new MatTableDataSource<IRecetas>();
-    dataSourceDetalle = new MatTableDataSource<IRecetasdetalle>();
+    produccion: Array<IProduccion>;
+    producciondetalle: Array<IProducciondetalle>;
+    produccionSelected: IProduccion;
+    dataSource = new MatTableDataSource<IProduccion>();
+    dataSourceDetalle = new MatTableDataSource<IProducciondetalle>();
     errorMessage: String;
     selectedId: number;
     edit: boolean;
     @Output() shower: EventEmitter<any> = new EventEmitter();
-    @Output() detalle: EventEmitter<Array<IRecetasdetalle>> = new EventEmitter();
+    @Output() detalle: EventEmitter<Array<IProducciondetalle>> = new EventEmitter();
 
 
     /** checkbox datatable */
-    selection = new SelectionModel<IRecetas>(true, []);
+    selection = new SelectionModel<IProduccion>(true, []);
 
     monthSelected: number;
 
     unsubscribe = new Subject();
 
     constructor(
-        private recetasService: RecetaService,
+        private produccionService: ProduccionService,
         private router: Router,
         public dialog: MatDialog,
         private snackBar: MatSnackBar,
-        private recetasServicedetalle: RecetasdetalleService,
+        private produccionServicedetalle: ProducciondetalleService,
         private monthService: MonthService
     ) {
         this.monthService.monthSelected
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(month => {
                 this.monthSelected = month;
-                this.getReceta();
+                this.getProduccion();
             });
     }
 
     ngOnInit(): void {
-        this.getReceta();
+        this.getProduccion();
     }
 
 
-    getReceta(): void {
+    getProduccion(): void {
 
-        this.recetasService.getRecetas()
+        this.produccionService.getAll()
             .subscribe(response => {
-                this.recetas = response;
-                // this.recetasSelected = this.recetas[0];
-                this.dataSource.data = this.recetas;
+                this.produccion = response;
+                // this.produccionSelected = this.produccion[0];
+                this.dataSource.data = this.produccion;
                 this.dataSource.paginator = this.paginator;
                 this.paginator._intl.itemsPerPageLabel = 'Item por Pagina:';
-                // this.detalle.emit(this.recetas[0].recetases);
-                this.updateRecetaSelected(true);
+                // this.detalle.emit(this.produccion[0].producciones);
+                this.updateProduccionSelected(true);
             });
     }
 
 
-    updateRecetaSelected(emit?: boolean): void {
+    updateProduccionSelected(emit?: boolean): void {
        
-        if (this.recetasSelected) {
-            this.recetasSelected = this.recetas.find((v, i) => v.id === this.recetasSelected.id);
+        if (this.produccionSelected) {
+            this.produccionSelected = this.produccion.find((v, i) => v.id === this.produccionSelected.id);
         } else {
-            this.recetasSelected = this.recetas[0];
+            this.produccionSelected = this.produccion[0];
         }
         if (emit) {
            
-            this.detalle.emit(this.recetasSelected ? this.recetasSelected.movrecetas : []);
+            this.detalle.emit(this.produccionSelected ? this.produccionSelected.movproduccion : []);
         }
     }
 
-    viewRecorddetail(recetas: IRecetas): void {
-        this.selectedId = recetas.id;
-        // console.log('viewRecorddetail', this.selectedId, recetas);
-        this.recetasSelected = recetas;
-        this.detalle.emit(this.recetasSelected.movrecetas);
+    viewRecorddetail(produccion: IProduccion): void {
+        this.selectedId = produccion.id;
+        // console.log('viewRecorddetail', this.selectedId, produccion);
+        this.produccionSelected = produccion;
+        this.detalle.emit(this.produccionSelected.movproduccion);
     }
 
     delete(id: number): void {
         this.selectedId = id;
-        this.deleteReceta();
+        this.deleteProduccion();
     }
 
-    deleteReceta(): void {
+    deleteProduccion(): void {
         if (confirm('Esta seguro que desea borrar este registro?')) {
-            this.recetasService.deleteReceta(this.selectedId)
+            this.produccionService.deleteProduccion(this.selectedId)
                 .subscribe(response => {
                     /* console.log(response); */
-                    this.getReceta();
+                    this.getProduccion();
                 });
         }
     }
@@ -131,8 +131,8 @@ export class RecetasmaestroComponent implements OnInit, OnDestroy {
         this.edit = false;
     }
 
-    updateDataTable(data: IRecetas): void {
-        this.getReceta();
+    updateDataTable(data: IProduccion): void {
+        this.getProduccion();
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -160,10 +160,10 @@ export class RecetasmaestroComponent implements OnInit, OnDestroy {
     async deleteAllSelecteds() {
         const selecteds = this.selection.selected;
         for (let index = 0; index < selecteds.length; index++) {
-            await this.recetasService.deleteReceta(selecteds[index].id).toPromise();
+            await this.produccionService.deleteProduccion(selecteds[index].id).toPromise();
             if (index === selecteds.length - 1) {
                 this.snackBar.open('ELMINADOS TODOS');
-                this.getReceta();
+                this.getProduccion();
             }
         }
     }

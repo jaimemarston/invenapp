@@ -2,8 +2,8 @@
     <toolbar-table [title]="'Detalle'"  [urlPrint]="'generate_pdf/'+idMaster" (inputText)="applyFilter($event)" [hidden]="edit"
                    (add)="addRecord()" (delete)="deleteAllSelecteds()"></toolbar-table>
     <div [hidden]="!edit">
-        <app-editrecetasdetalle [idMaster]="idMaster" [nombreMaster]="nombreMaster" [codempMaster]="codempMaster" [id]="selectedId" (back)="showDataTable()"
-                                   (update)="updateDataTable($event)"></app-editrecetasdetalle>
+        <app-editproducciondetalle [idMaster]="idMaster" [nombreMaster]="nombreMaster" [codempMaster]="codempMaster" [id]="selectedId" (back)="showDataTable()"
+                                   (update)="updateDataTable($event)"></app-editproducciondetalle>
     </div>
     <div fxFlex>
         <mat-table #table [dataSource]="dataSource">
@@ -21,7 +21,7 @@
                 </mat-cell>
             </ng-container>
 
-            <!-- <ng-container  matColumnDef="codigo">
+            <ng-container  matColumnDef="codigo">
                 <mat-header-cell fxFlex="80px" *matHeaderCellDef> codigo</mat-header-cell>
                 <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.codigo}}</mat-cell>
             </ng-container>
@@ -30,23 +30,20 @@
                 <mat-header-cell fxFlex="350px" *matHeaderCellDef> NOMBRE</mat-header-cell>
                 <mat-cell fxFlex="350px" *matCellDef="let element"> {{element.nombre}}</mat-cell>
             </ng-container>
-             -->
+            
             <ng-container  matColumnDef="cc">
-                <mat-header-cell fxFlex="80px" *matHeaderCellDef> codmat</mat-header-cell>
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> receta</mat-header-cell>
                 <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.cc}}</mat-cell>
             </ng-container>
             <ng-container  matColumnDef="descc">
-                <mat-header-cell fxFlex="200px" *matHeaderCellDef> materiales</mat-header-cell>
-                <mat-cell fxFlex="200px" *matCellDef="let element"> {{element.descc}}</mat-cell>
+                <mat-header-cell fxFlex="80px" *matHeaderCellDef> Descripcion</mat-header-cell>
+                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.descc}}</mat-cell>
             </ng-container>
             <ng-container  matColumnDef="cantidad">
                 <mat-header-cell fxFlex="80px" *matHeaderCellDef> cantidad</mat-header-cell>
                 <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.cantidad}}</mat-cell>
             </ng-container>
-            <ng-container  matColumnDef="importe">
-                <mat-header-cell fxFlex="80px" *matHeaderCellDef> importe</mat-header-cell>
-                <mat-cell fxFlex="80px" *matCellDef="let element"> {{element.importe}}</mat-cell>
-            </ng-container>
+            
             <ng-container matColumnDef="options">
                 <mat-header-cell *matHeaderCellDef> Options</mat-header-cell>
                 <mat-cell *matCellDef="let row">

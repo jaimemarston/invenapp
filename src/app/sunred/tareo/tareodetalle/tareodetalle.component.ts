@@ -159,9 +159,8 @@ export class TareodetalleComponent implements OnInit {
     }
     
     setFileSelected(event): void {
-        
         if (event != null) {
-            this.tareoService.uploadFile(event)
+            this.tareoService.uploadFile(this.idMaster, event)
                 .subscribe(response => {
                     console.log(response);
                 });

@@ -29,6 +29,7 @@ export class AuthService {
 
     static setAuhUser(user: IUserAuth): void {
         localStorage.setItem(STORAGE_USER_KEY, JSON.stringify(user));
+        // console.log('JSON.stringify(user)', JSON.stringify(user));
     }
 
     static getAuthUser(): IUserAuth {

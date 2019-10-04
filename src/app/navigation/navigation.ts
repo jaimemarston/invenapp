@@ -120,7 +120,7 @@ export const navigationEmpleados: FuseNavigation[] = [
             },
             {
                 id: 'repoemplea',
-                title: 'Planilla',
+                title: 'Reportes',
                 type: 'item',
                 icon: 'email',
                 url: '/repoemplea',
@@ -167,47 +167,18 @@ export const navigationProduccion: FuseNavigation[] = [
             },
             {
                 id: 'cotizacion',
-                title: 'Movimientos-Productos',
+                title: 'Genera-Produccion',
                 type: 'item',
                 icon: 'email',
-                url: '/cotizacion',
+                url: '/produccion',
             },
             
             {
-                id: 'dashboard',
-                title: 'MOVIMIENTOS ',
-                type: 'collapsable',
+                id: 'repoemplea',
+                title: 'Planilla',
+                type: 'item',
                 icon: 'email',
-                children: [
-                    {
-                        id: 'dashboard_analytics',
-                        title: 'Ordenes de trabajo',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    },
-                    {
-                        id: 'dashboard_projects',
-                        title: 'Producción Real',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    },
-                    {
-                        id: 'dashboard_projects',
-                        title: 'Producción Proyectada',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    },
-                    {
-                        id: 'dashboard_projects',
-                        title: 'Ingreso Almacen',
-                        type: 'item',
-                        icon: 'email',
-                        url: '/cotizacion',
-                    }
-                ]
+                url: '/repoemplea',
             },
         ]
     }

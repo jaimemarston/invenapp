@@ -18,6 +18,6 @@ export class RepoempleaService {
         //     }).join('&');
         // }
         console.log(url, params);
-        return this.http.get(`${url}?${params}`);
+        return this.http.get(`${url}?master_id=${params}`);
     }
 }

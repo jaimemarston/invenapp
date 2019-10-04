@@ -1,5 +1,5 @@
 <div id="clientes" fxLayout="column">
-    <toolbar-table [title]="'Maestro'" [urlPrint]="'generate_pdf/'+recetasSelected?.id" (inputText)="applyFilter($event)" [hidden]="edit"
+    <toolbar-table [title]="'Maestro'" [urlPrint]="'generate_pdf/'+produccionSelected?.id" (inputText)="applyFilter($event)" [hidden]="edit"
                    (add)="addRecord()"
                    (delete)="deleteAllSelecteds()"></toolbar-table>
     <div fxFlex [hidden]="edit">
@@ -47,7 +47,7 @@
             <mat-row
                 (click)="viewRecorddetail(row)"
                 class="element-row"
-                [ngClass]="{ 'highlight': row.id === recetasSelected?.id }"
+                [ngClass]="{ 'highlight': row.id === produccionSelected?.id }"
                 *matRowDef="let row; columns: displayedColumns;">
             </mat-row>
 
@@ -59,7 +59,7 @@
     </div>
     <mat-divider></mat-divider>
     <div fxFlex [hidden]="!edit">
-        <app-editrecetas [id]="selectedId" (back)="showDataTable()"
-                            (update)="updateDataTable($event)"></app-editrecetas>
+        <app-editproduccion [id]="selectedId" (back)="showDataTable()"
+                            (update)="updateDataTable($event)"></app-editproduccion>
     </div>
 </div>

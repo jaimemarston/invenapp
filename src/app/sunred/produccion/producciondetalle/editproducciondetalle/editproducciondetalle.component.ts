@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { RecetasdetalleService } from '../../../../core/services/recetasdetalle.service';
-import { IRecetasdetalle } from '../../../../core/interfaces/recetas.interface';
+import { ProducciondetalleService } from '../../../../core/services/producciondetalle.service';
+import { IProducciondetalle } from '../../../../core/interfaces/produccion.interface';
 import { IArticulo } from '../../../../core/interfaces/articulo.interface';
 import { IUnidad } from '../../../../core/interfaces/unidad.interface';
 import { ArticuloService } from '../../../../core/services/articulo.service';
@@ -19,12 +19,12 @@ export interface Opcviaje {
 }
 
 @Component({
-    selector: 'app-editrecetasdetalle',
-    templateUrl: './editrecetasdetalle.component.html',
+    selector: 'app-editproducciondetalle',
+    templateUrl: './editproducciondetalle.component.html',
     animations: fuseAnimations
 })
 
-export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges {
+export class EditproducciondetalleComponent implements OnInit, OnDestroy, OnChanges {
     $unsubscribe = new Subject();
     private _id: number;
     get id(): number {
@@ -35,7 +35,7 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
         this._id = id;
        
         if (id) {
-            this.getRecetas();
+            this.getOne();
         } else {
             if (this.registerForm) {
                 this.registerForm.reset();
@@ -61,7 +61,7 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
         { codigo: 'Full Day', descripcion: 'Full Day' },
     ];
 
-    recetas: IRecetasdetalle;
+    produccion: IProducciondetalle;
     articulos: Array<IArticulo>;
     unidades: Array<IUnidad>;
 
@@ -69,11 +69,11 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
     registerForm: FormGroup;
 
     @Output() back: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() update: EventEmitter<IRecetasdetalle> = new EventEmitter<IRecetasdetalle>();
+    @Output() update: EventEmitter<IProducciondetalle> = new EventEmitter<IProducciondetalle>();
 
     @ViewChild('inputCodigo') inputCodigo: ElementRef<HTMLInputElement>;
 
-    constructor(private recetasService: RecetasdetalleService,
+    constructor(private produccionService: ProducciondetalleService,
         private formBuilder: FormBuilder,
         private articuloService: ArticuloService,
         private unidadService: UnidadService,
@@ -144,7 +144,7 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
             cc: [null],
             descc: [null],
             cantidad: [null],
-            importe: [null],
+
         });
        
 
@@ -193,34 +193,32 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
     getcodigo(a): void {
         
         // this.registerForm.get('codigo').setValue(a.codigo);
-        // this.registerForm.get('nombre').setValue(this.recetas.nombre);
-        // this.registerForm.get('codemp').setValue(this.recetas.codemp);
-        this.registerForm.get('cc').setValue(this.recetas.cc);
-        this.registerForm.get('descc').setValue(this.recetas.descc);
-        this.registerForm.get('cantidad').setValue(this.recetas.cantidad);
-        this.registerForm.get('importe').setValue(this.recetas.importe);
+        // this.registerForm.get('nombre').setValue(this.produccion.nombre);
+        // this.registerForm.get('codemp').setValue(this.produccion.codemp);
+        this.registerForm.get('cc').setValue(this.produccion.cc);
+        this.registerForm.get('descc').setValue(this.produccion.descc);
+        this.registerForm.get('cantidad').setValue(this.produccion.cantidad);
 
     }
 
 
-    getRecetas(): void {
+    getOne(): void {
 
-        this.recetasService.getReceta(this.id)
+        this.produccionService.getOne(this.id)
             .subscribe(response => {
-                this.recetas = response;
+                this.produccion = response;
                 this.setForm();
             });
     }
 
     setForm(): void {
         
-        // this.registerForm.get('codigo').setValue(this.recetas.codigo);
-        // this.registerForm.get('nombre').setValue(this.recetas.nombre);
-        // this.registerForm.get('codemp').setValue(this.recetas.codemp);
-        this.registerForm.get('cc').setValue(this.recetas.cc);
-        this.registerForm.get('descc').setValue(this.recetas.descc);
-        this.registerForm.get('cantidad').setValue(this.recetas.cantidad);
-        this.registerForm.get('importe').setValue(this.recetas.importe);
+        // this.registerForm.get('codigo').setValue(this.produccion.codigo);
+        // this.registerForm.get('nombre').setValue(this.produccion.nombre);
+        // this.registerForm.get('codemp').setValue(this.produccion.codemp);
+        this.registerForm.get('cc').setValue(this.produccion.cc);
+        this.registerForm.get('descc').setValue(this.produccion.descc);
+        this.registerForm.get('cantidad').setValue(this.produccion.cantidad);
     }
 
     onBack(): void {
@@ -230,7 +228,7 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
     saveForm(clear?: boolean): void {
 
         if (this.registerForm.valid) {
-            this.saveRecetas();
+            this.saveProduccion();
             if (clear) {
                 this.registerForm.reset();
                 this.inputCodigo.nativeElement.focus();
@@ -247,35 +245,35 @@ export class EditrecetasdetalleComponent implements OnInit, OnDestroy, OnChanges
         this.registerForm.get('codigo').setValue(this.idMaster);
         this.registerForm.get('codemp').setValue(this.codempMaster);
         this.registerForm.get('nombre').setValue(this.nombreMaster);
-        const data: IRecetasdetalle = { ...this.registerForm.getRawValue() };
+        const data: IProducciondetalle = { ...this.registerForm.getRawValue() };
         data.master = this.idMaster;
         data.codemp = this.codempMaster;
         data.nombre = this.nombreMaster;
         return data;
     }
 
-    updateRecetas(): void {
+    updateProduccion(): void {
         const data = this.prepareData();
 
-        this.recetasService.updateRecetas(this.id, data)
+        this.produccionService.updateProduccion(this.id, data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');
             });
     }
 
-    addRecetas(): void {
+    addProduccion(): void {
         const data = this.prepareData();
-        console.log('addRecetas' + this.idMaster);
-        this.recetasService.addRecetas(data)
+        console.log('addProduccion' + this.idMaster);
+        this.produccionService.addProduccion(data)
             .subscribe(response => {
                 this.update.emit(response);
                 this.snackBar.open('Registro agregado satisfactoriamente...!');
             });
     }
 
-    saveRecetas(): void {
-        this.id ? this.updateRecetas() : this.addRecetas();
+    saveProduccion(): void {
+        this.id ? this.updateProduccion() : this.addProduccion();
     }
 
     ngOnDestroy(): void {

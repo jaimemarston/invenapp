@@ -73,7 +73,6 @@ export class RepoempleaComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(value => {
                 this.repoempleaSelected = value;
-                console.log('this.repoempleaSelected', this.repoempleaSelected.id);
                 // this.getServiceFromUrl(this.repoempleaSelected.api);
             });
 
@@ -116,6 +115,7 @@ export class RepoempleaComponent implements OnInit, OnDestroy {
 
     repoemplea_visualizar(): void {
         // this.getServiceFromUrl(this.repoempleaSelected.api);
+        console.log('NEW this.repoempleaSelected', this.repoempleaSelected.id);
         this.getServiceFromUrl(`${BASEURL}calcula_planilla`);
         console.log(`${BASEURL}calcula_planilla`);
         // window.open(`${BASEURL}filtro/2019-05-10/2019-05-13/`, '_blank');

@@ -1,14 +1,14 @@
-export interface IRecetas {
+export interface IProduccion {
   id?: number;
   codigo: number;
   nombre: string;
   telefono1: string;
   direccion: string;
   totcant: string;
-  movrecetas?: Array<IRecetasdetalle> | null;
+  movproduccion?: Array<IProducciondetalle> | null;
 }
 
-export interface IRecetasdetalle {
+export interface IProducciondetalle {
   id?: number;
   codigo: number;
   codemp: string;
