@@ -162,6 +162,13 @@ export class RepoempleaComponent implements OnInit, OnDestroy {
         this.showLoader();
         const [error, response] = await to(this.repoempleaService.getService(url, this.repoempleaSelected.id).toPromise());
         this.data = response;
+        
+        // const total = this.data[8].reduce(function(sum, value){
+        //     return sum + value;
+        //    }, 0);
+
+        // console.log('totalver', total);
+        
         this.setSearchTextToData();
         if (this.data && this.data.length) {
             this.headers = Object.keys(this.data[0]).filter(k => typeof this.data[0][k] !== 'object' && this.exclude_headers.indexOf(k) === -1).map(k => k);
@@ -170,7 +177,7 @@ export class RepoempleaComponent implements OnInit, OnDestroy {
 
         this.dataFiltered = [...this.data];
     }
-
+    
     setSearchTextToData(): void {
         this.data = this.data.map(s => {
             s.query_search = Object.keys(s).map(k => `${s[k]}`.trim().toLowerCase()).join(' ');

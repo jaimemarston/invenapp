@@ -24,9 +24,16 @@ export class CommonService {
         mywindow.close();
         return true;
     }
-
+    
+    // saveButtonClick = () =>{
+    //     let config = new MatSnackBarConfig();
+    //     config.duration = 5000;
+    //     config.panelClass = ['red-snackbar']
+    //     this.snackBar.open("This is a message!", "ACTION", config);
+    //   }
     showFormError(error: any): void {
         const formError = (error as any).error;
+        
         if (formError) {
             const messageError = Object.keys(formError).map(k => `${k}: ${formError[k].map(kk => kk).join(',')}`);
             this.snackBar.open(`Los siguientes campos contienen errores:  ${messageError}`, '', {
